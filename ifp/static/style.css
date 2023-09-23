@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,700;1,300&display=swap");
+@font-face{
+    font-family: 'Norse';
+    size-adjust: 130%;
+    src: url('norse.ttf') format('truetype');
+}
+@font-face{
+    font-family: 'emocji';
+    size-adjust: 130%;
+    src: url('emocji.woff2') format('woff2');
+}
+
+
+:root{
+    --txt: #c9d6de;
+    --txtBold: #c9d6ff;
+    --back: #1e1f23;
+    --a: #38baaf;
+    --aHover: #98DBC6;
+    --border: #d18a6479;
+    --panel: #17191b;
+    --inp-txt: #db1414;
+    --buttonHover: #2a3036;
+    --menu: #3d4247;
+
+    --scrollbar-width: 7px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: text;
+    font-family: 'Ubuntu', 'emocji', sans-serif;
+    font-weight: 400;
+}
+
+b{
+    font-weight: 700;
+}
+
+i, em{
+    font-weight: 300;
+    font-style: italic;
+}
+
+body{
+    background-color: var(--back);
+    color: var(--txt);
+    text-align: center;
+}
+
+a{
+    color: var(--a);
+}
+
+a:hover{
+    color: var(--aHover);
+}
+
+#app{
+    width: 100%;
+}
+
+#err, .err{
+    color: red;
+}
+
+/* Dostosowanie paska przewijania dla przeglądarek opartych na WebKit */
+::-webkit-scrollbar{
+    width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track{
+    background: var(--back);
+}
+
+::-webkit-scrollbar-thumb{
+    background: var(--txtBold);
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background: var(--border);
+}
+
+/* Dostosowanie paska przewijania dla przeglądarek opartych na Gecko */
+*{
+    scrollbar-width: var(--scrollbar-width);
+    scrollbar-color: var(--txtBold) var(--back);
+}
+
+*::-webkit-scrollbar{
+    width: var(--scrollbar-width);
+}
+
+*::-webkit-scrollbar-track{
+    background: var(--back);
+}
+
+*::-webkit-scrollbar-thumb{
+    background-color: var(--txtBold);
+}
+
+*::-webkit-scrollbar-thumb:hover{
+    background-color: var(--border);
+}
+
+/* Dostosowanie paska przewijania dla Electron (aplikacja webowa) */
+html::-webkit-scrollbar{
+    width: var(--scrollbar-width);
+}
+
+html::-webkit-scrollbar-track{
+    background: var(--back);
+}
+
+html::-webkit-scrollbar-thumb{
+    background: var(--txtBold);
+}
+
+html::-webkit-scrollbar-thumb:hover{
+    background: var(--border);
+}
+
+/* Dostosowanie paska przewijania dla WebView w React Native */
+body{
+    scrollbar-width: var(--scrollbar-width);
+    scrollbar-color: var(--txtBold) var(--back);
+}
+
+body::-webkit-scrollbar{
+    width: var(--scrollbar-width);
+}
+
+body::-webkit-scrollbar-track{
+    background: var(--back);
+}
+
+body::-webkit-scrollbar-thumb{
+    background-color: var(--txtBold);
+}
+
+body::-webkit-scrollbar-thumb:hover{
+    background-color: var(--border);
+}  

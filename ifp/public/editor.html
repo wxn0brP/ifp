@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">ifp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/favicon.ico" rel="shortcut icon">
+        <link href="/lib/wwli-res.css" rel="stylesheet">
+        <link href="/lib/wwli-nav.css" rel="stylesheet">
+        <link href="/lib/wwli-class.css" rel="stylesheet">
+        <link href="/style.css" rel="stylesheet">
+        <style>
+            #editor{
+                width: 80%;
+                margin: 20px auto;
+                border: 1px solid #ccc;
+                padding: 10px;
+                font-size: 16px;
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="editor" contenteditable="true">
+            <p>test</p>
+        </div>
+        <script src="/lib/wwli.js"></script>
+        <script src="/js/format.js"></script>
+        <script src="/js/util.js"></script>
+        <script>
+            var editor = document.getElementById("editor");
+
+            document.addEventListener('keydown', function(event){
+                if(!event.ctrlKey) return;
+                var com="";
+                switch(event.key){
+                    case "b":
+                        com = "bold"
+                    break;
+                    case "i":
+                        com = "italic"
+                    break;
+                }
+                if(!com) return;
+                event.preventDefault();
+                document.execCommand(com, false, null)
+            });
+
+            function logs(){
+                lo(editor.innerHTML.trim())
+            }
+        </script>          
+    </body>
+</html>

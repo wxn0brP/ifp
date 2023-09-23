@@ -1,0 +1,21 @@
+#duckGame{
+    aspect-ratio: 2/1;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+}
+
+.inter-page{
+    width: 40%;
+    max-width: 300px;
+    padding: 7px 3px 3px 7px;
+    border-radius: 1rem;
+    background-color: var(--panel);
+}
+
+.preCode{
+    background-color: var(--panel);
+    margin-top: 5px;
+    padding: 1rem;
+    border-radius: .9rem;
+    margin-right: 1rem;
+}

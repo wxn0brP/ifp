@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">ifp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/favicon.ico" rel="shortcut icon">
+        <link href="/lib/wwli.min.css" rel="stylesheet">
+        <link href="/style.css" rel="stylesheet">
+        <link href="/chat.css" rel="stylesheet">
+
+        <script src="/js/socket.io.min.js" defer></script>
+        <script src="/js/crypto-js.min.js" defer></script>
+        <script src="/js/hammer.min.js" defer></script>
+        <script src="/js/confetti.min.js" defer></script>
+        <script src="/js/highlight.min.js" defer></script>
+        <script src="/js/peerjs.min.js" defer></script>
+        <script src="/js/json5.min.js" defer></script>
+
+
+        <script src="js/core.js" defer></script>
+        <script src="js/settingsLib.js" defer></script>
+        <script src="js/settings.js" defer></script>
+        <script src="js/vars.js" defer></script>
+        <script src="js/utils.js" defer></script>
+        <script src="js/auth.js" defer></script>
+        <script src="js/ws.js" defer></script>
+        <script src="js/format.js" defer></script>
+        <script src="js/apis.js" defer></script>
+        <script src="js/cont-menu.js" defer></script>
+        <script src="js/func.js" defer></script>
+        <script src="js/init.js" defer></script>
+
+        <style>.loading{background-color:#1e1f23;}</style>
+    </head>
+    <body class="loading">
+        <script>setTimeout(() => document.body.classList.remove('loading'),100);</script>
+        <div id="app">
+            <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
+            <span id="confetti"></span>
+            <!-- <mob><button onclick="mobileMenuToogler()" id="mobileMenuToogler" style="z-index: 21;">&#9776;</button></mob> -->
+
+            <span loadHtml="app/leftMenu.html"></span>
+            <span loadHtml="app/mess.html"></span>
+            <div style="clear: both;"></div>
+
+            <span loadHtml="app/menu.html"></span>
+            <span loadHtml="app/popup.html"></span>
+
+            <!-- <div id="loadingScreen">
+                <svg id="ifp-wilk" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                    <use xlink:href="/img/wilk.svg#ifp-wilk" />
+                </svg>
+            </div> -->
+
+            <script>
+                setTimeout(() => {
+                    let loadingScreen = document.getElementById("loadingScreen");
+                    if(!loadingScreen) return;
+                    loadingScreen.remove();
+                }, 3100);
+                setTimeout(() => {
+                    let src = document.createElement("script");
+                    src.src = "js/run.js";
+                    document.body.appendChild(src)
+                }, 500);
+            </script>
+        </div>
+    </body>
+</html>

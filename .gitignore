@@ -1,0 +1,12 @@
+node_modules
+data
+dist
+*.exe
+.vscode
+logs
+.env
+*.env
+package-lock.json
+uploads
+qrCode.txt
+music

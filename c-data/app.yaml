@@ -1,0 +1,15 @@
+d:
+  - i: czy ifp działa na systemach windows
+    o: Tak, IFP jest dostępne dla systemów Windows w wersji desktopowej.
+
+  - i: czy ifp działa na systemach linux
+    o: IFP jest dostępne dla systemów Linux. Możesz pobrać odpowiednią wersję ze strony oficjalnej aplikacji.
+
+  - i: czy ifp jest dostępne na android
+    o: Tak, IFP ma wersję mobilną dostępną dla systemów Android.
+
+  - i: czy ifp jest dostępne na ios
+    o: Nie, IFP nie ma wersji na iOS.
+
+  - i: Czy ifp posiada wersję webową
+    o: Tak, IFP posiada wersję mobilną oraz wersję webową, która można uruchomić na dowolnej przeglądarce internetowej.

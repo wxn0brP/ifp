@@ -1,0 +1,39 @@
+{
+    "name": "ifp",
+    "version": "0.0.13",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon -dev",
+        "n": "electron .",
+        "build": "electron-builder"
+    },
+    "author": {
+        "name": "wxn0brP",
+        "email": "ares@projektares.tk"
+    },
+    "homepage": "https://ifp.projektares.tk",
+    "license": "MIT",
+    "devDependencies": {
+        "electron": "^25.1.0"
+    },
+    "build": {
+        "win": {
+            "icon": "icon.ico"
+        },
+        "linux": {
+            "target": "deb",
+            "icon": "icon.png"
+        },
+        "files": [
+            "index.js",
+            "favicon.png",
+            "icon.ico"
+        ]
+    },
+    "dependencies": {
+        "active-win": "^8.1.0",
+        "axios": "^1.4.0",
+        "electron-notifications": "^1.0.0"
+    }
+}

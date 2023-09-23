@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">ifp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="/lib/wwli-res.css" rel="stylesheet">
+        <link href="/lib/wwli-nav.css" rel="stylesheet">
+        <link href="/lib/wwli-class.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
+
+        <style>
+            form{
+                --hei: 395px;
+                height: var(--hei);
+                margin-top: calc(47vh - var(--hei) / 2 );
+                background-color: #222;
+                border-radius: 20px;
+                padding-top: 18px;
+            }
+            input{
+                width: 60%;
+                height: 2rem;
+                margin: 8px;
+                border-radius: 6px;
+                padding: 5px;
+            }
+            button{
+                width: 50%;
+                height: 2.2rem;
+                margin: 4px;
+            }
+            #err{
+                height: 1.5rem;
+                margin: 8px;
+            }
+            .napis{
+                color: aqua;
+                font-size: 1.1rem;
+            }
+            #qrcode-div{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                translate: -50% -50%;
+                width: 500px;
+                height: 500px;
+                background-color: #aaa;
+                padding: 50px;
+            }
+            #Xcode{
+                width: 2rem;
+                height: 2rem;
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                border-radius: 1rem;
+                background-color: var(--panel);
+                color: red;
+            }
+            #qrcode-e{
+                color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
+            <!-- <div id="cookie-message" class="s m_12 l_12" style="display: none;">
+                <p>Ta strona wykorzystuje pliki <b>COOKIES</b> w celu autoryzacji użytkowników.
+                    Pliki cookies przechowują jedynie dane autoryzacyjne i nie są wykorzystywane w żadnych innych celach.</p>
+                <br />
+                <p>Jeśli nie zgadzasz się na wykorzystanie plików cookies, prosimy o opuszczenie tej strony.</p>
+                <br />
+                <button onclick="acceptCookie();">Zgadzam się</button>
+            </div> -->
+            <form id="form" class="s m_6 l_4 mar">
+                <span class="napis">Login lub E-mail:</span>
+                <br />
+                <input type="text" id="login">
+                <br />
+                <span class="napis">Hasło:</span>
+                <br />
+                <input type="password" id="pass">
+                <br />
+                <div id="err"></div>
+                <button type="submit" value="">OK</button>
+                <br />
+                <br />
+                Nie masz konta? <a href="register">Zarejestruj się!</a>
+                <br />
+                <br />
+                Zapomniałeś hasła? <a href="reset">Zrestartuj się!</a>
+                <br />
+                <br />
+                <button type="button" onclick="changeCodeStatus();">Zaloguj przez kod QR:</button>
+            </form>
+            <div id="qrcode-div" style="display: none;">
+                <button onclick="changeCodeStatus();" id="Xcode">X</button>
+                <div id="qrcode"></div>
+                <div id="qrcode-e"></div>
+            </div>
+        </div>
+
+        <script src="/lib/wwli.js"></script>
+        <script src="js/cookies.js"></script>
+        <script src="js/socket.io.min.js"></script>
+        <script src="js/qrcode.min.js"></script>
+        <script>
+            function loginW(){
+                var urlParam = new URLSearchParams(location.search);
+                if(urlParam.get("err")) return;
+                if(
+                    localStorage.getItem("rToken") &&
+                    localStorage.getItem("from") &&
+                    localStorage.getItem("user_id")
+                ){
+                    location.href = "/app";
+                }
+            }
+            loginW();
+            var dataXor = null;
+            var socket = io("/qr_code");
+            var _id = "";
+            socket.connect();
+            socket.on("connect", () => {
+                var id = createCode();
+                var url = location.protocol + '//' + location.host + "/lk?k=" + id;
+                qrcodeC(url);
+                socket.emit("set", id);
+                _id = id;
+            });
+
+            socket.on("get", (data) => {
+                dataXor = data;
+                getPass();
+            });
+
+            var loginDiv = __("#login");
+            var passDiv = __("#pass");
+            var errDiv = __("#err");
+
+            __("#form").on("submit", (e) => {
+                e.preventDefault();
+                var login = loginDiv.cont();
+                if(!login){
+                    errDiv.html("Login nie może być pusty");
+                    return;
+                }
+                var pass = passDiv.cont();
+                if(!pass){
+                    errDiv.html("Hasło nie może być puste");
+                    return;
+                }
+                login = login.trim();
+                pass = pass.trim();
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/login", false);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({ login, pass }));
+                var res = xhr.responseText;
+                try{
+                    res = JSON.parse(res);
+                    if(res.err){
+                        errDiv.html(res.msg);
+                        return;
+                    }
+                    localStorage.setItem("from", res.from);
+                    localStorage.setItem("user_id", res.user_id);
+                    localStorage.setItem("rToken", res.rToken);
+                    sessionStorage.setItem("token", res.token);
+
+                    var urlParam = new URLSearchParams(location.search);
+                    urlParam = urlParam.get("next");
+                    var next = "/app";
+                    if(urlParam){
+                        next = window.location.protocol + "//" + window.location.host;
+                        if(!urlParam.startsWith("/")) urlParam = "/" + urlParam;
+                        next += urlParam;
+                    }
+                    location.href = next;
+                }catch(e){
+                    alert("err: "+res);
+                }
+            });
+
+            function qrcodeC(url){
+                var qrcode = new QRCode(document.getElementById("qrcode"), {
+                    width: 400,
+                    height: 400,
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+                qrcode.makeCode(url);
+            }
+
+            function createCode(){
+                var id = "";
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                for(let i=0; i<15; i++) id += characters.charAt(Math.floor(Math.random() * characters.length));
+                return id;
+            }
+
+            function xorEncrypt(message, key){
+                var encryptedMessage = '';
+                for(var i = 0; i < message.length; i++){
+                    var charCode = message.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+                    encryptedMessage += String.fromCharCode(charCode);
+                }
+                return encryptedMessage;
+            }
+
+            function getPass(){
+                document.getElementById("qrcode").innerHTML = "";
+                var ele = document.getElementById("qrcode-e");
+                ele.style.display = "block";
+                ele.innerHTML = `
+                    Podaj kod <b>LOGOWANIA</b>:<br />
+                    <input id="qrcode-inp" onkeydown="search(this)"/>
+                    <button onclick="getPassF()">OK</button>
+                `;
+            }
+
+            function search(ele){
+                if(event.key === 'Enter') getPassF();
+            }
+
+            function getPassF(){
+                var ele = document.getElementById("qrcode-inp");
+                if(!ele) return;
+                var code = ele.value;
+                try{
+                    var decode = xorEncrypt(dataXor, code);
+                    var json = JSON.parse(decode);
+                    localStorage.setItem("rToken", json.rToken);
+                    localStorage.setItem("from", json.from);
+                    localStorage.setItem("user_id", json.user_id);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/getTempToken", false);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify({
+                        from: json.from,
+                        rToken: json.rToken,
+                        user_id: json.user_id
+                    }));
+                    var token = xhr.responseText;
+                    sessionStorage.setItem("token", token);
+                    location.href = "/app";
+                }catch{
+                    dataXor = null;
+                    socket.disconnect();
+                    setTimeout(() => {
+                        socket.connect();
+                    }, 100);
+                    document.getElementById("qrcode-e").style.display = "none";
+                    alert("Błędny kod");
+                }
+            }
+
+            function changeCodeStatus(){
+                var ele = document.getElementById("qrcode-div").style;
+                if(ele.display == "block") ele.display = "none";
+                else ele.display = "block";
+            }
+
+        </script>
+    </body>
+</html>

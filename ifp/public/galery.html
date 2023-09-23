@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">IFP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="IFP - Infinite Fusion Project">
+		<meta name="keywords" content="ifp, IFP, Infinite Fusion Project">
+        <link href="/favicon.ico" rel="shortcut icon">
+        <link href="/lib/wwli.min.css" rel="stylesheet">
+        <link href="/style.css" rel="stylesheet">
+        <style>
+            #galery{
+                text-align: left;
+                font-size: 1.2rem;
+                position: relative;
+            }
+            ul{
+                list-style-type: circle;
+            }
+            li{
+                margin-left: 1rem;
+                cursor: pointer;
+            }
+            #galery div{
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="/lib/wwli.js"></script>
+        <div id="app">
+            <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
+            <div id="navs"></div>
+            <script>__.menuBuildUrl();</script>
+            
+            <h1>Galeria obrazów z IFP</h1>
+            <div id="galery" class="s_11 m_10 l_10 mar">
+                <div class="s_6 m_6 l_6" style="left: 0">
+                    Lista plików:
+                    <ul id="list"></ul>
+                </div>
+                <div class="s_6 m_6 l_6" style="right: 0;">
+                    <img id="mg">
+                </div>
+            </div>
+            <script>
+                var galery = __("#galery");
+                var m = "img/"
+                var fileList = [
+                    "",
+                    "favicon.ico",
+                    "favicon.png",
+                    m+"logo.svg",
+                    "favicon256.png",
+                    m+"logo-wd-red-256.svg",
+                ];
+                var list = __("#list");
+                var mg = __("#mg");
+                fileList.forEach(f => {
+                    var li = document.createElement("li");
+                    li.innerHTML = f;
+                    li.addEventListener("click", () => {
+                        mg.css("src", f)
+                        mg.css("title", f)
+                    });
+                    list.add(li);
+                })
+            </script>
+        </div>
+    </body>
+</html>

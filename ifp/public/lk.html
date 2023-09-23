@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">ifp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        <script src="/lib/wwli.js"></script>
+        <script src="js/socket.io.min.js"></script>
+        <script>
+            function exit(){
+                location.href = "/login";
+            }
+
+            var param = new URLSearchParams(location.search);
+            param = param.get("k");
+            if(!param) exit();
+
+            var data = {
+                rToken: localStorage.getItem("rToken"),
+                user_id: localStorage.getItem("user_id"),
+                from: localStorage.getItem("from")
+            }
+
+            if(!data.rToken || !data.user_id || !data.from) exit();
+            var json = JSON.stringify(data);
+            var key = data.user_id[0]+""+data.user_id[data.user_id.length-1]+"";
+            var dec = xorEncrypt(json, key);
+
+            var socket = io("/qr_code");
+            socket.connect();
+            socket.on("connect", () => {
+                socket.emit("send", dec, param);
+                setTimeout(() => {
+                    location.href = "/app";
+                }, 1000);
+            });
+
+            function xorEncrypt(message, key){
+                var encryptedMessage = '';
+                for(var i = 0; i < message.length; i++){
+                    var charCode = message.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+                    encryptedMessage += String.fromCharCode(charCode);
+                }
+                return encryptedMessage;
+            }
+        </script>
+    </body>
+</html>

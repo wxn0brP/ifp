@@ -1,0 +1,73 @@
+#msg{
+    overflow: auto;
+    height: calc(100vh - 62px);
+    padding: 15px;
+    width: calc(100vw - 290px);
+}
+
+.mess{
+    width: 100%;
+    min-height: 1.2rem;
+    height: auto;
+    text-align: left;
+    border-radius: 2rem;
+    padding-left: 1rem;
+    position: relative;
+    font-size: 1.05rem;
+}
+
+.mess:hover, .menu-pod{
+    background-color: var(--messHover);
+}
+
+.menu-visible{
+    display: block;
+}
+
+.editMess, .editMessB{
+    border-radius: 1rem;
+    background-color: var(--back);
+    color: var(--txt);
+    border: 1px solid var(--border);
+}
+
+.editMess{
+    width: 70%;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.editMessB{
+    padding: 7px;
+    margin-left: 5px;
+}
+
+#messagess{
+    width: 100% - 290px;
+}
+
+.res-msg{
+    position: absolute;
+    left: 4rem;
+    bottom: 1rem;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+.res-msg-mess{
+    margin-top: 1rem;
+}
+
+.res-msg-anim{
+    animation: res-msg-anims 1s;
+}
+
+.inviteChatBtn{
+    border: 0;
+    padding: 5px;
+    color: #11b511;
+    background-color: var(--menu);
+    border-radius: 5px;
+    margin-top: 5px;
+    
+}

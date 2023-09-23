@@ -1,0 +1,56 @@
+#send{
+    height: 60px;
+}
+
+#send #send-menu{
+    width: 98%;
+    height: 40px;
+    background-color: var(--inp);
+    border-radius: 1rem;
+    color: var(--txt);
+    position: relative;
+}
+
+#send input, #send button, #send #send-menu-data{
+    position: absolute;
+    top: 0;
+    height: 40px;
+    border: none;
+    color: var(--txt);
+    background-color: var(--inp);
+}
+
+#send input{
+    left: 1.1rem;
+    width: calc(100% - 9.5rem);
+    padding: 0;
+}
+
+#send input:focus{
+    outline: none;
+}
+
+#send #send-menu-data{
+    right: 3.1rem;
+    width: 5rem;
+    display: flex;
+    align-items: center;
+}
+
+#send button{
+    right: 1.1rem;
+    width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#sendBtn-img{
+    width: 60%;
+    aspect-ratio: 1/1;
+    --fil: grey;
+}
+
+#sendBtn-img path{
+    fill: var(--fil);
+}

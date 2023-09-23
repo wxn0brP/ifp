@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">IFP - Regulamin</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="IFP - Infinite Fusion Project">
+		<meta name="keywords" content="ifp, IFP, Infinite Fusion Project">
+        <link href="/favicon.ico" rel="shortcut icon">
+        <link href="/lib/wwli-res.css" rel="stylesheet">
+        <link href="/lib/wwli-nav.css" rel="stylesheet">
+        <link href="/lib/wwli-class.css" rel="stylesheet">
+        <link href="/style.css" rel="stylesheet">
+        <style>
+            .app{
+                text-align: left;
+            }
+            h2{
+                margin-left: 7px;
+            }
+            h3{
+                margin-left: 13px;
+                margin-top: 10px;
+            }
+            ul{
+                list-style-type: square;
+                padding-left: 40px;
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app s m_8 l_7 mar">
+            <h1>Licencje Infinite Fusion Project:</h1>
+            <br />
+            <h2>Front End:</h2>
+
+            <h3>Czcionki:</h3>
+            <ul>
+                <li><a href="https://fonts.google.com/specimen/Ubuntu/about" target="_blank">Ubuntu</a></li>
+            </ul>
+
+            <h3>Biblioteki:</h3>
+            <ul>
+                <li><a href="https://davidshimjs.github.io/qrcodejs" target="_blank">QRCode.js</a></li>
+                <li><a href="https://hammerjs.github.io/" target="_blank">hammer.js</a></li>
+                <li><a href="https://confettijs.org/" target="_blank">confetti</a></li>
+                <li><a href="https://cryptojs.gitbook.io/docs/" target="_blank">crypto-js</a></li>
+            </ul>
+
+
+            <br />
+            <br />
+            <h2>Back End:</h2>
+
+            <h3>Serwer:</h3>
+            <ul class="npm">
+                <li>body-parser ^1.20.2</li>
+                <li>cookie-parser ^1.4.6</li>
+                <li>crc ^4.3.2</li>
+                <li>dotenv ^16.0.3</li>
+                <li>express ^4.18.2</li>
+                <li>nodemailer ^6.9.1</li>
+                <li>qrcode-terminal ^0.12.0</li>
+                <li>readline ^1.3.0</li>
+                <li>socket.io ^4.6.1</li>
+                <li>whirlpool-hash ^1.1.6</li>
+                <li>yaml ^2.3.1</li>
+            </ul>
+
+            <h3>Aplikacja desktop:</h3>
+            <ul class="npm">
+                <li>electron ^25.1.0</li>
+                <li>axios ^1.4.0</li>
+                <li>electron-notifications ^1.0.0</li>
+            </ul>
+
+            <h3>Aplikacja Android:</h3>
+            <ul class="npm">
+                <li>androidjs ^2.0.2</li>
+            </ul>
+            <br /><br /><br />
+        </div>
+        <div class="s m_6 l_6 mar" style="margin-bottom: 10rem;">
+            <a href="/" id="prev">POWRÓT</a>
+        </div>
+        <script>
+            var urlParam = new URLSearchParams(location.search);
+            urlParam = urlParam.get("next");
+            if(urlParam){
+                var next = window.location.protocol + "//" + window.location.host;
+                if(!urlParam.startsWith("/")) urlParam = "/" + urlParam;
+                next += urlParam;
+                document.getElementById("prev").setAttribute("href", next);
+            }
+        </script>
+        <script>
+            var lo = console.log;
+            [...document.querySelectorAll(".npm li")].forEach(npm => {
+                var link = npm.innerHTML.split(" ")[0];
+                var a = document.createElement("a");
+                a.innerHTML = npm.innerHTML;
+                a.href = "https://www.npmjs.com/package/"+link;
+                a.target = "_blank";
+                npm.innerHTML = "";
+                npm.appendChild(a);
+            })
+        </script>
+    </body>
+</html>

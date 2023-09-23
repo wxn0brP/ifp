@@ -1,0 +1,190 @@
+#mobileMenuToogler{
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    font-size: 1.7rem;
+    background-color: transparent;
+    color: white;
+    border: 0;
+    z-index: 5;
+}
+
+#alertLink{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    border-radius: 2rem;
+    background-color: var(--panel);
+    border: 1px solid var(--border);
+}
+
+#alertLink button{
+    width: 48%;
+    height: 2.3rem;
+    background-color: var(--back);
+    color: var(--txt);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+}
+
+#alertServerAction{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    border-radius: 2rem;
+    background-color: var(--panel);
+    border: 1px solid var(--border);
+}
+
+#alertServerAction button{
+    width: 80%;
+    height: 2.3rem;
+    color: var(--txt);
+    background-color: var(--panel);
+    border: none;
+    margin: 2px;
+}
+
+#alertServerAction button:hover{
+    background-color: var(--menu);
+    border-radius: 5px;
+}
+
+#addChat{
+    font-size: 2rem;
+    position: relative;
+}
+
+#addChat::before,
+#addChat::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #0ba60b;
+    transform: translate(-50%, -50%);
+    border-radius: 4px;
+}
+
+#addChat::before{
+    width: 50%;
+    height: 4px;
+}
+
+#addChat::after{
+    width: 4px;
+    height: 50%;
+}
+
+#errMesses div{
+    position: absolute;
+    max-width: 70%;
+    top: -10rem;
+    left: 50%;
+    transition: .7s;
+    font-size: 1.6rem;
+    border-radius: 1rem;
+    letter-spacing: 2px;
+    padding: 5px 10px;
+    transform: translateX(-50%);
+    z-index: 99;
+}
+
+#loadingScreen{
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 90;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    cursor: progress;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    animation: animacja-load 3s;
+    background-color: var(--back);
+}
+
+#ifp-wilk{
+    width: 256px;
+    height: 256px;
+}
+
+#ifp-wilk path{
+    fill: red;
+}
+
+#ifp-duck{
+    width: 64px;
+    height: 64px;
+}
+
+#ifp-duck path{
+    fill: green;
+}
+
+#callMedia{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: var(--menu);
+    cursor: grab;
+    text-align: left;
+}
+
+#callMedia button{
+    background-color: var(--back);
+    color: var(--txt);
+    border: var(--border);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+#settingsDiv{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--back);
+}
+
+#settingsDivBtn{
+    position: absolute;
+    aspect-ratio: 1/1;
+    top: 5px;
+    left: 5px;
+    padding: 10px;
+    border-radius: 100%;
+    color: var(--txt);
+    background-color: var(--menu);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#settingsDivC{
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: left;
+}
+
+#settingsDivC>div{
+    margin: 1rem 0;
+}
+
+.settings-btn{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--menu);
+    color: var(--txt);
+    margin: 5px;
+}

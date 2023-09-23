@@ -1,0 +1,23 @@
+@keyframes animacja-load{
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+@keyframes res-msg-anims{
+    0%, 100%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.4);
+        background-color: grey;
+        padding: 5px;
+        border-radius: 5px;
+    }
+}

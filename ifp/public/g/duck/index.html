@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">IFP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="IFP - Infinite Fusion Project">
+		<meta name="keywords" content="ifp, IFP, Infinite Fusion Project">
+        <link href="/favicon.ico" rel="shortcut icon">
+        <link href="/lib/wwli-res.css" rel="stylesheet">
+        <link href="/lib/wwli-class.css" rel="stylesheet">
+        <link href="/style.css" rel="stylesheet">
+
+        <style>
+            :root{
+                --t: 70px;
+            }
+            #game-container {
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .duck{
+                position: absolute;
+                width: var(--t);
+                height: var(--t);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                cursor: pointer;
+                z-index: 5;
+                transition: 0.5s;
+            }
+
+            #strzelba{
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                background-color: red;
+                border: 2px solid white;
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+            }
+
+            #score{
+                position: absolute;
+                top: 5px;
+                left: 50%;
+                z-index: 6;
+                font-size: 1.1rem;
+            }
+
+            .nonsel{
+                user-select: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript> 
+            <div id="game-container">
+                <div id="score" class="nonsel"></div>
+                <img class="duck nonsel" src="duck.svg" />
+                <img class="duck nonsel" src="duck.svg" />
+                <img class="duck nonsel" src="duck.svg" />
+                <img class="duck nonsel" src="duck.svg" />
+                <img class="duck nonsel" src="duck.svg" />
+                <img class="duck nonsel" src="duck.svg" />
+                <div id="strzelba"></div>
+            </div>
+            <span id="confetti"></span>
+        </div>
+        <script src="/lib/wwli.js"></script>
+        <script src="/js/confetti.min.js"></script>
+        <script>
+            var confetti = new Confetti("confetti");
+            confetti.setCount(70);
+            confetti.setSize(1);
+            confetti.setPower(5);
+            confetti.setFade(true);
+            confetti.destroyTarget(false);
+
+            function emulateDuckClick(x=window.innerWidth / 2, y=window.innerHeight / 2){
+                var clickEvent = new MouseEvent("click", {
+                    view: window, bubbles: true, cancelable: true,
+                    clientX: x, clientY: y,
+                });
+                document.getElementById("confetti").dispatchEvent(clickEvent);
+            }
+        </script>
+        <script src="duck.js"></script>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<div id="alertLink" style="display: none;" class="s m_7 l_5">
+    <br />
+    <h1>
+        Czy na pewno chcesz pójść pod ten link: <br />
+        <span id="alertLinkSpan"></span>
+    </h1>
+    <br />
+    <button id="alertLink_ok">TAK</button>
+    <button onclick="hideLink()">Anuluj</button>
+    <br /><br />
+</div>
+
+<div id="alertServerAction" style="display: none;" class="s m_7 l_5">
+    <br />
+    <button onclick="createChat()">Chce stowrzyć czat +</button>
+    <button onclick="inivteAchat()">Chce dołączyć do czatu -></button>
+    <button onclick="document.querySelector('#alertServerAction').css('display: none;')">Anuluj</button>
+    <br /><br />
+</div>
+
+<div id="errMesses"></div>
+
+<div id="callMedia" style="display: none;">
+    <p>Połączenie trwa...</p>
+    <button onclick="callEnd()">End</button>
+    <br />
+    <button id="togleMic" onclick="togleMic()">Mic = wył</button>
+    <br /><br />
+    <div id="callContener" style="display: none;"></div>
+</div>
+
+<div id="settingsDiv" style="display: none;">
+    <button id="settingsDivBtn" onclick="closeSettings()">X</button>
+    <div id="settingsDivC" class="s m_8 l_8"></div>
+</div>

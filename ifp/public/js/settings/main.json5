@@ -1,0 +1,18 @@
+[
+    {
+        name: "głośność powiadomień",
+        type: "slider",
+    },
+    {
+        name: "typ powiadomienia",
+        type: "list",
+        options: [
+            "Dźwięk",
+            "Lektor"
+        ]
+    },
+    {
+        name: "radio",
+        type: "button"
+    }
+]

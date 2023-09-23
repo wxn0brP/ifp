@@ -1,0 +1,26 @@
+@media screen and (max-width: 850px){
+    #msg{
+        padding-top: 36px;
+        height: calc(100vh - 125px); /*  -125px = keyboard */
+        width: 100vw;
+    }
+
+    #menu{
+        position: absolute;
+        transition: 1s;
+        padding-top: 2.6rem;
+        margin-top: -2.6rem;
+        z-index: 6;
+    }
+
+    .servery{
+        padding-top: 2.6rem;
+    }
+
+    #emocjiMenu{
+        width: 100%;
+        height: 50vh;
+        left: 0;
+        bottom: 0;
+    }
+}

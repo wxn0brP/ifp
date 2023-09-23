@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            *{
+                margin: 0;
+                border: 0;
+                padding: 0;
+            }
+            .t{
+                width: calc(100vw - 10px);
+                height: calc(100vh - 5px);
+            }
+            body{
+                background-color: #161a1e;
+                width: calc(100vw - 10px);
+                height: calc(100vh - 5px);
+            }
+        </style>
+        <script>
+            function sendToBack(m, js=false){
+                if(js) m = JSON.stringify(m);
+                window.electronAPI.send(m);
+            }
+            function crateIframe(l, v){
+                var body = document.body;
+                var iframe = document.createElement("iframe");
+                iframe.classList.add("t");
+                iframe.src = l+"app";
+                body.appendChild(iframe);
+
+                window.addEventListener('message', event => {
+                    var data = event.data;
+                    switch(data.type){
+                        case "sendNotif":
+                            if(localStorage.getItem("notif") == "false") return;
+                            window.electronAPI.send(data);
+                        break;
+                        case "zezwolNaNotif":
+                            var conf = confirm("Czy chcesz otrzymywać powiadomienia na pulpicie?");
+                            localStorage.setItem("notif", conf);
+                        break;
+                        default:
+                            window.electronAPI.send(data);
+                        break;
+                    }
+                });
+            }
+            function fromBack(data){
+                data = JSON.parse(data);
+                if(data.type == "test"){
+                    alert(data.msg)
+                }
+            }
+            function test(){}
+            test();
+        </script>
+    </head>
+    <body>
+        <span id="switch" onclick="fromBack(this.innerHTML)" style="display: none;"></span>
+    </body>
+</html>

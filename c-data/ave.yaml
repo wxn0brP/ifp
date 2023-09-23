@@ -1,0 +1,9 @@
+d:
+  - i: hej
+    o: Cześć
+    
+  - i: witaj
+    o: Witaj!
+
+  - i: cześć
+    o: Cześć :)

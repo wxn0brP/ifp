@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /reset/
+Disallow: /reset-kod/
+Disallow: /regiser-kod/
+Sitemap: https://ifp.projektares.tk/sitemap.xml

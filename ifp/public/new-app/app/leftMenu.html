@@ -1,0 +1,235 @@
+<div class="left" id="menu">
+    <div class="left servery" id="servery">
+        <button onclick="changeTo('main');" id="goMain">
+            <img src="/favicon.ico" alt="MAIN" style="width: 80%; margin-top: 5px;">
+        </button>
+        <button onclick="document.querySelector('#alertServerAction').css('display: block;')" id="addChat"></button>
+        <hr style="margin: 3px 5px;">
+        <span id="serverList"></span>
+    </div>
+    <div class="left" id="friends">
+        <div id="friends-main">
+            <button onclick="logout()">WYLOGUJ SIĘ 🔚</button><br />
+            <pc><button onclick="zezwolNaNotif()">Powiadomienia 🔔</button><br /></pc>
+            <button onclick="addFriends()">Dodaj Znajomego 🤝</button>
+            <button onclick="settingsChange('main')">Ustawienia ⚙️</button>
+            <button onclick="kodLog()">Kod logowania 🔐</button>
+            <button onclick="callTo()" id="callToBtn">Zadzwoń do... ☎️</button>
+            <hr style="margin-top: 11px; margin-bottom: 7px;">
+            <span id="friendsList"></span>
+            <br /><br />
+            <span id="err" style="color: var(--txt);"></span>
+            <br /><br />
+            <span id="invites"></span>
+        </div>
+        <div id="friends-server">
+            <br />
+            <h2 id="serverName"></h2>
+            <br /><hr><br />
+        </div>
+    </div>
+</div>
+
+<script>
+function kodLog(){
+    var id = localStorage.getItem("user_id");
+    alert("Kod logowania: "+id[0]+id[id.length-1]+"");
+}
+
+function copyMess(){
+    let id = document.getElementById('messMenu').getAttribute('w_id');
+    const messageDiv = document.getElementById(id + "_");
+    const messageContent = messageDiv.getAttribute("_plain");
+    navigator.clipboard.writeText(messageContent);
+}
+
+function editMess(){
+    let id = document.getElementById('messMenu').getAttribute('w_id');
+    const messageDiv = document.getElementById(id + "_mess");
+    const messageContent = messageDiv.getAttribute("_plain");
+    messageDiv.innerHTML = `<input type="text" class="editMess" id="editMessageInput${id}" value="${messageContent}">`;
+    messageDiv.insertAdjacentHTML('beforeend', `<button class="editMessB" id="confirmButton${id}">Zatwierdź</button>`);
+    const editMessageInput = document.getElementById(`editMessageInput${id}`);
+    const confirmButton = document.getElementById(`confirmButton${id}`);
+    confirmButton.addEventListener("click", () => handleEditEnd(id, messageContent));
+    editMessageInput.addEventListener("keydown", (event) => {
+        if(event.key !== "Enter") return;
+        event.preventDefault();
+        handleEditEnd(id, messageContent);
+    });
+    editMessageInput.focus();
+    editMessageInput.setSelectionRange(editMessageInput.value.length, editMessageInput.value.length);
+}
+
+function handleEditEnd(id, messageContent){
+    const editedMessage = document.getElementById(`editMessageInput${id}`).value;
+    const messageDiv = document.getElementById(id + "_mess");
+    if(editedMessage != messageContent){
+        // messageDiv.innerHTML = editedMessage;
+        socket.emit("editMess", toChat, id, editedMessage);
+    }else{
+        messageDiv.innerHTML = formatText(messageContent);
+    }
+    focusInp();
+}
+
+function delMess(){
+    if(!confirm("Napewno chcesz usunąć wiadomość? Tej operacji nie można cofnąć")) return;
+    let id = document.getElementById('messMenu').getAttribute('w_id');
+    socket.emit("delMess", toChat, id);
+}
+
+function responeMsgE(){
+    resMsgId = document.querySelector("#messMenu").atrib("w_id");
+    document.querySelector("#resMsgX").css("");
+}
+
+function sendFile(){
+    var input = document.createElement("input");
+    input.type = "file";
+    input.click();
+
+    input.addEventListener("change", function(event) {
+        var file = event.target.files[0];
+        if(file.size > 8 * 1024 * 1024){
+            alert('File size exceeds 8MB limit.');
+            return;
+        }
+        if(file.name > 40){
+            alert('File name exceeds 40 char limit.');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const fileData = {
+                name: file.name,
+                size: file.size,
+                data: event.target.result
+            };
+            socket.emit('file', { fileData });
+        };
+
+        reader.readAsArrayBuffer(file);
+    });
+}
+
+function copyInvite(){
+    let id = document.getElementById("serverMenu").getAttribute("w_id");
+    socket.emit("getInivteFromId", id);
+}
+
+function createChat(){
+    var name = (prompt("Jak ma nazywać się serwer?") || "").trim();
+    if(!name || name == "") return uiMsg("Podaj nazwę", 2);
+    socket.emit("createChat", name);
+    setTimeout(() => socket.emit("getChats"), 1000);
+    __('#alertServerAction').css('display: none;')
+}
+
+function inivteAchat(id=null){
+    if(!id){
+        var idP = "000000-000000-000000";
+        var txt = "Podaj id zaprosznia:\n"+
+        "Przykładowa formaty to:\n"+
+        `- ${idP}\n`+
+        `- ${location.host}/ic?id=${idP}\n`+
+        `- ${location.protocol}//${location.host}/ic?id=${idP}`;
+        id = (prompt(txt) || "").trim();
+    }
+    if(!id || id == "") return uiMsg("Podaj id", 2);
+
+    var match = id.match(/(\w+-\w+-\w+)/);
+    if(!match){
+        __('#alertServerAction').css('display: none;')
+        uiMsg("Podaj poprawne zaproszenie", 2);
+    }
+    id = match[1];
+
+    lo(id)
+    socket.emit("inviteChat", id);
+    setTimeout(() => socket.emit("getChats"), 500);
+    __('#alertServerAction').css('display: none;')
+}
+
+function addInviteToUi(invite){
+    const inviteDiv = document.createElement("div");
+    
+    const fromLabel = document.createElement("label");
+    fromLabel.textContent = `From: ${changeIdToName(invite.from)}`;
+    inviteDiv.appendChild(fromLabel);
+    
+    const acceptBtn = document.createElement("button");
+    acceptBtn.textContent = "Accept";
+    acceptBtn.addEventListener("click", () => {
+        socket.emit("inviteAccept", invite._id);
+        __("#invites").g().removeChild(inviteDiv);
+        setTimeout(() => {
+            socket.emit("friends");
+        }, 2000);
+    });
+    inviteDiv.appendChild(acceptBtn);
+    
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Delete";
+    delBtn.addEventListener("click", () => {
+        socket.emit("inviteDelice", invite._id);
+        __("#invites").g().removeChild(inviteDiv)
+    });
+    inviteDiv.appendChild(delBtn);
+    
+    __("#invites").add(inviteDiv);
+}
+
+function addFriends(){
+    var inp = prompt("Podaj nazwę swojego przyjaciela: ");
+    if(!inp) return uiMsg("musisz podać user", 1);
+    
+    inp = inp.trim();
+    if(inp == "") return uiMsg("musisz podać user", 1);
+    
+    if(inp == fr){
+        return uiMsg("nie możesz wysłać zaproszenia do siebie", 1);
+    }
+
+    var res = JSON.parse(__.httpReq("userName?user="+inp));
+    if(res.err){
+        return uiMsg(res.msg, 1);
+    }
+    var id = res.msg;
+    if(changeIdToName(id) == fr){
+        return uiMsg("nie możesz wysłać zaproszenia do siebie", 1);
+    }
+
+    socket.emit("invite", id);
+    clearErrMess();
+}
+
+function deleteFriends(){
+    if(!confirm("Ta operacja spowoduje usunięcie **"+changeIdToName(to)+"** z listy przyjaciół!!!")) return;
+    if(!confirm("Napewno?")) return;
+    if(!confirm("Napewno? (double click)")) return;
+    socket.emit("deleteFriends", to);
+    changeTo("main");
+    setTimeout(() => socket.emit("getStatus"), 1000);
+}
+
+function exitChat(){
+    if(!confirm("Ta operacja spowoduje opuszczenie czatu!")) return;
+    if(!confirm("Napewno?")) return;
+    var id = __("#serverMenu").atrib("w_id");
+    socket.emit("exitChat", id);
+    changeTo("main");
+    setTimeout(() => socket.emit("getChats"), 1000);
+}
+
+function logout(){
+    if(!confirm("Napewno?")) return;
+    socket.emit("logout");
+    localStorage.removeItem("from");
+    localStorage.removeItem("user_id");
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("rToken");
+    localStorage.removeItem("session");
+    location.href = "/login";
+}
+</script>

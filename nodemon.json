@@ -1,0 +1,11 @@
+{
+    "ignore": [
+        "./ifp/*",
+        "./ifp-app/*",
+        "./media/*",
+        "./uploads/*"
+    ],
+    "events": {
+        "restart": "cls"
+    }
+}

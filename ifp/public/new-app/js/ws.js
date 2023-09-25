@@ -14,7 +14,7 @@ function setUpSocket(){
 }
 
 socket.on("connect", () => {
-    uiMsg("conn")
+    debugMsg("conn")
     socket.emit("getChats");
     socket.emit("invites");
     socket.emit("friends");
@@ -108,9 +108,9 @@ socket.on("friends", (g) => {
     }, 10 * 1000);
 });
 
-// socket.on("exitChat", () => {
-//     socket.emit("getChats");
-// })
+socket.on("exitChat", () => {
+    socket.emit("getChats");
+})
 
 socket.on("getChats", (g) => {
     var serverList = document.querySelector("#serverList");
@@ -141,34 +141,34 @@ socket.on("getChats", (g) => {
     })
 });
 
-// socket.on("inviteAccept", function(inviteId){
-//     socket.emit("friends");
-//     sendNotif({ title: "Zaproszenie", body: "Zaproszeno zaakceptowane od "+changeIdToName(inviteId)+"!" });
-// });
+socket.on("inviteAccept", function(inviteId){
+    socket.emit("friends");
+    sendNotif({ title: "Zaproszenie", body: "Zaproszeno zaakceptowane od "+changeIdToName(inviteId)+"!" });
+});
 
-// socket.on("inviteDelice", function(inviteId){
-//     socket.emit("friends");
-//     sendNotif({ title: "Zaproszenie", body: "Zaproszeno odrzucone od "+changeIdToName(inviteId)+"!" });
-// });
+socket.on("inviteDelice", function(inviteId){
+    socket.emit("friends");
+    sendNotif({ title: "Zaproszenie", body: "Zaproszeno odrzucone od "+changeIdToName(inviteId)+"!" });
+});
 
-// socket.on("deleteFriends", () => {
-//     socket.emit("friends");
-// });
+socket.on("deleteFriends", () => {
+    socket.emit("friends");
+});
 
-// socket.on("invite", function(invite){
-//     addInviteToUi(invite);
-// });
+socket.on("invite", function(invite){
+    addInviteToUi(invite);
+});
 
-// socket.on("invites", (invites) => {
-//     if(!invites) return;
-//     alert("masz "+invites.length+" zaproszeń");
-//     __("#invites").html("")
-//     invites.forEach((invite) => addInviteToUi(invite));
-// });
+socket.on("invites", (invites) => {
+    if(!invites) return;
+    alert("masz "+invites.length+" zaproszeń");
+    document.querySelector("#invites").html("")
+    invites.forEach((invite) => addInviteToUi(invite));
+});
 
-// socket.on("invite", () => {
-//     uiMsg("Wysłano zaprosznie");
-// });
+socket.on("invite", () => {
+    uiMsg("Wysłano zaprosznie");
+});
 
 // socket.on("getUserStatus", (data) => {
 //     __("#f-"+data.id).html(data.data ? "✅" : "❌");
@@ -188,51 +188,51 @@ socket.on("delMess", (id) => {
     messageDiv.remove();   
 });
 
-// socket.on("type", (server, from) => {
-//     if(server == to && from != fr_id){
-//         var ele = document.createElement("span");
-//         ele.innerHTML = " " + changeIdToName(from) + " pisze... ";
-//         __("#pisze").add(ele);
-//         setTimeout(() => {
-//             ele.remove();
-//         }, 5000)
-//     }
-// });
+socket.on("type", (server, from) => {
+    if(server == to && from != fr_id){
+        var ele = document.createElement("span");
+        ele.innerHTML = " " + changeIdToName(from) + " pisze... ";
+        document.querySelector("#pisze").add(ele);
+        setTimeout(() => {
+            ele.remove();
+        }, 5000)
+    }
+});
 
-// socket.on("getInivteFromId", id => {
-//     var txt = location.protocol + "//" + location.host + "/ic?id=" + id;
-//     navigator.clipboard.writeText(txt);
-// });
+socket.on("getInivteFromId", id => {
+    var txt = location.protocol + "//" + location.host + "/ic?id=" + id;
+    navigator.clipboard.writeText(txt);
+});
 
-// socket.on("fileRes", res => {
-//     if(res.err) return alert("error file send");
-//     var link = location.origin + "/" + res.msg;
-//     if(to == "main") return;
-//     var data = {
-//         from: fr, to, channel: "main",
-//         msg: link
-//     }
-//     socket.emit("mess", data)
-// });
+socket.on("fileRes", res => {
+    if(res.err) return alert("error file send");
+    var link = location.origin + "/" + res.msg;
+    if(to == "main") return;
+    var data = {
+        from: fr, to, channel: "main",
+        msg: link
+    }
+    socket.emit("mess", data)
+});
 
-// socket.on("callRes", (res) => {
-//     if(!res) return alert("Osoba nie odbiera");
-//     __("#callMedia").style("");
-//     callInit();
-//     uiMsg("Osoba odebrała");
-// });
+socket.on("callRes", (res) => {
+    if(!res) return alert("Osoba nie odbiera");
+    document.querySelector("#callMedia").css("");
+    callInit();
+    uiMsg("Osoba odebrała");
+});
 
-// socket.on("callTo", (id) => {
-//     endCallID = id;
-//     var p = confirm(changeIdToName(id) + " dzwoni do cb? Czy odebrać?");
-//     socket.emit("callRes", id, p);
-//     if(!p) return;
-//     callInit();
-//     setTimeout(() => {
-//         __("#callMedia").style("");
-//     }, 1000);
-//     setTimeout(() => {
-//         callApi.call(id);
-//     }, 3000); //wait to 2 os init
-// });
+socket.on("callTo", (id) => {
+    endCallID = id;
+    var p = confirm(changeIdToName(id) + " dzwoni do cb? Czy odebrać?");
+    socket.emit("callRes", id, p);
+    if(!p) return;
+    callInit();
+    setTimeout(() => {
+        document.querySelector("#callMedia").css("");
+    }, 1000);
+    setTimeout(() => {
+        callApi.call(id);
+    }, 3000); //wait to 2 os init
+});
 

@@ -45,9 +45,10 @@ function uiMsg(data, type=0){
     uiMessage(data, color, time * 1000);
 }
 
-function debugMsg(data){
+function debugMsg(data, i=false){
     // if(!config.debug) return;
-    uiMsg(data.toString(), 1);
+    if(i) uiMsg(data.toString(), 2);
+    lo(data)
 }
 
 function movableDiv(movableDiv, margin=3){
@@ -144,7 +145,7 @@ function readText(obj){
         let id = document.getElementById('messMenu').getAttribute('w_id');
         let d = document.querySelector(`div[_id="${id}"]`);
         if(!d) return;
-        text = d.children[0].innerHTML + " powiedział ";
+        text = d.children[0].innerHTML.replace("<b>","").replace("</b>","") + " powiedział ";
         text += d.children[1].getAttribute("_plain");
     }
     if(!text) return;

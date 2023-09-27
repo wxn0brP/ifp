@@ -40,8 +40,8 @@ function loadApis(){
 
     script.src = "/devices/"+path+".js";
     script.onload = function(){
-        debugMsg("load api: "+path)
+        debugMsg("load api: "+path);
+        setUpSocket();
     }
     document.body.appendChild(script);
 }
-loadApis();

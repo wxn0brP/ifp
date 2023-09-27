@@ -6,15 +6,12 @@
                 margin: 0;
                 border: 0;
                 padding: 0;
+                box-sizing: border-box;
+                overflow: hidden;
             }
-            .t{
-                width: calc(100vw - 10px);
-                height: calc(100vh - 5px);
-            }
-            body{
-                background-color: #161a1e;
-                width: calc(100vw - 10px);
-                height: calc(100vh - 5px);
+            iframe, body{
+                width: 100vw;
+                height: 100vh;
             }
         </style>
         <script>
@@ -25,8 +22,7 @@
             function crateIframe(l, v){
                 var body = document.body;
                 var iframe = document.createElement("iframe");
-                iframe.classList.add("t");
-                iframe.src = l+"app";
+                iframe.src = l+"new-app";
                 body.appendChild(iframe);
 
                 window.addEventListener('message', event => {

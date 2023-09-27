@@ -5,8 +5,13 @@ const localUser = {
     id: localStorage.getItem("user_id"),
 }
 
+const config = {
+    debug: localStorage.getItem("config.debug") == "true"
+}
+
 const messCount = 50;
 var actMess = 0;
+var isType = false;
 
 const serversId = {};
 const friendsId = {};
@@ -36,3 +41,11 @@ const sounds = {
 }
 var reader = null;
 sounds.init();
+
+const confetti = new Confetti("confetti");
+confetti.setFade(true);
+confetti.destroyTarget(false);
+confetti.setCount(250);
+confetti.setSize(1);
+confetti.setPower(20);
+confetti.maxsiu = false;

@@ -6,6 +6,6 @@
         "./uploads/*"
     ],
     "events": {
-        "restart": "cls"
+        "restart": "clear"
     }
 }

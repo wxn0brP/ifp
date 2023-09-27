@@ -43,3 +43,25 @@ button{
     width: 2px;
     background-color: red;
 }
+
+.mar{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media only screen and (max-width: 850px){
+    mob{
+        display: block;
+    }
+    pc{
+        display: none;
+    }
+}
+@media only screen and (min-width: 850px){
+    mob{
+        display: none;
+    }
+    pc{
+        display: block;
+    }
+}

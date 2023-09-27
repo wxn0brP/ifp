@@ -1,26 +1,54 @@
-function loadHtml(doc=document){
+function loadPart(){
     const parser = new DOMParser();
-    const scriptsArray = [];
-    doc.querySelectorAll("[loadHtml]").forEach(ele => {
-        const text = cw.get(ele.getAttribute("loadHtml"));
+    const paths = [];
+    document.body.querySelectorAll("[loadPart]").forEach(ele => {
+        paths.push(ele.getAttribute("loadPart"));
+        const text = cw.get("app/"+ele.getAttribute("loadPart")+".html");
         const html = parser.parseFromString(text, "text/html");
-        const scripts = html.querySelectorAll("script");
-        scripts.forEach(src => {
-            scriptsArray.push(src);
-            src.remove();
-        });
         const elements = Array.from(html.body.children);
         elements.forEach(e => {
             ele.insertAdjacentElement("afterend", e);
         });
         ele.remove();
     });
-    scriptsArray.forEach(script => {
-        let text = (script.src) ? cw.get(script.src) : script.innerHTML;
-        const src = doc.createElement("script");
-        src.innerHTML = text;
-        doc.body.appendChild(src);
+    paths.forEach(path => {
+        const src = document.createElement("script");
+        src.src = "app/"+path+".js";
+        document.body.appendChild(src);
     });
+    loadJs();
 }
 
-loadHtml();
+async function loadJs(){
+    const srcs = [
+        "js/settingsLib.js",
+        "js/settings.js",
+        "js/vars.js",
+        "js/ws.js",
+        "js/format.js",
+        "js/apis.js",
+        "js/cont-menu.js",
+        "js/func.js",
+        "js/call.js",
+        "js/generateResCss.js",
+        "js/anty.js",
+        "js/warning.js",
+        "js/egg.js",
+        "js/run.js"
+    ];
+    async function load(p){
+        return await new Promise((r) => {
+            const src = document.createElement("script");
+            src.src = p;
+            src.addEventListener("load", () => {
+                r();
+            });
+            document.body.appendChild(src);
+        })
+    }
+    for(let i=0; i<srcs.length; i++){
+        await load(srcs[i]);
+    }
+}
+
+loadPart();

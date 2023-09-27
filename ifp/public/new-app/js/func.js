@@ -46,7 +46,7 @@ function uiMsg(data, type=0){
 }
 
 function debugMsg(data, i=false){
-    // if(!config.debug) return;
+    if(!config.debug) return;
     if(i) uiMsg(data.toString(), 2);
     lo(data)
 }

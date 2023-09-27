@@ -189,7 +189,7 @@ socket.on("delMess", (id) => {
 });
 
 socket.on("type", (server, from) => {
-    if(server == to && from != fr_id){
+    if(server == toChat && from != fr_id){
         var ele = document.createElement("span");
         ele.innerHTML = " " + changeIdToName(from) + " pisze... ";
         document.querySelector("#pisze").add(ele);
@@ -207,9 +207,9 @@ socket.on("getInivteFromId", id => {
 socket.on("fileRes", res => {
     if(res.err) return alert("error file send");
     var link = location.origin + "/" + res.msg;
-    if(to == "main") return;
+    if(toChat == "main") return;
     var data = {
-        from: fr, to, channel: "main",
+        from: localUser.fr, to: toChat, channel: "main",
         msg: link
     }
     socket.emit("mess", data)

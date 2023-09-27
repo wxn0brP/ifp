@@ -83,6 +83,7 @@ io.of("/").on("connection", (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             var { to, msg, channel } = req;
+            if(!to || !msg || !channel) return socket.emit("error", "to & msg & channel is required");
             
             var friendChat = to.startsWith("$");
             if(friendChat){

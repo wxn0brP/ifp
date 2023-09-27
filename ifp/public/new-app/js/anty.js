@@ -47,7 +47,7 @@ _anty.robotsDetector = function(){
     }
 
     return false;
-};
+}
 
 _anty.addBlockerDetector = async function(){
     let adBlockEnabled = false;
@@ -60,4 +60,4 @@ _anty.addBlockerDetector = async function(){
     }
 
     return adBlockEnabled;
-};
+}

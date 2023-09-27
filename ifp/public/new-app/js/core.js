@@ -1,4 +1,5 @@
 var lo = console.log;
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const cw = {};
 
@@ -122,7 +123,7 @@ cw.init = function(){
 cw.init();
 
 
-cw.grid = function(doc=document){
+cw.grid = function(doc=document.body){
     function getSize(className, size){
         const match = className.match(new RegExp(`${size}_(\\d+)`));
         return match ? parseInt(match[0].replace(size+"_","")) : 12;

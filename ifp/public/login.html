@@ -108,6 +108,18 @@
         <script src="js/socket.io.min.js"></script>
         <script src="js/qrcode.min.js"></script>
         <script>
+            function locationNext(){
+                var urlParam = new URLSearchParams(location.search);
+                urlParam = urlParam.get("next");
+                var next = "/app";
+                if(urlParam){
+                    next = window.location.protocol + "//" + window.location.host;
+                    if(!urlParam.startsWith("/")) urlParam = "/" + urlParam;
+                    next += urlParam;
+                }
+                location.href = next;
+            }
+
             function loginW(){
                 var urlParam = new URLSearchParams(location.search);
                 if(urlParam.get("err")) return;
@@ -116,7 +128,7 @@
                     localStorage.getItem("from") &&
                     localStorage.getItem("user_id")
                 ){
-                    location.href = "/app";
+                    locationNext();
                 }
             }
             loginW();
@@ -171,16 +183,7 @@
                     localStorage.setItem("user_id", res.user_id);
                     localStorage.setItem("rToken", res.rToken);
                     sessionStorage.setItem("token", res.token);
-
-                    var urlParam = new URLSearchParams(location.search);
-                    urlParam = urlParam.get("next");
-                    var next = "/app";
-                    if(urlParam){
-                        next = window.location.protocol + "//" + window.location.host;
-                        if(!urlParam.startsWith("/")) urlParam = "/" + urlParam;
-                        next += urlParam;
-                    }
-                    location.href = next;
+                    locationNext();
                 }catch(e){
                     alert("err: "+res);
                 }

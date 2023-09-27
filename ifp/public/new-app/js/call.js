@@ -12,7 +12,7 @@ function callInit(){
 }
 
 function callTo(){
-    if(toChat == "main") return alert("Musisz wejść w czat z daną osobą!");
+    if(!toChat.startsWith("$")) return alert("Musisz wejść w czat z daną osobą!");
     socket.emit("callTo", toChat.replace("$",""));
     endCallID = toChat.replace("$","");
     var callBtn = document.getElementById("callToBtn");

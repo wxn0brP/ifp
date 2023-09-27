@@ -14,7 +14,9 @@ function formatText(text){
             if(!media) continue;
             text += "<br />" + media.innerHTML;
         }
-    }catch{}
+    }catch(e){
+        debugMsg(e)
+    }
 
 
     return text;
@@ -241,7 +243,7 @@ function changeMedia(link){
         pre.style.overflow = "auto";
         
         var code = document.createElement("code");
-        var file = __.httpReq(link);
+        var file = cw.get(link);
         code.innerHTML = hljs.highlight(file, {language}).value;
         if(file.length>500 || file.split("\n").length > 10){
             pre.style.maxHeight = "17rem";
@@ -252,7 +254,7 @@ function changeMedia(link){
         return a;
     }
     else if(link.startsWith('http')){
-        var html = __.httpReq(link);
+        var html = cw.get(link);
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
@@ -261,7 +263,7 @@ function changeMedia(link){
         const descriptionElement = doc.querySelector('head meta[name="description"]');
         const description = descriptionElement ? descriptionElement.getAttribute('content') : false;
 
-        if(favicon || title || description){
+        if(title || description){
             var ele = document.createElement("div");
             ele.classList.add("inter-page");
             var html = "";

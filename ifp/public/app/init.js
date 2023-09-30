@@ -34,6 +34,7 @@ async function loadJs(){
         "js/anty.js",
         "js/warning.js",
         "js/egg.js",
+        "js/encrypt.js",
         "js/run.js"
     ];
     async function load(p){

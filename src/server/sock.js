@@ -1,7 +1,7 @@
 const socket_io = require("socket.io");
 global.io = socket_io(global.server, {
     cors: {
-        origin: ["localhost:1478", "ifp.projektares.tk"],
+        origin: ["localhost:1478", "ifp.projektares.tk", "admin.socket.io"],
     }
 });
 
@@ -20,6 +20,11 @@ var vInne = [
 const { user: usrDB, mess: messDB } = global.db;
 
 io.of("/").use((socket, next) => {
+    function authError(str){
+        const authError = new Error(str);
+        authError.data = 'AuthenticationError';
+        next(authError);
+    }
     if(process.env.normal == "pt"){
         var ne = false;
         var cookie = socket.handshake.headers.cookie;
@@ -33,7 +38,7 @@ io.of("/").use((socket, next) => {
             }
         }
         if(!ne){
-            next(new Error(`{"type":"pt"}`));
+            authError(`pt`);
             return;
         }
     }
@@ -48,24 +53,21 @@ io.of("/").use((socket, next) => {
     if(socket.isUser){
         var { rToken, name } = socket.handshake.query;
         if(!token || !name || !rToken){
-            next(new Error(`{"type":"valid"}`));
-            return;
+            return authError(`valid`);
         }
         var hashBase = global.tokens.veryTemp(token);
         if(!hashBase){
-            next(new Error(`{"type": "token"}`));
-            return;
+            return authError(`token`);
         }
         if(hashBase.user.name != name){
-            next(new Error(`{"type": "token."}`));
-            return;
+            return authError(`token.`);
         }
         // lo(hashBase.name + " logged");
         socket.user = hashBase.user;
         socket.rToken = rToken;
     }else{
         var tokenD = botTest.tokenVery(token);
-        if(!tokenD) return next(new Error(`{"type": "token"}`));
+        if(!tokenD) return authError(`token`);
         socket.user = tokenD.o;
     }
 
@@ -84,6 +86,7 @@ io.of("/").on("connection", (socket) => {
             if(!socket.user) return socket.emit("error", "not auth");
             var { to, msg, channel } = req;
             if(!to || !msg || !channel) return socket.emit("error", "to & msg & channel is required");
+            var encrypt = req.encrypt || "plain";
             
             var friendChat = to.startsWith("$");
             if(friendChat){
@@ -96,25 +99,16 @@ io.of("/").on("connection", (socket) => {
             if(!chat) return socket.emit("error", "chat is not exists - getMess");
             chat = chat.o;
 
-            var silent = false;
-            var resMsg = false;
             var message = msg.trim();
-            if(msg.startsWith("/silent ")){
-                silent = true;
-                message = message.replace("/silent ", "");
-            }
-
-            if(/^\/res (\w+-\w+-\w+)/.test(message)){
-                resMsg = true;
-            }
-
-            if(msg.length > 90 + (resMsg ? 0 : 40)) return socket.emit("error", "msg jest za długie");
+            if(msg.length > 90) return socket.emit("error", "msg jest za długie");
             
             var data = {
                 from: socket.user._id,
                 msg: message,
-                channel
+                channel,
+                encrypt,
             }
+            if(req.res) data.res = req.res;
 
             var _id = await global.db.chat.mess.add(to, data);
 
@@ -122,11 +116,13 @@ io.of("/").on("connection", (socket) => {
             else data.to = "$"+socket.user._id;
             
             data._id = _id._id;
-            if(silent) data.silent = silent;
+            if(req.silent) data.silent = silent;
             sendToSocket(socket.user._id, "mess", {
                 from: socket.user._id,
                 msg: data.msg,
-                channel, _id: _id._id,
+                channel,
+                _id: _id._id,
+                encrypt,
                 to: "@"
             });
             chat.users.forEach(u => {

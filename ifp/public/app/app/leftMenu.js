@@ -35,10 +35,9 @@ function inivteAchat(id=null){
     }
     id = match[1];
 
-    lo(id)
     socket.emit("inviteChat", id);
     setTimeout(() => socket.emit("getChats"), 500);
-    __('#alertServerAction').css('display: none;')
+    document.querySelector('#alertServerAction').css('display: none;')
 }
 
 function addInviteToUi(invite){
@@ -101,15 +100,6 @@ function deleteFriends(){
     socket.emit("deleteFriends", to);
     changeTo("main");
     setTimeout(() => socket.emit("getStatus"), 1000);
-}
-
-function exitChat(){
-    if(!confirm("Ta operacja spowoduje opuszczenie czatu!")) return;
-    if(!confirm("Napewno?")) return;
-    var id = __("#serverMenu").atrib("w_id");
-    socket.emit("exitChat", id);
-    changeTo("main");
-    setTimeout(() => socket.emit("getChats"), 1000);
 }
 
 function logout(){

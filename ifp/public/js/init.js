@@ -14,7 +14,7 @@ setTimeout(() => {
 }, 1000);
 
 (async function(){
-    var robot = _anty.robotsDetecort();
+    var robot = _anty.robotsDetector();
     if(robot) location.href = "/";
 
     var add = await _anty.addBlockerDetector();

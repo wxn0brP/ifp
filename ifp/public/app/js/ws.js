@@ -20,23 +20,28 @@ socket.on("connect", () => {
     socket.emit("friends");
 });
 
-socket.on("config", (data) => {
-    privKey = data;
-});
+// socket.on("config", (data) => {
+//     privKey = data;
+// });
 
 socket.on("connect_error", (err) => {
-    var errMsg = err;
-    try{
-        err = JSON.parse((err+"").replace("Error: ", ""));
-        if(err.type == "token"){
-            sessionStorage.removeItem("token");
-            reNewToken();
-            socket.connect();
-            return;
+    var errMsg = err.message;
+    if(err.data == "AuthenticationError"){
+        sessionStorage.removeItem("token");
+        const rToken = localStorage.getItem("rToken");
+        if(!rToken){
+            location.href = `/login?err=No_Login!${next}`;
+        }else if(!reNewToken(rToken)){
+            location.href = `/login?err=Not_Auth!${next}`;
         }
-        errMsg = err.type.replaceAll(" ", "_")
-    }catch{}
-    location.href = "/login?err=true&error="+errMsg;
+        socket.connect();
+    }else if(err.type == "TransportError"){
+        uiMsg("Błąd serwera! Przepraszamy! :(", 1);
+        debugMsg(errMsg);
+    }else{
+        debugMsg(err.type + " ::: " + errMsg)
+        uiMsg("Nieznany błąd: "+errMsg, 1);
+    }
 });
 
 socket.on("mess", (data) => {

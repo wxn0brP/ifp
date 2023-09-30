@@ -1,23 +1,22 @@
 const token = sessionStorage.getItem("token");
-
 if(!token){
     const next = window.locationNext ? `&next=${locationNext}` : "";
     const rToken = localStorage.getItem("rToken");
 
     if(!rToken){
         location.href = `/login?err=No_Login!${next}`;
-    }else if(!renewToken(rToken)){
+    }else if(!reNewToken(rToken)){
         location.href = `/login?err=Not_Auth!${next}`;
     }
 }
 
-function renewToken(rToken){
+function reNewToken(rToken){
     const xhr1 = new XMLHttpRequest();
     xhr1.open("POST", "/validToken", false);
     xhr1.setRequestHeader('Content-Type', 'application/json');
     xhr1.send(JSON.stringify({ rToken }));
 
-    if(xhr1.responseText === "false")  return false;
+    if(xhr1.responseText === "false") return false;
 
     const from = localStorage.getItem("from");
     const user_id = localStorage.getItem("user_id");

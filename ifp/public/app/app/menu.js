@@ -75,3 +75,12 @@ function sendFile(){
         reader.readAsArrayBuffer(file);
     });
 }
+
+function exitChat(){
+    if(!confirm("Ta operacja spowoduje opuszczenie czatu!")) return;
+    if(!confirm("Napewno?")) return;
+    var id = document.querySelector("#serverMenu").atrib("w_id");
+    socket.emit("exitChat", id);
+    changeTo("main");
+    setTimeout(() => socket.emit("getChats"), 1000);
+}

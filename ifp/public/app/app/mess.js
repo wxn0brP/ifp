@@ -20,7 +20,7 @@ function sendMess(){
     let data = {
         from: localUser.id,
         to: toChat,
-        msg,
+        msg: encryptV.enc(msg),
         channel: "main",
         res: resMsgId ? resMsgId : "",
         silent
@@ -71,7 +71,9 @@ function addMess(msg, socroll=true, up=false){
 }
 
 function sendBtnStyle(){
-    var len = msgInput.value.trim().length;
+    var data = (msgInput.value || "").trim();
+    if(data.startsWith("/silent ")) data = data.replace("/silent ", "");
+    var len = data.length;
     var prop = "";
     if(len == 0) prop = "grey";
     else if(len <= 90) prop = "green";
@@ -120,13 +122,13 @@ function hideLink(){
 
 document.querySelector("#alertLink_ok").on("click", () => {
     hideLink();
-    window.open(document.querySelector("#alertLinkSpan").html(), "_blank");
+    window.open(document.querySelector("#alertLinkSpan").innerHTML, "_blank");
 });
 
 function reloadMsg(time){
     function f(){
         msgDiv.html("");
-        socket.emit("getMessage", to, 0, messCount, false);
+        socket.emit("getMessage", toChat, 0, messCount, false);
     }
     time ? setTimeout(f, time*1000) : f();
 }

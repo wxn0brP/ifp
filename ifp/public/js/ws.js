@@ -50,6 +50,7 @@ socket.on("mess", (data) => {
     if(data.to != "@"){ //sender is author
         if(data.to != to) return;
     }
+    data.msg = encryptV.dec(data.msg);
     dodajMess(data);
 });
 
@@ -64,7 +65,7 @@ socket.on("getMessage", (data) => {
             try{
                 dodajMess({
                     from: mess.from,
-                    msg: mess.msg,
+                    msg: encryptV.dec(mess.msg),
                     _id: mess._id,
                     e: mess.edit ? true : false,
                 }, false, true);

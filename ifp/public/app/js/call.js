@@ -7,6 +7,25 @@ const callApi = {
     micE: false
 };
 
+/*
+const $01f0d223090cb1f8$var$DEFAULT_CONFIG = {
+    iceServers: [
+        {
+            urls: "stun:stun.l.google.com:19302"
+        },
+        {
+            urls: [
+                "turn:eu-0.turn.peerjs.com:3478",
+                "turn:us-0.turn.peerjs.com:3478"
+            ],
+            username: "peerjs",
+            credential: "peerjsp"
+        }
+    ],
+    sdpSemantics: "unified-plan"
+};
+ */
+
 function callInit(){
     callFunc(fr_id);
 }

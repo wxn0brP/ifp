@@ -13,7 +13,7 @@ function createChat(){
     if(!name || name == "") return uiMsg("Podaj nazwę", 2);
     socket.emit("createChat", name);
     setTimeout(() => socket.emit("getChats"), 1000);
-    __('#alertServerAction').css('display: none;')
+    document.querySelector('#alertServerAction').css('display: none;')
 }
 
 function inivteAchat(id=null){
@@ -30,7 +30,7 @@ function inivteAchat(id=null){
 
     var match = id.match(/(\w+-\w+-\w+)/);
     if(!match){
-        __('#alertServerAction').css('display: none;')
+        document.querySelector('#alertServerAction').css('display: none;')
         uiMsg("Podaj poprawne zaproszenie", 2);
     }
     id = match[1];
@@ -51,7 +51,7 @@ function addInviteToUi(invite){
     acceptBtn.textContent = "Accept";
     acceptBtn.addEventListener("click", () => {
         socket.emit("inviteAccept", invite._id);
-        __("#invites").g().removeChild(inviteDiv);
+        document.querySelector("#invites").removeChild(inviteDiv);
         setTimeout(() => {
             socket.emit("friends");
         }, 2000);
@@ -62,11 +62,11 @@ function addInviteToUi(invite){
     delBtn.textContent = "Delete";
     delBtn.addEventListener("click", () => {
         socket.emit("inviteDelice", invite._id);
-        __("#invites").g().removeChild(inviteDiv)
+        document.querySelector("#invites").removeChild(inviteDiv)
     });
     inviteDiv.appendChild(delBtn);
     
-    __("#invites").add(inviteDiv);
+    document.querySelector("#invites").appendChild(inviteDiv);
 }
 
 function addFriends(){
@@ -76,21 +76,20 @@ function addFriends(){
     inp = inp.trim();
     if(inp == "") return uiMsg("musisz podać user", 1);
     
-    if(inp == fr){
+    if(inp == localUser.fr){
         return uiMsg("nie możesz wysłać zaproszenia do siebie", 1);
     }
 
-    var res = JSON.parse(__.httpReq("userName?user="+inp));
+    var res = JSON.parse(cw.get("/userName?user="+inp));
     if(res.err){
         return uiMsg(res.msg, 1);
     }
     var id = res.msg;
-    if(changeIdToName(id) == fr){
+    if(changeIdToName(id) == localUser.id){
         return uiMsg("nie możesz wysłać zaproszenia do siebie", 1);
     }
 
     socket.emit("invite", id);
-    clearErrMess();
 }
 
 function deleteFriends(){

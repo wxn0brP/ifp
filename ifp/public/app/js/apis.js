@@ -43,5 +43,5 @@ function loadApis(){
         debugMsg("load api: "+path);
         setUpSocket();
     }
-    document.body.appendChild(script);
+    document.querySelector("#assets").appendChild(script);
 }

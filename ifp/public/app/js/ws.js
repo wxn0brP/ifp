@@ -61,7 +61,7 @@ socket.on("mess", (data) => {
 
 socket.on("error", (data) => {
     uiMsg(data, 1);
-    setTimeout(clearErrMess, 10 * 1000);
+    debugMsg(data);
 });
 
 socket.on("getMessage", (data) => {
@@ -172,7 +172,7 @@ socket.on("invites", (invites) => {
 });
 
 socket.on("invite", () => {
-    uiMsg("Wysłano zaprosznie");
+    uiMsg("Otrzymano zaprosznie");
 });
 
 // socket.on("getUserStatus", (data) => {
@@ -194,7 +194,7 @@ socket.on("delMess", (id) => {
 });
 
 socket.on("type", (server, from) => {
-    if(server == toChat && from != fr_id){
+    if(server == toChat && from != localUser.id){
         var ele = document.createElement("span");
         ele.innerHTML = " " + changeIdToName(from) + " pisze... ";
         document.querySelector("#pisze").add(ele);
@@ -220,24 +220,49 @@ socket.on("fileRes", res => {
     socket.emit("mess", data)
 });
 
-socket.on("callRes", (res) => {
-    if(!res) return alert("Osoba nie odbiera");
+socket.on("newVCId", (id, my=false) => {
+    if(!peerVars.callOk) return;
+    let peer = makeConnect(id);
+    if(!my) return;
+    setTimeout(() => {
+        callTor(id, peer);
+    }, 3000);
+});
+
+socket.on("VCUsers", (users, type) => {
+    users = users.map(user => {
+        return `<li>${changeIdToName(user)}</li>`;
+    });
+    document.querySelector("#callUsers").innerHTML = "Osoby: "+users.join("");
+    switch(type){
+        case "join":
+            sounds.join.play();
+        break;
+        case "leave":
+            sounds.leave.play();
+        break;
+    }
+    debugMsg("VCUsers type: "+type);
+});
+
+socket.on("VCUserLeave", (user) => {
+    document.querySelector("#callMedia-user-"+user+"-video")?.remove();
+    document.querySelector("#callMedia-user-"+user+"-range")?.remove();
+})
+
+socket.on("callTo", async (id, room) => {
+    if(room == peerVars.id) return;
+    let str = changeIdToName(id) + " dzwoni do ciebie. Dołączyć?";
+    let c = confirm(str);
+    if(!c) return;
+    callEnd();
+    let to = await getChatIdFriends("$"+id);
+    joinVC(to+"-main");
     document.querySelector("#callMedia").css("");
-    callInit();
-    uiMsg("Osoba odebrała");
 });
 
-socket.on("callTo", (id) => {
-    endCallID = id;
-    var p = confirm(changeIdToName(id) + " dzwoni do cb? Czy odebrać?");
-    socket.emit("callRes", id, p);
-    if(!p) return;
-    callInit();
-    setTimeout(() => {
-        document.querySelector("#callMedia").css("");
-    }, 1000);
-    setTimeout(() => {
-        callApi.call(id);
-    }, 3000); //wait to 2 os init
-});
-
+socket.io.on("reconnect", () => {
+    if(!peerVars.callOk) return;
+    if(!peerVars.id) return;
+    socket.emit("joinVC-reconn", peerVars.id);
+})

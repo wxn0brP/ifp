@@ -21,15 +21,27 @@
 <div id="errMesses"></div>
 
 <div id="callMedia" style="display: none;">
-    <p>Połączenie trwa...</p>
-    <button onclick="callEnd()">End</button>
-    <br />
-    <button id="togleMic" onclick="togleMic()">Mic = wył</button>
+    <div class="s" id="callMediaMov" style="text-align: center;">➕</div>
+    <div style="display: flex; justify-content: space-between;">
+        <div class="s_5">
+            <button onclick="callEnd()" style="background-color: red;">End</button>
+            <br />
+            <button id="togleMic" onclick="togleMic()">Mic = wył</button>
+            <br />
+            <meter id="callMeter" min="0" max="0.3" low="0.01" high="0.1" optimum="0.2"></meter>
+        </div>
+        <div class="s_5">
+            <ul id="callUsers"></ul>
+        </div>
+    </div>
     <br /><br />
     <div id="callContener" style="display: none;"></div>
+    <div id="callContenerM"></div>
 </div>
 
 <div id="settingsDiv" style="display: none;">
     <button id="settingsDivBtn" onclick="closeSettings()">X</button>
     <div id="settingsDivC" class="s m_8 l_8"></div>
 </div>
+
+<div id="cats" style="display: none;"></div>

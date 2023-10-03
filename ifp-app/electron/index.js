@@ -32,6 +32,8 @@ async function createWindow(){
     mainWin = new BrowserWindow({
         width: 1300,
         height: 700,
+        minWidth: 900,
+        minHeight: 400,
         autoHideMenuBar: true,
         webPreferences: {
             preload: __dirname + '/preload.js'
@@ -111,7 +113,7 @@ async function updateApp(){
             type: 'warning',
             buttons: ['OK'],
             defaultId: 0,
-            message: 'IFP nie wspiera aktualnego systemu :(',
+            message: 'IFP aktualnie nie wspiera twojego systemu :(',
             detail: 'Aktualizacja jest NIE MOŻLIWA!',
         });
         return;

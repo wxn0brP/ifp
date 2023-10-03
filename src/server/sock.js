@@ -15,7 +15,9 @@ var vInne = [
     require("./socket/inne"),
     require("./socket/invite"),
     require("./socket/file"),
+    require("./socket/vc"),
 ];
+const genId = require("../db/gen");
 
 const { user: usrDB, mess: messDB } = global.db;
 
@@ -302,15 +304,14 @@ io.of("/").on("connection", (socket) => {
         socket.isUser = false;
     });
 
-    socket.on("callTo", id => {
+    socket.on("getChatIdFriends", (to) => {
         if(!socket.user) return socket.emit("error", "not auth");
-        if(global.getSocket(id).length == 0) return socket.emit("callRes", false);
-        sendToSocket(id, "callTo", socket.user._id);
-    });
-
-    socket.on("callRes", (id, p) => {
-        if(!socket.user) return socket.emit("error", "not auth");
-        sendToSocket(id, "callRes", p);
+        if(to.startsWith("$")){
+            var p1 = socket.user._id;
+            var p2 = to.replace("$", "");
+            to = messInter.combinateId(p1, p2);
+        }
+        socket.emit("getChatIdFriends", to);
     });
 });
 

@@ -27,6 +27,8 @@ const edit_txt = '&nbsp;&nbsp;<span style="font-size: 0.5rem;">(edytowane)</span
 
 const sounds = {
     notifVaw: new Audio("/notif.wav"),
+    join: new Audio("/join.mp3"),
+    leave: new Audio("/leave.mp3"),
     lektor: new SpeechSynthesisUtterance(),
 
     init(){

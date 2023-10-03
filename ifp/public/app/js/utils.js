@@ -14,6 +14,6 @@ const utils = {
     },
 
     ss(){
-        return window.innerWidth < 1000;
+        return window.innerWidth < 700;
     }
 }

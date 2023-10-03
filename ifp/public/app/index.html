@@ -25,9 +25,9 @@
         <style>.loading{background-color:#1e1f23;}</style>
     </head>
     <body class="loading">
-        <script>setTimeout(() => document.body.classList.remove('loading'),100);</script>
+        <script class="delete" time="500">setTimeout(() => document.body.classList.remove('loading'),100);</script>
+        <noscript class="delete" time="4000">Ta strona wymaga js (javascript) do poprawnego działania</noscript>
         <div id="app">
-            <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
             <span id="confetti"></span>
             <mob><button onclick="mobileMenuToogler()" id="mobileMenuToogler" style="z-index: 21;">&#9776;</button></mob>
 
@@ -43,14 +43,16 @@
                     <use xlink:href="/img/wilk.svg#ifp-wilk" />
                 </svg>
             </div>
-
-            <script>
-                setTimeout(() => {
-                    let loadingScreen = document.getElementById("loadingScreen");
-                    if(!loadingScreen) return;
-                    loadingScreen.remove();
-                }, 3100);
-            </script>
         </div>
+
+        <span id="assets" style="display: none;"></span>
+
+        <script class="delete" time="4000">
+            setTimeout(() => {
+                let loadingScreen = document.getElementById("loadingScreen");
+                if(!loadingScreen) return;
+                loadingScreen.remove();
+            }, 3100);
+        </script>
     </body>
 </html>

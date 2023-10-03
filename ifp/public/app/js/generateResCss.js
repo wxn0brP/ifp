@@ -1,6 +1,6 @@
 function generateCSS(){
     var styleSheet = document.createElement('style');
-    document.body.appendChild(styleSheet);
+    document.querySelector("#assets").appendChild(styleSheet);
     var cssText = '';
     const pr = [
         12, 6, 4, 3, "12 * 5", 2, "12 * 7", "12 * 8", "12 * 9", "12 * 10","12 * 11"

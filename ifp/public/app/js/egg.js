@@ -7,6 +7,8 @@ function emulateConfettiClick(x=window.innerWidth / 2, y=window.innerHeight / 2)
 }
 
 (function(){
+    document.querySelector("#cats").fadeIn();
+    setTimeout(() => document.querySelector("#cats").fadeOut(), 1000);
     const konamiCode = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
     var konamiIndex = 0;
     var block = false;
@@ -26,7 +28,23 @@ function emulateConfettiClick(x=window.innerWidth / 2, y=window.innerHeight / 2)
     }
 
     function startKonami(){
-        alert("koniami")
+        fetch('https://cataas.com/cat/says/Hey Mr Taliban').then(r => r.blob())
+        .then(data => {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(data);
+
+            let cats = document.querySelector("#cats");
+            cats.innerHTML = "";
+            cats.appendChild(img);
+            
+            cats.fadeIn();
+            setTimeout(() => {
+                cats.fadeOut();
+                setTimeout(() => cats.innerHTML = "", 500);
+                
+            }, 5000);
+        }).catch(()=>{});
+        setTimeout(() => block = false, 4000);
     }
 })();
 
@@ -48,3 +66,15 @@ function emulateConfettiClick(x=window.innerWidth / 2, y=window.innerHeight / 2)
         }
     })
 })();
+
+document.querySelector("#goMain").on("dblclick", () => {
+    if(confetti.maxsiu) return;
+    confetti.maxsiu = true;
+    setTimeout(() => {
+        confetti.maxsiu = false;
+    }, 600);
+    confetti.setCount(cw.rand(500, 1000));
+    confetti.setSize(cw.rand(1, 2));
+    confetti.setPower(cw.rand(15, 30));
+    emulateConfettiClick(cw.rand(0, window.innerWidth), cw.rand(0, window.innerHeight));
+});

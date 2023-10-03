@@ -11,10 +11,11 @@ function loadPart(){
         });
         ele.remove();
     });
+    let assets = document.querySelector("#assets");
     paths.forEach(path => {
         const src = document.createElement("script");
         src.src = "app/"+path+".js";
-        document.body.appendChild(src);
+        assets.appendChild(src);
     });
     loadJs();
 }
@@ -29,14 +30,17 @@ async function loadJs(){
         "js/apis.js",
         "js/cont-menu.js",
         "js/func.js",
-        "js/call.js",
+        "js/audioFunc.js",
+        "js/callsApi.js",
         "js/generateResCss.js",
         "js/anty.js",
         "js/warning.js",
         "js/egg.js",
         "js/encrypt.js",
-        "js/run.js"
+        "js/run.js",
+        "js/params.js"
     ];
+    let assets = document.querySelector("#assets");
     async function load(p){
         return await new Promise((r) => {
             const src = document.createElement("script");
@@ -44,7 +48,7 @@ async function loadJs(){
             src.addEventListener("load", () => {
                 r();
             });
-            document.body.appendChild(src);
+            assets.appendChild(src);
         })
     }
     for(let i=0; i<srcs.length; i++){
@@ -53,3 +57,7 @@ async function loadJs(){
 }
 
 loadPart();
+document.querySelectorAll(".delete").forEach(e => {
+    let time = parseInt(e.getAttribute("time"));
+    setTimeout(()=>e.remove(), time);
+});

@@ -1,5 +1,5 @@
 {
-    "exec": "electron . -dev http://192.168.0.15:1478/",
+    "exec": "electron . -dev http://localhost:1478/",
     "events": {
         "restart": "clear"
     },

@@ -51,7 +51,8 @@ function debugMsg(data, i=false){
     lo(data)
 }
 
-function movableDiv(movableDiv, margin=3){
+function movableDiv(movableDiv, area=movableDiv){
+    let margin = 3;
     let isDragging = false;
     let offsetX, offsetY;
 
@@ -61,15 +62,15 @@ function movableDiv(movableDiv, margin=3){
             disableSelect(child);
         }
     }
-    disableSelect(movableDiv);
+    disableSelect(area);
 
-    movableDiv.addEventListener("mousedown", (e) => {
+    area.addEventListener("mousedown", (e) => {
         isDragging = true;
 
         offsetX = e.clientX - movableDiv.getBoundingClientRect().left;
         offsetY = e.clientY - movableDiv.getBoundingClientRect().top;
 
-        movableDiv.style.cursor = "grabbing";
+        area.style.cursor = "grabbing";
     });
 
     document.addEventListener("mousemove", (e) => {
@@ -90,7 +91,7 @@ function movableDiv(movableDiv, margin=3){
 
     document.addEventListener("mouseup", () => {
         isDragging = false;
-        movableDiv.style.cursor = "grab";
+        area.style.cursor = "grab";
     });
 }
 
@@ -169,4 +170,23 @@ function changeIdToServer(id){
     var data = getInServer("/serverId?s="+id);
     serversId[id] = data;
     return data;
+}
+
+function genId(){
+    var unix = Math.floor(new Date().getTime() / 1000).toString(16);
+    var unixPod = Math.pow(10, unix.length);
+    var random1 = (Math.floor(Math.random() * unixPod)).toString(16);
+    var random2 = (Math.floor(Math.random() * unixPod)).toString(16);
+    return unix + "-" + random1 + "-" + random2;
+}
+
+function notifSound(){
+    switch(ifpSettings.main["typ powiadomienia"]){
+        case "Dźwięk":
+            sounds.notifVaw.play();
+        break;
+        case "Lektor":
+            sounds.lektorSpeak("Masz nową wiadomość");
+        break;
+    }
 }

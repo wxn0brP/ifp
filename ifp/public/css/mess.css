@@ -1,6 +1,6 @@
 #msg{
     overflow: auto;
-    height: calc(100vh - 62px);
+    height: calc(100vh - 72px);
     padding: 15px;
     width: calc(100vw - 290px);
 }
@@ -43,7 +43,7 @@
 }
 
 #messagess{
-    width: 100% - 290px;
+    width: calc(100% - 290px);
 }
 
 .res-msg{

@@ -152,7 +152,7 @@ cw.rand = function(min, max){
 }
 
 cw.round = function(a, b){
-	var factor = $$.math.pow(10, b);
+	var factor = Math.pow(10, b);
 	return Math.round(a*factor)/factor;
 }
 

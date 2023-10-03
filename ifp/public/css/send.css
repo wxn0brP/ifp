@@ -1,32 +1,34 @@
 #send{
     height: 60px;
+    width: 100%;
 }
 
 #send #send-menu{
     width: 98%;
-    height: 40px;
+    height: 50px;
     background-color: var(--inp);
     border-radius: 1rem;
     color: var(--txt);
     position: relative;
 }
 
-#send input, #send button, #send #send-menu-data{
+#send #inpSend, #send button, #send #send-menu-data{
     position: absolute;
     top: 0;
-    height: 40px;
+    height: 50px;
     border: none;
     color: var(--txt);
     background-color: var(--inp);
 }
 
-#send input{
+#send #inpSend{
     left: 1.1rem;
     width: calc(100% - 9.5rem);
-    padding: 0;
+    padding: 5px;
+    resize: none;
 }
 
-#send input:focus{
+#send #inpSend:focus{
     outline: none;
 }
 

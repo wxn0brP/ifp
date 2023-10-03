@@ -11,7 +11,7 @@ setTimeout(() => {
     })
 }, 1000);
 
-movableDiv(document.getElementById("callMedia"));
+movableDiv(document.getElementById("callMedia"), document.getElementById("callMediaMov"));
 
 document.querySelector("#resMsgX").on("click", () => {
     resMsgId = null;
@@ -21,18 +21,6 @@ document.querySelector("#resMsgX").on("click", () => {
 document.querySelector("#app").on("contextmenu", (e) => {
     e.preventDefault();
     return false;
-});
-
-document.querySelector("#goMain").on("dblclick", () => {
-    if(confetti.maxsiu) return;
-    confetti.maxsiu = true;
-    setTimeout(() => {
-        confetti.maxsiu = false;
-    }, 600);
-    confetti.setCount(cw.rand(500, 1000));
-    confetti.setSize(cw.rand(1, 2));
-    confetti.setPower(cw.rand(15, 30));
-    emulateConfettiClick(cw.rand(0, window.innerWidth), cw.rand(0, window.innerHeight));
 });
 
 (async function(){
@@ -75,3 +63,7 @@ document.querySelector("#goMain").on("dblclick", () => {
 })();
 
 document.getElementById("title").innerHTML = "IFP | "+localUser.fr;
+window.parent.postMessage({
+    type: "setTitle",
+    msg: "IFP | "+localUser.fr
+}, '*');

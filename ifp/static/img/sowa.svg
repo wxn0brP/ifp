@@ -1,5 +1,5 @@
-<svg id="ifp-sowa" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
-<g transform="translate(0,256) scale(0.1,-0.1)" stroke="none">
+<svg id="ifp-sowa" class="ifp-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(0,512) scale(0.1,-0.1)" stroke="none">
 <path d="M2380 4469 c-74 -15 -146 -33 -160 -38 -14 -5 -38 -12 -55 -16 -16
 -3 -64 -16 -105 -28 -69 -20 -82 -29 -185 -123 l-111 -101 -34 17 c-19 10 -55
 26 -80 37 -173 77 -203 86 -228 61 -16 -16 -15 -63 1 -75 12 -10 204 -95 240

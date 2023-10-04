@@ -108,22 +108,13 @@
     background-color: var(--back);
 }
 
-#ifp-wilk{
-    width: 256px;
-    height: 256px;
+.ifp-svg{
+    width: 20rem;
+    height: 20rem;
 }
 
-#ifp-wilk path{
+.ifp-svg path{
     fill: red;
-}
-
-#ifp-duck{
-    width: 64px;
-    height: 64px;
-}
-
-#ifp-duck path{
-    fill: green;
 }
 
 #callMedia{
@@ -211,4 +202,23 @@
 #cats img{
     border-radius: 1rem;
     max-height: 90vh;
+}
+
+#imgSelector{
+    position: absolute;
+    top: 1%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: var(--panel);
+    padding: 1rem;
+    border-radius: 1rem;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+#imgSelector svg{
+    width: 150px;
+    padding: 10px;
+    cursor: pointer;
 }

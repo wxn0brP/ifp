@@ -190,3 +190,20 @@ function notifSound(){
         break;
     }
 }
+
+function imgSelector(){
+    return new Promise(r => {
+        let imgSelector = document.querySelector("#imgSelector");
+        imgSelector.fadeIn();
+
+        let imgs = document.querySelectorAll("#imgSelector svg");
+        function handelClick(){
+            r(this.getAttribute("_name"));
+            imgSelector.fadeOut();
+            imgs.forEach(img => img.removeEventListener("click", handelClick));
+        }
+        imgs.forEach(img => {
+            img.addEventListener("click", handelClick);
+        });
+    });
+}

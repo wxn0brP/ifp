@@ -1,4 +1,4 @@
-<svg id="ifp-eagle" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<svg id="ifp-eagle" class="ifp-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 <g transform="translate(0,512) scale(0.1,-0.1)" stroke="none">
 <path d="M4970 4436 c-8 -13 -58 -71 -111 -128 -52 -56 -142 -154 -198 -217
 -75 -83 -118 -121 -159 -143 -31 -17 -61 -34 -67 -38 -5 -4 -26 -17 -45 -28

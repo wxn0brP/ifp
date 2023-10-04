@@ -1,4 +1,4 @@
-<svg id="ifp-krasnolud" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<svg id="ifp-krasnolud" class="ifp-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 <g transform="translate(0,512) scale(0.1,-0.1)" stroke="none">
 <path d="M1038 5038 c-9 -7 -42 -49 -74 -93 -32 -44 -63 -84 -70 -90 -7 -5
 -24 -89 -39 -185 -14 -96 -30 -191 -35 -210 -7 -23 -4 -104 7 -245 l16 -210

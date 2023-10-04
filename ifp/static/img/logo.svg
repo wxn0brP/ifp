@@ -1,4 +1,4 @@
-<svg id="ifp-logo" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<svg id="ifp-logo" class="ifp-svg" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
 <g transform="translate(0,256) scale(0.1,-0.1)" stroke="none">
 <path d="M360 2511 c-6 -12 -10 -104 -10 -230 l0 -211 53 -58 c28 -31 83 -92
 121 -135 l69 -78 -11 -52 c-6 -29 -36 -171 -66 -317 -31 -146 -78 -372 -105

@@ -1,4 +1,4 @@
-<svg id="ifp-lis" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<svg id="ifp-lis" class="ifp-svg" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
 <g transform="translate(0,512) scale(0.1,-0.1)" stroke="none">
 <path d="M2473 5039 c-35 -11 -63 -23 -63 -28 0 -5 -51 -78 -112 -162 l-113
 -154 -86 -254 -86 -255 -154 -59 c-152 -58 -157 -61 -394 -229 -132 -94 -248

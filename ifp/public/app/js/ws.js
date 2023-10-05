@@ -82,7 +82,7 @@ socket.on("getMessage", (data) => {
                 msgDiv.add(div);
             }
         });
-        socrollToBottom();
+        setTimeout(socrollToBottom, 30);
     }catch(e){
         lo(e);
         var div = document.createElement("div");

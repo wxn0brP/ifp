@@ -1,7 +1,7 @@
-module.exports = () => {
+module.exports = (parts=2) => {
     var unix = Math.floor(new Date().getTime() / 1000).toString(16);
     var unixPod = Math.pow(10, unix.length);
-    var random1 = (Math.floor(Math.random() * unixPod)).toString(16);
-    var random2 = (Math.floor(Math.random() * unixPod)).toString(16);
-    return unix + "-" + random1 + "-" + random2;
+    let str = unix;
+    for(let i=0; i<parts; i++) str += "-" + (Math.floor(Math.random() * unixPod)).toString(16);
+    return str;
 }

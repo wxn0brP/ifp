@@ -8,13 +8,13 @@
         <span id="serverList"></span>
     </div>
     <div class="left" id="friends">
-        <div id="friends-main">
+        <div id="friends-main" w_if="toChat.startsWith('$') || toChat == 'main'">
             <button onclick="logout()">WYLOGUJ SIĘ 🔚</button><br />
-            <pc><button onclick="zezwolNaNotif()">Powiadomienia 🔔</button><br /></pc>
-            <button onclick="addFriends()">Dodaj Znajomego 🤝</button>
+            <pc w_if="toChat == 'main'"><button onclick="zezwolNaNotif()">Powiadomienia 🔔</button><br /></pc>
+            <button onclick="addFriends()" w_if="toChat == 'main'">Dodaj Znajomego 🤝</button>
             <button onclick="settingsChange('main')">Ustawienia ⚙️</button>
-            <button onclick="kodLog()">Kod logowania 🔐</button>
-            <button onclick="calls()" id="callToBtn">Zadzwoń do... ☎️</button>
+            <button onclick="kodLog()" w_if="toChat == 'main'">Kod logowania 🔐</button>
+            <button onclick="callToFunc()" w_if="toChat != 'main'" id="callToBtn">Zadzwoń do... ☎️</button>
             <hr style="margin-top: 11px; margin-bottom: 7px;">
             <span id="friendsList"></span>
             <br /><br />
@@ -22,10 +22,10 @@
             <br /><br />
             <span id="invites"></span>
         </div>
-        <div id="friends-server">
+        <div id="friends-server" w_if="!toChat.startsWith('$') && toChat != 'main'">
             <br />
             <h2 id="serverName"></h2>
-            <br /><hr><br />
+            <!-- <br /><hr><br /> -->
         </div>
     </div>
 </div>

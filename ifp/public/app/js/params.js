@@ -4,7 +4,7 @@ function urlParams(){
         let b = document.createElement("button");
         b.innerHTML = "join";
         b.addEventListener("click", () => {
-            joinVC("tak");
+            renczneCall("tak");
         })
         document.querySelector("#friends-main").appendChild(b);
     }

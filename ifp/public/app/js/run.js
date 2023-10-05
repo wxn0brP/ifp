@@ -67,3 +67,5 @@ window.parent.postMessage({
     type: "setTitle",
     msg: "IFP | "+localUser.fr
 }, '*');
+
+setInterval(handleWifElements, 500);

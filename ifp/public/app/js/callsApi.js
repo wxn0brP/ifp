@@ -153,7 +153,7 @@ async function getChatIdFriends(t){
     });
 }
 
-async function calls(){
+async function callToFunc(){
     if(toChat == "main") return uiMsg("err");
     callEnd();
     var callBtn = document.getElementById("callToBtn");
@@ -169,6 +169,11 @@ async function calls(){
         socket.emit("callTo", toChat.replace("$",""), to+"-main");
     }
 
+    document.querySelector("#callMedia").css("");
+}
+
+function renczneCall(to){
+    joinVC(to+"-main");
     document.querySelector("#callMedia").css("");
 }
 

@@ -217,7 +217,7 @@ io.of("/").on("connection", (socket) => {
             if(!mess) return socket.emit("error", "msg is not exists");
             if(mess.o.from != socket.user._id) return socket.emit("error", "not");
 
-            await global.db.chat.mess.updateOne(to, { _id }, { msg, edit: true });
+            await global.db.chat.mess.updateOne(to, { _id }, { msg, edit: true, lastEdit: genId(0) });
             sendToChatUsers(to, "editMess", _id, msg);
         }catch(e){
             lo("error: ", e)

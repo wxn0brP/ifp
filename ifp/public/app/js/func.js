@@ -103,14 +103,9 @@ function changeTo(f){
         e.classList.remove("a-active")
     });
     if(f == "main"){
-        // msgDiv.html(main);
         msgDiv.html("nic");
         sendDiv.css({ display: "none" });
-        // sendDiv.style("display: none;");
-        // document.getElementById("goMain").classList.add("a-active");
-        // document.getElementById("friends-main").style.display = "";
-        // document.getElementById("friends-server").style.display = "none";
-        // __("#callToBtn").style().cursor = "not-allowed";
+        document.getElementById("goMain").clA("a-active");
     }else{
         //TODO dodać kanały
         msgDiv.html("");
@@ -118,17 +113,14 @@ function changeTo(f){
         socket.emit("getMessage", toChat, 0, messCount, false);
         actMess = messCount;
         focusInp();
-        // if(menuL){
-        //     document.getElementById("friends-main").style.display = "none";
-        //     document.getElementById("friends-server").style.display = "";
-        //     serverInit();
-        // }
         if(inputChat[toChat]){
             inpSendDiv.value(inputChat[toChat]);
             inpSendDiv.g().dispatchEvent(new Event("input"));
         }
+        document.getElementById("goMain").clR("a-active");
         // __("#callToBtn").style().cursor = "pointer";
     }
+    handleWifElements();
 }
 
 function socrollToBottom(){
@@ -205,5 +197,17 @@ function imgSelector(){
         imgs.forEach(img => {
             img.addEventListener("click", handelClick);
         });
+    });
+}
+
+function handleWifElements(){
+    document.querySelectorAll('[w_if]').forEach(ele => {
+        try{
+            const wifAttribute = ele.getAttribute('w_if');
+            const result = eval(wifAttribute);
+            ele.style.display = result ? "" : "none";
+        }catch(error){
+            debugMsg(error);
+        }
     });
 }

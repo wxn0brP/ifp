@@ -61,3 +61,5 @@ document.querySelectorAll(".delete").forEach(e => {
     let time = parseInt(e.getAttribute("time"));
     setTimeout(()=>e.remove(), time);
 });
+
+window.addEventListener("error", e => alert(JSON.stringify(e)))

@@ -58,7 +58,7 @@ function addMess(msg, socroll=true, up=false){
         setTimeout(() => responeMess(div, msg.res), 1000);
     }
     content = formatText(content);
-    if(msg.e) content += edit_txt;
+    if(msg.e) content += edit_txt.replace("$$", formatDateFormUnux(parseInt(msg.e, 16)));
     div.innerHTML = 
         `<div><b>${from}</b></div>`+
         `<div id="${msg._id}_mess" _plain="${msg.msg}">${content}</div>`;

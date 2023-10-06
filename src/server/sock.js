@@ -217,8 +217,9 @@ io.of("/").on("connection", (socket) => {
             if(!mess) return socket.emit("error", "msg is not exists");
             if(mess.o.from != socket.user._id) return socket.emit("error", "not");
 
-            await global.db.chat.mess.updateOne(to, { _id }, { msg, edit: true, lastEdit: genId(0) });
-            sendToChatUsers(to, "editMess", _id, msg);
+            const time = genId(0);
+            await global.db.chat.mess.updateOne(to, { _id }, { msg, edit: true, lastEdit: time });
+            sendToChatUsers(to, "editMess", _id, msg, time);
         }catch(e){
             lo("error: ", e)
         }
@@ -258,8 +259,6 @@ io.of("/").on("connection", (socket) => {
         
         var res = await messInter.addUser(inv.chat, socket.user._id);
         socket.emit("inviteChat", res);
-
-        // BUG czasem exit nie działa
     });
 
     socket.on("createChat", async (name) => {

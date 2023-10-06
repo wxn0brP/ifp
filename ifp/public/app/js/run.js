@@ -27,6 +27,8 @@ document.querySelector("#app").on("contextmenu", (e) => {
     var robot = _anty.robotsDetector();
     if(robot) location.href = "/";
 
+    if(utils.ss()) return;
+
     await delay(10_000);
     var add = await _anty.addBlockerDetector();
     if(!add) return;
@@ -69,3 +71,15 @@ window.parent.postMessage({
 }, '*');
 
 setInterval(handleWifElements, 500);
+
+(function(){
+    const hammer = new Hammer(document.querySelector("#app"));
+    hammer.on('swipe', function(event){
+        var style = document.querySelector("#menu").style;
+        if(event.direction === Hammer.DIRECTION_LEFT){
+            if(style.left == "0px") mobileMenuToogler();
+        }else if(event.direction === Hammer.DIRECTION_RIGHT){
+            if(style.left == "-100%") mobileMenuToogler();
+        }
+    });
+})();

@@ -34,9 +34,9 @@ _anty.robotsDetector = function(){
 
     if(detectMUA(userAgent)) return true;
 
-    if(userAgent.match(/Mobile|Tablet|Android|iPhone|iPad|iPod/i)){
-        if(navigator.maxTouchPoints < 1 || !this.touchSupport()) return true;
-    }
+    // if(userAgent.match(/Mobile|Tablet|Android|iPhone|iPad|iPod/i)){
+    //     if(navigator.maxTouchPoints < 1 || !this.touchSupport()) return true;
+    // }
 
     if(window.outerWidth === 0 && window.outerHeight === 0){
         return true;

@@ -57,7 +57,6 @@ class dbActionC{
         await more.update(path, index, json);
     }
 
-    // FIXME coś się odjebało z usuwaniem starej wiad
     async updateOne(name, obj, arg){
         var res = await this.findOne(name, obj);
         if(!res) return false;

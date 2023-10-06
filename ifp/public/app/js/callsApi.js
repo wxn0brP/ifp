@@ -59,14 +59,46 @@ function addVideoStream(stream, user, video=document.createElement('video'), oth
     // lo("2 os dołączyła");
 }
 
-function joinVC(id){
+alert(!!navigator.getUserMedia + " " +!!navigator.mediaDevices?.getUserMedia + " " + !!navigator.webkitGetUserMedia + " " + !!navigator.mozGetUserMedia)
+
+async function joinVC(id){
+    navigator.permissions.query({ name: 'camera' })
+  .then(function(permissionStatus) {
+    if (permissionStatus.state === 'granted') {
+      // Użytkownik udzielił uprawnień do mikrofonu
+      alert('Użytkownik udzielił uprawnień do mikrofonu. Możesz rozpocząć korzystanie z mikrofonu.');
+    } else if (permissionStatus.state === 'prompt') {
+      // Użytkownik zostanie poproszony o zgodę
+      permissionStatus.onchange = function() {
+        if (permissionStatus.state === 'granted') {
+          // Użytkownik udzielił uprawnień do mikrofonu
+          alert('Użytkownik udzielił uprawnień do mikrofonu. Możesz rozpocząć korzystanie z mikrofonu.');
+        } else {
+          // Użytkownik odmówił dostępu
+          alert('Użytkownik odmówił dostępu do mikrofonu.');
+        }
+      };
+    } else {
+      // Użytkownik odmówił dostępu
+      alert('Użytkownik odmówił dostępu do mikrofonu.');
+    }
+  })
+  .catch(function(error) {
+    // Obsłuż ewentualne błędy
+    alert('Wystąpił błąd podczas sprawdzania uprawnień do mikrofonu. '+error);
+  });
+
     debugMsg("Join to "+id);
     socket.emit("joinVC", id);
     peerVars.id = id;
     peerVars.callOk = true;
-    navigator.mediaDevices.getUserMedia({
-        audio: true,
-    })/*.then(stream => {
+    let stream
+    try{
+        stream = await getStream({ audio: true });
+    }catch(e){
+        alert(e);
+    }
+    /*
         var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         var audioStream = audioCtx.createMediaStreamSource(stream);
 
@@ -90,17 +122,16 @@ function joinVC(id){
             meter.value = vol * 10;
             //gainNode.gain.value = vol >= 0.01 ? 1 : 0;
         }, 50);
-        return stream;
-    })*/.then(stream => {
-        peerVars.stream = stream;
-        let v = document.createElement('video');
-        v.muted = true;
-        addVideoStream(stream, localUser.id, v, false);
-        togleMic(false);
-        // setTimeout(() => {
-        //     togleMic(false);
-        // }, 1000);
-    });
+    */
+    peerVars.stream = stream;
+    let v = document.createElement('video');
+    v.muted = true;
+    addVideoStream(stream, localUser.id, v, false);
+    togleMic(true);
+    // setTimeout(() => {
+    //     togleMic(false);
+    // }, 1000);
+    
 }
 
 function makeConnect(to){
@@ -195,4 +226,11 @@ function callEnd(){
     peerVars.peers = [];
     if(peerVars.stream) peerVars.stream.getTracks().forEach(t => t.stop());
     document.querySelector("#callContenerM").innerHTML = "";
+}
+
+async function getStream(obj){
+    if(navigator.mediaDevices?.getUserMedia) return await navigator.mediaDevices.getUserMedia(obj);
+    else if(navigator.webkitGetUserMedia) return await navigator.webkitGetUserMedia(obj);
+    else if(navigator.mozGetUserMedia) return await nnavigator.mozGetUserMedia(obj);
+    else return new MediaStream();
 }

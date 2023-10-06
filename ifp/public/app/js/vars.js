@@ -23,7 +23,7 @@ var resMsgId;
 
 var emocjiMap = JSON.parse(cw.get("/emocji/emocji.json"));
 var emocjiMapR = JSON.parse(cw.get("/emocji/emocjiR.json"));
-const edit_txt = '&nbsp;&nbsp;<span style="font-size: 0.5rem;">(edytowane)</span>';
+const edit_txt = '&nbsp;&nbsp;<span style="font-size: 0.5rem; cursor: default;" title="$$">(edytowane)</span>';
 
 const sounds = {
     notifVaw: new Audio("/notif.wav"),

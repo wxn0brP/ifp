@@ -119,6 +119,9 @@ function changeTo(f){
         }
         document.getElementById("goMain").clR("a-active");
         // __("#callToBtn").style().cursor = "pointer";
+        if(!toChat.startsWith("$")){
+            //setUpServer()
+        }
     }
     handleWifElements();
 }
@@ -210,4 +213,17 @@ function handleWifElements(){
             debugMsg(error);
         }
     });
+}
+
+function formatDateFormUnux(unixTimestamp){
+    const date = new Date(unixTimestamp * 1000);
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    const formattedDate = `${day}.${month}.${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}`;
+    return formattedDate;
 }

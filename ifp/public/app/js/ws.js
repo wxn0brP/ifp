@@ -72,7 +72,7 @@ socket.on("getMessage", (data) => {
                     from: mess.from,
                     msg: mess.msg,
                     _id: mess._id,
-                    e: mess.edit ? true : false,
+                    e: mess.edit ? mess.lastEdit : false,
                 }, false, true);
             }catch(e){
                 lo(e);
@@ -179,12 +179,12 @@ socket.on("invite", () => {
 //     __("#f-"+data.id).html(data.data ? "✅" : "❌");
 // });
 
-socket.on("editMess", (id, msg) => {
+socket.on("editMess", (id, msg, time) => {
     const messageDiv = document.getElementById(id + "_mess");
     if(!messageDiv) return;
     messageDiv.setAttribute("_plain", msg);
     messageDiv.innerHTML = formatText(msg);
-    messageDiv.innerHTML += edit_txt;
+    messageDiv.innerHTML += edit_txt.replace("$$", formatDateFormUnux(parseInt(time, 16)));
 });
 
 socket.on("delMess", (id) => {

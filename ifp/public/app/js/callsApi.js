@@ -31,7 +31,7 @@ function connectToNewUser(userId){
 }
 
 function addVideoStream(stream, user, video=document.createElement('video'), other=true){
-    // let setVolume = modifyAudioStream(stream);
+    let setVolume = modifyAudioStream(stream);
 
     video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
@@ -40,54 +40,28 @@ function addVideoStream(stream, user, video=document.createElement('video'), oth
     video.id = "callMedia-user-"+user+"-video";
     document.querySelector("#callContener").appendChild(video);
 
-    // if(other){
-    //     let range = document.createElement("input");
-    //     range.type = "range";
-    //     range.min = "0";
-    //     range.max = "3";
-    //     range.step = "0.1";
-    //     range.value = "1";
-    //     range.addEventListener("change", () => {
-    //         let v = parseFloat(range.value);
-    //         setVolume(v);
-    //     });
-    //     range.id = "callMedia-user-"+user+"-range";
-    //     document.querySelector("#callContenerM").appendChild(range);
-    // }else{
-    //     setVolume(0);
-    // }
+    if(other){
+        let range = document.createElement("input");
+        range.type = "range";
+        range.min = "0";
+        range.max = "3";
+        range.step = "0.1";
+        range.value = "1";
+        range.addEventListener("change", () => {
+            let v = parseFloat(range.value);
+            setVolume(v);
+        });
+        range.id = "callMedia-user-"+user+"-range";
+        document.querySelector("#callContenerM").appendChild(range);
+    }else{
+        setVolume(0);
+    }
     // lo("2 os dołączyła");
 }
 
-alert(!!navigator.getUserMedia + " " +!!navigator.mediaDevices?.getUserMedia + " " + !!navigator.webkitGetUserMedia + " " + !!navigator.mozGetUserMedia)
+// alert(!!navigator.getUserMedia + " " +!!navigator.mediaDevices?.getUserMedia + " " + !!navigator.webkitGetUserMedia + " " + !!navigator.mozGetUserMedia)
 
 async function joinVC(id){
-    navigator.permissions.query({ name: 'camera' })
-  .then(function(permissionStatus) {
-    if (permissionStatus.state === 'granted') {
-      // Użytkownik udzielił uprawnień do mikrofonu
-      alert('Użytkownik udzielił uprawnień do mikrofonu. Możesz rozpocząć korzystanie z mikrofonu.');
-    } else if (permissionStatus.state === 'prompt') {
-      // Użytkownik zostanie poproszony o zgodę
-      permissionStatus.onchange = function() {
-        if (permissionStatus.state === 'granted') {
-          // Użytkownik udzielił uprawnień do mikrofonu
-          alert('Użytkownik udzielił uprawnień do mikrofonu. Możesz rozpocząć korzystanie z mikrofonu.');
-        } else {
-          // Użytkownik odmówił dostępu
-          alert('Użytkownik odmówił dostępu do mikrofonu.');
-        }
-      };
-    } else {
-      // Użytkownik odmówił dostępu
-      alert('Użytkownik odmówił dostępu do mikrofonu.');
-    }
-  })
-  .catch(function(error) {
-    // Obsłuż ewentualne błędy
-    alert('Wystąpił błąd podczas sprawdzania uprawnień do mikrofonu. '+error);
-  });
-
     debugMsg("Join to "+id);
     socket.emit("joinVC", id);
     peerVars.id = id;
@@ -98,31 +72,31 @@ async function joinVC(id){
     }catch(e){
         alert(e);
     }
-    /*
-        var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        var audioStream = audioCtx.createMediaStreamSource(stream);
+    
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var audioStream = audioCtx.createMediaStreamSource(stream);
 
-        const analyserNode = audioCtx.createAnalyser();
-        audioStream.connect(analyserNode);
+    const analyserNode = audioCtx.createAnalyser();
+    audioStream.connect(analyserNode);
 
-        var gainNode = audioCtx.createGain();
-        audioStream.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
+    var gainNode = audioCtx.createGain();
+    audioStream.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
 
-        const pcmData = new Float32Array(analyserNode.fftSize);
-        const meter = document.querySelector("#callMeter");
-        setInterval(() => {
-            analyserNode.getFloatTimeDomainData(pcmData);
-            let sumSquares = 0.0;
-            for(const amplitude of pcmData){
-                sumSquares += amplitude * amplitude;
-            }
-            let vol = Math.sqrt(sumSquares / pcmData.length);
-            vol = cw.round(vol, 2);
-            meter.value = vol * 10;
-            //gainNode.gain.value = vol >= 0.01 ? 1 : 0;
-        }, 50);
-    */
+    const pcmData = new Float32Array(analyserNode.fftSize);
+    const meter = document.querySelector("#callMeter");
+    setInterval(() => {
+        analyserNode.getFloatTimeDomainData(pcmData);
+        let sumSquares = 0.0;
+        for(const amplitude of pcmData){
+            sumSquares += amplitude * amplitude;
+        }
+        let vol = Math.sqrt(sumSquares / pcmData.length);
+        vol = cw.round(vol, 2);
+        meter.value = vol * 10;
+        //gainNode.gain.value = vol >= 0.01 ? 1 : 0;
+    }, 50);
+    
     peerVars.stream = stream;
     let v = document.createElement('video');
     v.muted = true;

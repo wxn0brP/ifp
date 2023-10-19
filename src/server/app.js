@@ -59,11 +59,6 @@ module.exports = (app) => {
     require("./router")(app);
     app.use("/", express.static("./ifp/public"));
     app.use("/uploads", express.static("./uploads"));
-    if(process.env.status == "dev"){
-        app.use("/lib", express.static(process.env.wwli+"js"));
-        app.use("/lib", express.static(process.env.wwli+"css"));
-        app.use("/lib", express.static(process.env.wwli+"dist"));
-    }
     require("../auth/auth-api.js")(app);
 
     require("./map")(app, "ifp/static/sitemap.xml");

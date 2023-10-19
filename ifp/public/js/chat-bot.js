@@ -1,17 +1,17 @@
-var mess = __("#mess");
-var inpSend = __("#inpSend");
+var mess = document.querySelector("#mess");
+var inpSend = document.querySelector("#inpSend");
 
 function getData(que){
     que = que.replaceAll(" ", "+");
-    var res = __.httpReq("/chatBot?q="+que);
+    var res = cw.get("/chatBot?q="+que);
     res = JSON.parse(res);
     if(res.err) return null;
     return res.data;
 }
 
 function getRespone(){
-    var dataS = inpSend.value();
-    inpSend.value("");
+    var dataS = inpSend.value;
+    inpSend.value = "";
     var data = getData(dataS);
     if(data == null) return;
 
@@ -43,7 +43,6 @@ inpSend.on("keypress", (e) => {
 });
 
 function focus(){
-    __.mobile();
-    if(__.mobile.tab || __.mobile.tel) return;
+    if(window.innerWidth < 700) return;
     inpSend.res.focus();
 }

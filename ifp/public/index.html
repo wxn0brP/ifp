@@ -8,8 +8,8 @@
 		<meta name="description" content="IFP - Infinite Fusion Project">
 		<meta name="keywords" content="ifp, IFP, Infinite Fusion Project">
         <link href="/favicon.ico" rel="shortcut icon">
-        <link href="/lib/wwli.min.css" rel="stylesheet">
         <link href="/style.css" rel="stylesheet">
+        <link href="/css/wwli-nav.min.css" rel="stylesheet">
 
         <style>
             #app{
@@ -29,11 +29,14 @@
         </style>
     </head>
     <body>
-        <script src="/lib/wwli.js"></script>
+        <script src="/core.js"></script>
+        <script src="/js/menuBuilder.js"></script>
+        <div id="assets"></div>
+        <script src="js/generateResCss.js"></script>
         <div id="app">
             <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
             <div id="navs"></div>
-            <script>__.menuBuildUrl();</script>
+            <script>menuBuilder.menuBuildUrl();</script>
             <h1 class="fontNorse">IFP</h1>
             <h2 class="fontNorse">Infinite Fusion Project</h2>
             <br />
@@ -52,13 +55,13 @@
 "Moc komunikacji w Twoich rękach – ifp, twój chatowy towarzysz, gotowy, by odkrywać nowe możliwości!",
             ];
             
-            var slider = __("#slider");
-            var i = __.math.rand(0, napisy.length-1);
+            var slider = document.querySelector("#slider");
+            var i = cw.rand(0, napisy.length-1);
             main();
             function loop(){
-                slider.cssAC("fade-out");
+                slider.clA("fade-out");
                 setTimeout(() => {
-                    slider.cssRC("fade-out");
+                    slider.clR("fade-out");
                     main();
                 }, 600);
             }
@@ -73,7 +76,6 @@
         <script src="/js/confetti.min.js"></script>
         <script>
             var confettiOn = false;
-            __.mobile();
             var confetti = new Confetti("confetti");
             confetti.setCount(250);
             confetti.setSize(1);
@@ -86,14 +88,14 @@
                     view: window, bubbles: true, cancelable: true,
                     clientX: x, clientY: y,
                 });
-                document.getElementById("confetti").dispatchEvent(clickEvent);
+                document.querySelector("#confetti").dispatchEvent(clickEvent);
             }
             setTimeout(() => {
                 if(!sessionStorage.getItem("confetti")) emulateClick();
                 confettiOn = false;
                 sessionStorage.setItem("confetti", true);
             }, 500);
-            __("#app").on("click", (e) => {
+            document.querySelector("#app").on("click", (e) => {
                 if(confettiOn) return;
                 confettiOn = true;
                 if(e.target.tagName == "A") return;
@@ -101,7 +103,7 @@
                 emulateClick(e.clientX, e.clientY);
                 setTimeout(() => {
                     confettiOn = false;
-                }, __.mobile.mob ? 3000 : 1500)
+                }, window.innerHeight < 700 ? 3000 : 1500)
             });
         </script>
     </body>

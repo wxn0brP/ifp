@@ -32,7 +32,7 @@ async function loadJs(){
         "js/func.js",
         "js/audioFunc.js",
         "js/callsApi.js",
-        "js/generateResCss.js",
+        "/js/generateResCss.js",
         "js/anty.js",
         "js/warning.js",
         "js/egg.js",

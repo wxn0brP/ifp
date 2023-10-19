@@ -31,7 +31,7 @@ function connectToNewUser(userId){
 }
 
 function addVideoStream(stream, user, video=document.createElement('video'), other=true){
-    let setVolume = modifyAudioStream(stream);
+    let setVolume = modifyAudioStream(stream, other ? undefined : 0);
 
     video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
@@ -40,6 +40,7 @@ function addVideoStream(stream, user, video=document.createElement('video'), oth
     video.id = "callMedia-user-"+user+"-video";
     document.querySelector("#callContener").appendChild(video);
 
+    debugMsg(user + " :: "+other);
     if(other){
         let range = document.createElement("input");
         range.type = "range";
@@ -53,8 +54,6 @@ function addVideoStream(stream, user, video=document.createElement('video'), oth
         });
         range.id = "callMedia-user-"+user+"-range";
         document.querySelector("#callContenerM").appendChild(range);
-    }else{
-        setVolume(0);
     }
     // lo("2 os dołączyła");
 }
@@ -102,9 +101,6 @@ async function joinVC(id){
     v.muted = true;
     addVideoStream(stream, localUser.id, v, false);
     togleMic(true);
-    // setTimeout(() => {
-    //     togleMic(false);
-    // }, 1000);
     
 }
 

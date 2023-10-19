@@ -1,4 +1,5 @@
-var banedIP = require("../../data/ip.json");
+const path = "../../data/banedIP.json";
+var banedIP = require(path);
 
 module.exports = async (req, res, next) => {
     var ip = req.ip;
@@ -10,5 +11,5 @@ module.exports = async (req, res, next) => {
 }
 
 setTimeout(() => {
-    banedIP = require("../../data/ip.json");
+    banedIP = require(path);
 }, 10 * 60 * 1000); // 10min

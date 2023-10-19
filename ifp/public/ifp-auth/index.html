@@ -52,7 +52,7 @@
             </form>
         </div>
 
-        <script src="/lib/wwli.js"></script>
+        <script src="../core.js"></script>
         <script>
             var urlParam = new URLSearchParams(location.search);
             var server = urlParam.get("s") || "http://localhost:1478";
@@ -64,18 +64,18 @@
                 lo(xhr.responseText)
             })()
 
-            var loginDiv = __("#login");
-            var passDiv = __("#pass");
-            var errDiv = __("#err");
+            var loginDiv = document.querySelector("#login");
+            var passDiv = document.querySelector("#pass");
+            var errDiv = document.querySelector("#err");
 
-            __("#form").on("submit", (e) => {
+            document.querySelector("#form").on("submit", (e) => {
                 e.preventDefault();
-                var login = loginDiv.cont();
+                var login = loginDiv.value;
                 if(!login){
                     errDiv.html("Login nie może być pusty");
                     return;
                 }
-                var pass = passDiv.cont();
+                var pass = passDiv.value;
                 if(!pass){
                     errDiv.html("Hasło nie może być puste");
                     return;
@@ -94,8 +94,6 @@
                 const evt = new CustomEvent('ifp-auth', { detail: res.token });
                 window.parent.dispatchEvent(evt);
             });
-
-
         </script>
     </body>
 </html>

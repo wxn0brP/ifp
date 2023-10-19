@@ -1,4 +1,5 @@
 const databaseC = require("./db/database");
+const advDatabaseC = require("./db/db-adv");
 
 global.db = {
     user: new databaseC(getPath("user"), require("./shemas/shema_user")),
@@ -6,6 +7,7 @@ global.db = {
     token: new databaseC(getPath("token")),
     ic: new databaseC(getPath("ic")),
     bot: new databaseC(getPath("bot")),
+    permission: new advDatabaseC("data/perm-db"),
 }
 
 function getPath(name){

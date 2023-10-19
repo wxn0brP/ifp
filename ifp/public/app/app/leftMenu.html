@@ -15,6 +15,9 @@
             <button onclick="settingsChange('main')">Ustawienia ⚙️</button>
             <button onclick="kodLog()" w_if="toChat == 'main'">Kod logowania 🔐</button>
             <button onclick="callToFunc()" w_if="toChat != 'main'" id="callToBtn">Zadzwoń do... ☎️</button>
+            <button onclick="exportMess()" w_if="toChat != 'main'">Wyeksportuj ⬆️</button>
+            <button onclick="importMess()" w_if="toChat == 'main'">Importuj ⬇️</button>
+
             <hr style="margin-top: 11px; margin-bottom: 7px;">
             <span id="friendsList"></span>
             <br /><br />

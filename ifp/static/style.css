@@ -66,6 +66,11 @@ a:hover{
     color: red;
 }
 
+.mar{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Dostosowanie paska przewijania dla przeglądarek opartych na WebKit */
 ::-webkit-scrollbar{
     width: var(--scrollbar-width);

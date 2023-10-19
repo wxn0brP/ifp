@@ -5,9 +5,6 @@
         <title id="title">ifp</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="favicon.ico" rel="shortcut icon">
-        <link href="/lib/wwli-res.css" rel="stylesheet">
-        <link href="/lib/wwli-nav.css" rel="stylesheet">
-        <link href="/lib/wwli-class.css" rel="stylesheet">
         <link href="style.css" rel="stylesheet">
 
         <style>
@@ -49,6 +46,9 @@
         </style>
     </head>
     <body>
+        <script src="/core.js"></script>
+        <div id="assets"></div>
+        <script src="js/generateResCss.js"></script>
         <div id="app">
             <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
             <form id="form" class="s m_6 l_4 mar">
@@ -75,38 +75,37 @@
                 <div class="passGood mar"><span id="passGood_a"></span> Mała litera</div>
                 <div class="passGood mar"><span id="passGood_A"></span> Duża litera</div>
                 <div class="passGood mar"><span id="passGood_1"></span> Liczba</div>
-                <div class="passGood mar"><span id="passGood_$"></span> Znak specialny</div>
+                <div class="passGood mar"><span id="passGood_sp"></span> Znak specialny</div>
                 <div class="passGood mar"><span id="passGood_len"></span> 8 znaków</div>
             </div>
         </div>
 
-        <script src="/lib/wwli.js"></script>
         <script>
-            var kodDiv = __("#kod");
-            var pass1Div = __("#pass1");
-            var pass2Div = __("#pass2");
-            var errDiv = __("#err");
+            var kodDiv = document.querySelector("#kod");
+            var pass1Div = document.querySelector("#pass1");
+            var pass2Div = document.querySelector("#pass2");
+            var errDiv = document.querySelector("#err");
 
-            var passGood_a = __("#passGood_a");
-            var passGood_A = __("#passGood_A");
-            var passGood_1 = __("#passGood_1");
-            var passGood_$ = __("#passGood_$");
-            var passGood_len = __("#passGood_len");
+            var passGood_a = document.querySelector("#passGood_a");
+            var passGood_A = document.querySelector("#passGood_A");
+            var passGood_1 = document.querySelector("#passGood_1");
+            var passGood_$ = document.querySelector("#passGood_sp");
+            var passGood_len = document.querySelector("#passGood_len");
 
-            __("#form").on("submit", async (e) => {
+            document.querySelector("#form").on("submit", async (e) => {
                 e.preventDefault();
-                var kod = kodDiv.cont();
+                var kod = kodDiv.value;
                 if(!kod){
                     errDiv.html("Pole kod nie może być puste");
                     return;
                 }
-                var pass1 = pass1Div.cont();
+                var pass1 = pass1Div.value;
                 if(!pass1){
                     errDiv.html("Pole Hasło nie może być puste");
                     return;
                 }
                 pass1 = pass1.trim();
-                var pass2 = pass2Div.cont();
+                var pass2 = pass2Div.value;
                 if(!pass2){
                     errDiv.html("Pole Hasło nie może być puste");
                     return;
@@ -170,11 +169,10 @@
             function pokazPass(x){
                 var pass = window["pass"+x+"Div"];
                 if(!pass) return;
-                pass = pass.g();
-                if(pass.type == "text"){
-                    pass.type = "password";
-                }else{
+                if(pass.type == "password"){
                     pass.type = "text";
+                }else{
+                    pass.type = "password";
                 }
             }
 
@@ -184,7 +182,7 @@
             }
 
             function passGood(){
-                var pass = pass1Div.cont();
+                var pass = pass1Div.value;
                 passGood_a.html(xv(pass.match(/[a-z]/g)));
                 passGood_A.html(xv(pass.match(/[A-Z]/g)));
                 passGood_1.html(xv(pass.match(/[0-9]/g)));

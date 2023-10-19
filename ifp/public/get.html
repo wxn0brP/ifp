@@ -8,8 +8,8 @@
 		<meta name="description" content="IFP - Infinite Fusion Project">
 		<meta name="keywords" content="ifp, IFP, Infinite Fusion Project">
         <link href="/favicon.ico" rel="shortcut icon">
-        <link href="/lib/wwli.min.css" rel="stylesheet">
         <link href="/style.css" rel="stylesheet">
+        <link href="/css/wwli-nav.min.css" rel="stylesheet">
         <style>
             #get button{
                 width: 200px;
@@ -39,11 +39,14 @@
         </style>
     </head>
     <body>
-        <script src="/lib/wwli.js"></script>
+        <script src="/core.js"></script>
+        <script src="/js/menuBuilder.js"></script>
+        <div id="assets"></div>
+        <script src="js/generateResCss.js"></script>
         <div id="app">
             <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
             <div id="navs"></div>
-            <script>__.menuBuildUrl();</script>
+            <script>menuBuilder.menuBuildUrl();</script>
             <div id="get">
                 <button id="win">
                     <a href="/ele-app/rele/ifp-installer.exe">Windows</a>

@@ -90,4 +90,5 @@ function sendUsersInfo(){
     });
 }
 
-Init();
+if(songList.length > 0) Init();
+else log("Radio: Bark utworów.")

@@ -1,6 +1,7 @@
 require("./global");
 require("dotenv").config();
 require("./log");
+require("./setUp");
 require('./db');
 
 const http = require('http');
@@ -25,6 +26,6 @@ lo("__________________"+(new Date()+"").split(" ").slice(1,5).join(" "));
 server.listen(process.env.PORT, function(){
     if(process.env.status == "dev"){
         require("./links");
-        // require("./test");
+        require("./test");
     }
 });

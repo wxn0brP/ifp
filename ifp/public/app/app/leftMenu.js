@@ -120,3 +120,53 @@ function mobileMenuToogler(){
 setTimeout(() => {
     if(utils.ss()) mobileMenuToogler();
 }, 200);
+
+function importMess(){
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json5';
+      
+    input.addEventListener('change', function(){
+        const selectedFile = input.files[0];
+        if (!selectedFile) return;
+        const reader = new FileReader();
+        reader.onload = function(event){
+            const fileContent = event.target.result;
+            try{
+                const jsonData = JSON5.parse(fileContent);
+                toChat = "$import";
+                msgDiv.innerHTML = "";
+                jsonData.forEach(obj => {
+                    const msg = document.createElement("div");
+                    msg.classList.add("mess");
+                    msg.innerHTML = 
+                        `<div><b>${obj.fr}</b></div>`+
+                        `<div>${formatText(obj.txt)}</div>`;
+                    msgDiv.appendChild(msg);
+                });
+            }catch{
+                uiMsg("Wybrany plik jest uszkodzony lub jest w innym formacie.", 1);
+                return;
+            }
+        };
+        reader.readAsText(selectedFile);
+    });
+    input.click();
+}
+
+function exportMess(){
+    let chcek = confirm("Tak");
+    if(!chcek) return;
+    const exp = [];
+    document.querySelectorAll(".mess").forEach(ele => {
+        exp.push({
+            fr: ele.querySelector("div>b").innerHTML,
+            txt: ele.querySelector("[_plain]").getAttribute("_plain")
+        });
+    });
+    const json = JSON5.stringify(exp);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = "data:text/plain;charset=utf-8," + encodeURIComponent(json);
+    downloadLink.download = "IFP-"+localUser.fr+"-"+changeIdToName(toChat.replace("$",""))+".json5";
+    downloadLink.click();
+}

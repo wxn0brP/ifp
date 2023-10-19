@@ -5,9 +5,6 @@
         <title id="title">ifp</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/favicon.ico" rel="shortcut icon">
-        <link href="/lib/wwli-res.css" rel="stylesheet">
-        <link href="/lib/wwli-nav.css" rel="stylesheet">
-        <link href="/lib/wwli-class.css" rel="stylesheet">
         <link href="/style.css" rel="stylesheet">
         <style>
             a{
@@ -59,7 +56,9 @@
         </style>
     </head>
     <body>
-        <script src="/lib/wwli.js"></script>
+        <script src="/core.js"></script>
+        <div id="assets"></div>
+        <script src="js/generateResCss.js"></script>
         <div id="app">
             <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
             <div id="form" class="s m_6 l_4">
@@ -101,12 +100,12 @@
         </script>
         <script src="/js/auth.js"></script>
         <script>
-            var inv = JSON.parse(__.httpReq("/ic/get?id="+id));
+            var inv = JSON.parse(cw.get("/ic/get?id="+id));
             if(!inv.err){
-                __("#ok").style("display: block");
-                __("#server").html(inv.msg.name);
+                document.querySelector("#ok").style("display: block");
+                document.querySelector("#server").innerHTML = inv.msg.name;
             }else{
-                __("#not").style("display: block");
+                document.querySelector("#not").style("display: block");
             }
 
             function ok(){
@@ -124,8 +123,8 @@
 
                 var res = JSON.parse(xhr.responseText);
                 if(res.err) return alert("error");
-                __("#ok").style("display: none");
-                __("#okk").style("display: block");
+                document.querySelector("#ok").style("display: none");
+                document.querySelector("#okk").style("display: block");
             }
         </script>
     </body>

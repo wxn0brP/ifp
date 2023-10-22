@@ -2,13 +2,14 @@ const fs = require('fs');
 const os = require("os");
 const qrcode = require('qrcode-terminal');
 
+const ssl = appConfig.ssl ? "s" : "";
 var port = process.env.PORT;
 var psy = getPhysicalIpAddress();
 var ipLink = psy.map(ip => {
-    return "http://"+ip+":"+port+"/app"
+    return `http${ssl}://`+ip+":"+port+"/app"
 })
 
-lo("http://localhost:"+port+"/app");
+lo(`http${ssl}://localhost:`+port+"/app");
 lo(ipLink.join(" "));
 generateQR();
 

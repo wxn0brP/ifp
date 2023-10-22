@@ -16,7 +16,7 @@ function folders(path, req, res, next){
         var files = fs.readdirSync(path);
         files.unshift("..");
         files = files.map(file => {
-            return "<div><a href=\""+file+"\">"+file+"</a></div>";
+            return `<div><a href="${file}">${file}</a></div>`;
         }).join("");
         var html = fs.readFileSync("./ifp/files.html")+"";
         res.send(html.replace("$1", files));

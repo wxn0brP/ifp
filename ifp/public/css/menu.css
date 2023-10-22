@@ -50,7 +50,7 @@
     word-wrap: break-word;
 }
 
-#resMsgX{
+#responeMsgCloseMenu{
     position: absolute;
     top: 5px;
     left: 50%;
@@ -62,7 +62,7 @@
     transition: .5s;
 }
 
-#resMsgX:hover{
+#responeMsgCloseMenu:hover{
     border-radius: 1rem;
     padding: 7px;
 }

@@ -14,8 +14,8 @@ if(params.get("l")){
 
 ducks = [...ducks].map(duck => {
     var [x, y] = randD();
-    duck.style.left = __.math.rand(20, 80) + "%";
-    duck.style.top = __.math.rand(20, 80) + "%";
+    duck.style.left = cw.rand(20, 80) + "%";
+    duck.style.top = cw.rand(20, 80) + "%";
     return { x, y, duck };
 })
 
@@ -23,8 +23,8 @@ ducks.forEach(duck => {
     duck.duck.addEventListener("click", (event) => {
         score++;
         updateScore();
-        duck.duck.style.top = __.math.rand(20, 80) + "%";
-        duck.duck.style.left = __.math.rand(20, 80) + "%";
+        duck.duck.style.top = cw.rand(20, 80) + "%";
+        duck.duck.style.left = cw.rand(20, 80) + "%";
         var [x, y] = randD();
         duck.x = x;
         duck.y = y;
@@ -78,9 +78,9 @@ function moveDuck(){
 }
 
 function randD(){
-    var dx = __.math.rand(0, 1);
+    var dx = cw.rand(0, 1);
     if(dx == 0) dx = -1;
-    var dy = __.math.rand(0, 1);
+    var dy = cw.rand(0, 1);
     if(dy == 0) dy = -1;
     return [dx, dy];
 }

@@ -8,6 +8,7 @@ global.db = {
     ic: new databaseC(getPath("ic")),
     bot: new databaseC(getPath("bot")),
     permission: new advDatabaseC("data/perm-db"),
+    serverSettings: new databaseC(getPath("server-settings")),
 }
 
 function getPath(name){

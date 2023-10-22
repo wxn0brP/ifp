@@ -4,10 +4,17 @@ require("./log");
 require("./setUp");
 require('./db');
 
-const http = require('http');
 const fs = require('fs');
 const app = require("express")();
-const server = http.createServer(app);
+let server;
+if(appConfig.ssl){
+    server = require('https').createServer({
+        key: fs.readFileSync(appConfig.sslConfig.privateKey, 'utf8'),
+        cert: fs.readFileSync(appConfig.sslConfig.certificate, 'utf8')
+    }, app);
+}else{
+    server = require('http').createServer(app);
+}
 
 global.server = server;
 global.tokens = require("./auth/token");

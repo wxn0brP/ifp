@@ -38,16 +38,17 @@
             <script>menuBuilder.menuBuildUrl();</script>
             
             <h1>Galeria obrazów z IFP</h1>
-            <div id="galery" class="s_11 m_10 l_10 mar">
-                <div class="s_6 m_6 l_6" style="left: 0">
+            <div id="galery" class="s_11 m_10 mar">
+                <div class="s_6" style="left: 0">
                     Lista plików:
                     <ul id="list"></ul>
                 </div>
-                <div class="s_6 m_6 l_6" style="right: 0;">
+                <div class="s_6" style="right: 0;">
                     <img id="mg">
                 </div>
             </div>
             <script>
+                cs.grid();
                 var galery = document.querySelector("#galery");
                 var m = "img/"
                 var fileList = [

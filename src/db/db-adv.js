@@ -1,6 +1,7 @@
 const dbActionC = require("./action-adv");
 const executorC = require("./executor");
 const fs = require("fs");
+
 class dbC{
     constructor(path){
         if(!path.lastIndexOf("/") != -1) path += "/";
@@ -77,21 +78,21 @@ class dbC{
     }
 }
 
-var utli = {
+const utli = {
     maxFileSize: 2 * 1024 * 1024, //2 kB
 
     getLastFile: function(path){
-        var files = fs.readdirSync(path).filter(file => !/\.tmp$/.test(file));
+        let files = fs.readdirSync(path).filter(file => !/\.tmp$/.test(file));
         if(files.length == 0){
             fs.writeFileSync(path+"/1.db", "");
             return "1.db";
         }
         files = files.sort();
-        var last = files[files.length-1];
-        var info = path + "/" + last;
+        const last = files[files.length-1];
+        const info = path + "/" + last;
         if(fs.statSync(info).size > this.maxFileSize){
-            var temName = last.replace(".db", "");
-            var int = parseInt(temName) + 1;
+            const temName = last.replace(".db", "");
+            const int = parseInt(temName) + 1;
             fs.writeFileSync(path + "/" + int + ".db", "");
             return int+".db";
         }

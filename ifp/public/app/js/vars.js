@@ -41,7 +41,6 @@ const sounds = {
         speechSynthesis.speak(this.lektor);
     }
 }
-var reader = null;
 sounds.init();
 
 const confetti = new Confetti("confetti");

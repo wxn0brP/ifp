@@ -2,20 +2,13 @@ changeTo("main");
 loadApis();
 cw.grid();
 
-setTimeout(() => {
-    let ele = document.querySelectorAll("[loadUrl]");
-    [...ele].forEach(e => {
-        const link = e.getAttribute("loadUrl");
-        const data = cw.get(link);
-        e.innerHTML = data;
-    })
-}, 1000);
+setTimeout(loadFilesWithUrl, 1000);
 
 movableDiv(document.getElementById("callMedia"), document.getElementById("callMediaMov"));
 
-document.querySelector("#resMsgX").on("click", () => {
+document.querySelector("#responeMsgCloseMenu").on("click", () => {
     resMsgId = null;
-    document.querySelector("#resMsgX").style("display: none");
+    document.querySelector("#responeMsgCloseMenu").style("display: none");
 });
 
 document.querySelector("#app").on("contextmenu", (e) => {

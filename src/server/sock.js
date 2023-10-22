@@ -16,6 +16,7 @@ var vInne = [
     require("./socket/invite"),
     require("./socket/file"),
     require("./socket/vc"),
+    require("./socket//serverMgmt"),
 ];
 const genId = require("../db/gen");
 

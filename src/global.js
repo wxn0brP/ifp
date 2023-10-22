@@ -12,4 +12,6 @@ global.vars = {
     month: 2592000000
 }
 
+global.appConfig = require("../config");
+
 global.debug = require("./server/debug");

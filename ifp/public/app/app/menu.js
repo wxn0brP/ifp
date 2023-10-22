@@ -44,7 +44,7 @@ function delMess(){
 
 function responeMsgE(){
     resMsgId = document.querySelector("#messMenu").atrib("w_id");
-    document.querySelector("#resMsgX").css("");
+    document.querySelector("#responeMsgCloseMenu").css("");
 }
 
 function sendFile(){

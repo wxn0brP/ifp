@@ -145,12 +145,7 @@ function readText(obj){
         text += d.children[1].getAttribute("_plain");
     }
     if(!text) return;
-    if(!reader){
-        reader = new SpeechSynthesisUtterance();
-        reader.lang = "pl-PL";
-    }
-    reader.text = text;
-    speechSynthesis.speak(reader);
+    sounds.lektorSpeak(text);
 }
 
 function changeIdToName(id){
@@ -227,3 +222,32 @@ function formatDateFormUnux(unixTimestamp){
     const formattedDate = `${day}.${month}.${year} ${hours}:${(minutes < 10 ? '0' : '')}${minutes}`;
     return formattedDate;
 }
+
+function loadFilesWithUrl(){
+    let ele = document.querySelectorAll("[loadUrl]");
+    [...ele].forEach(e => {
+        const link = e.getAttribute("loadUrl");
+        const data = cw.get(link);
+        e.innerHTML = data;
+        e.removeAttribute("loadUrl");
+    })
+}
+
+
+
+
+
+
+
+
+
+function testMgmt(d){
+    socket.emit("editServer", {
+        server: "test",
+        ...d
+    })
+}
+
+
+
+

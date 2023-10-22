@@ -21,7 +21,7 @@ var ifpSettingsCreator = {}
 
 function settingsChange(name){
     if(!ifpSettingsCreator[name]){
-        var json = cw.get("/js/settings/"+name+".json5");
+        var json = cw.get("settings/"+name+".json5");
         ifpSettingsCreator[name] = JSON5.parse(json);
     }
     var e = document.querySelector("#settingsDiv");

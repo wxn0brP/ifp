@@ -68,10 +68,10 @@ socket.on("Users-Online", (users) => {
     document.getElementById("connected").innerText = users;
 });
 
-var stBt = __("#start");
+var stBt = document.querySelector("#start");
 stBt.style("cursor: pointer;");
 function start(){
     socket.emit("Start");
-    stBt.g().disabled = true;
+    stBt.disabled = true;
     stBt.style("cursor: not-allowed;");
 }

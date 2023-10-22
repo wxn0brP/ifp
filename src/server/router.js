@@ -31,5 +31,10 @@ module.exports = (app) => {
         app.post("/reset-kod", resetKodA);
         app.post("/ic", inviteChatA);
         app.get("/ic/get", inviteChatGetA);
+        app.post("/github-webhook", (req, res) => {
+            const eventType = req.headers['x-github-event'];
+            lo(eventType, req.body);
+            res.sendStatus(200);
+        })
     }
 }

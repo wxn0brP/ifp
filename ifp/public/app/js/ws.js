@@ -56,6 +56,7 @@ socket.on("mess", (data) => {
     if(data.to != "@"){ //sender is author
         if(data.to != toChat) return;
     }
+    if(toChatChannel != data.chnl) return;
     addMess(data);
 });
 
@@ -69,7 +70,7 @@ socket.on("getMessage", (data) => {
         data.forEach((mess) => {
             try{
                 addMess({
-                    from: mess.from,
+                    fr: mess.fr,
                     msg: mess.msg,
                     _id: mess._id,
                     e: mess.edit ? mess.lastEdit : false,
@@ -103,6 +104,17 @@ socket.on("friends", (g) => {
         });
         var span = document.createElement("span");
         span.id = "f-"+f;
+
+        if(utils.ss()){ //if mobile
+            btn.addEventListener("dblclick", (e) => contMenu.friendBtn(f, e));
+        }else{
+            btn.addEventListener("contextmenu", (e) => {
+                e.preventDefault();
+                contMenu.friendBtn(f, e);
+                return false;
+            });
+        }
+
         btn.appendChild(span);
         friendsList.add(btn);
         friendsList.add(document.createElement("br"));
@@ -265,4 +277,15 @@ socket.io.on("reconnect", () => {
     if(!peerVars.callOk) return;
     if(!peerVars.id) return;
     socket.emit("joinVC-reconn", peerVars.id);
-})
+});
+
+socket.on("setUpServer", (categories) => {
+    setUpServer(categories);
+});
+
+socket.on("getProfile", data => {
+    document.querySelector("#userProfile_name_content").innerHTML = data.name;
+    document.querySelector("#userProfile_status").innerHTML = data.status;
+    document.querySelector("#userProfile_opis").innerHTML = data.opis;
+    document.querySelector("#userProfile_ifp_date").innerHTML = formatDateFormUnux(parseInt(data.time, 16));
+});

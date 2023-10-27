@@ -1,0 +1,76 @@
+#settingsDiv{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--back);
+    text-align: left;
+    padding: 20px;
+    padding-top: 35px;
+}
+
+#settingsCloseBtn{
+    position: absolute;
+    aspect-ratio: 1/1;
+    top: 5px;
+    right: 5px;
+    padding: 10px;
+    border-radius: 100%;
+    color: var(--txt);
+    background-color: var(--menu);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* #settingsDivC>div{
+    margin: 1rem 0;
+} */
+
+.settings-btn{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--menu);
+    color: var(--txt);
+    margin: 5px;
+}
+
+.setting_ele{
+    margin-top: 12px;
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px solid var(--txt);
+}
+
+#settingsList{
+    width: 100px;
+    height: 100%;
+    float: left;
+    margin-right: 10px;
+}
+
+#settingsList button{
+    width: 95%;
+    border-radius: 1rem;
+    background-color: var(--menu);
+    color: var(--txt);
+    height: 2rem;
+    margin-top: 10px;
+}
+
+#settingsDivC{
+    float: left;
+    width: calc(100% - 120px); 
+}
+
+@media screen and (max-width: 850px){
+    #settingsList{
+        float: none;
+    }
+
+    #settingsDivC{
+        float: none;
+    }
+}

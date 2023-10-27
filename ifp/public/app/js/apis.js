@@ -39,9 +39,11 @@ function loadApis(){
     else path = "web";
 
     script.src = "/devices/"+path+".js";
-    script.onload = function(){
+    const loadEvt = () => {
         debugMsg("load api: "+path);
         setUpSocket();
+        script.removeEventListener("load", loadEvt);
     }
+    script.addEventListener("load", loadEvt);
     document.querySelector("#assets").appendChild(script);
 }

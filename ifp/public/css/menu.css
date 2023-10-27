@@ -22,7 +22,7 @@
     background-color: var(--menu);
 }
 
-#menu #friends{
+#menu #leftPanel{
     overflow: auto;
     height: 100vh;
     background-color: var(--panel);
@@ -31,7 +31,15 @@
     width: 240px;
 }
 
-#menu #friends button{
+#goMain{
+    transition: transform 1s;
+}
+
+#goMain:hover{
+    transform: rotate(10deg);
+}
+
+#menu #leftPanel button{
     width: 100%;
     height: 2rem;
     border: none;
@@ -40,9 +48,25 @@
     background-color: var(--panel);
 }
 
-#menu #friends button:hover{
+#menu #leftPanel button:hover{
     border-radius: 5px;
     background-color: var(--back);
+}
+
+#leftPanel-server details{
+    margin-top: 10px;
+}
+
+#serverChannels button{
+    text-align: left;
+    padding: 0 10px;
+}
+
+#leftPanel-server summary{
+    padding: 0 5px;
+    text-align: left;
+    user-select: none;
+    cursor: pointer;
 }
 
 #serverName{
@@ -65,4 +89,12 @@
 #responeMsgCloseMenu:hover{
     border-radius: 1rem;
     padding: 7px;
+}
+
+.channel_text::before{
+    content: "📝";
+}
+
+.channel_voice::before{
+    content: "🔊";
 }

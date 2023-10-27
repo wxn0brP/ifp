@@ -4,35 +4,52 @@ var contMenu = {
         var style = menu ? "" : "none";
         document.querySelectorAll(".messMenuA").forEach(e => e.style.display=style);
 
-        var messMenu = document.getElementById("messMenu");
+        var messMenu = document.querySelector("#messMenu");
         messMenu.setAttribute("w_id", id);
         messMenu.style.display = "block";
 
         menuMax(e, messMenu);
 
         function click(){
-            document.removeEventListener("click", click);
+            document.body.removeEventListener("click", click);
             messMenu.style.display = "none";
         }
 
-        document.addEventListener("click", click);
+        document.body.addEventListener("click", click);
     },
 
     server: (id, e) => {
         window.getSelection().removeAllRanges();
 
-        var serverMenu = document.getElementById("serverMenu");
+        var serverMenu = document.querySelector("#serverMenu");
         serverMenu.setAttribute("w_id", id);
         serverMenu.style.display = "";
 
         menuMax(e, serverMenu);
 
         function click(){
-            document.removeEventListener("click", click);
+            document.body.removeEventListener("click", click);
             serverMenu.style.display = "none";
         }
 
-        document.addEventListener("click", click);
+        document.body.addEventListener("click", click);
+    },
+
+    friendBtn: (id, e) => {
+        window.getSelection().removeAllRanges();
+
+        var friendMenu = document.querySelector("#friendMenu");
+        friendMenu.setAttribute("w_id", id);
+        friendMenu.style.display = "";
+
+        menuMax(e, friendMenu);
+
+        function click(){
+            document.body.removeEventListener("click", click);
+            friendMenu.style.display = "none";
+        }
+
+        document.body.addEventListener("click", click);
     }
 }
 

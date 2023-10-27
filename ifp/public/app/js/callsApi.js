@@ -173,7 +173,7 @@ async function callToFunc(){
     document.querySelector("#callMedia").css("");
 }
 
-function renczneCall(to){
+function serverCall(to){
     joinVC(to+"-main");
     document.querySelector("#callMedia").css("");
 }

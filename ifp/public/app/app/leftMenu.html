@@ -3,16 +3,16 @@
         <button onclick="changeTo('main');" id="goMain">
             <img src="/favicon.ico" alt="MAIN" style="width: 80%; margin-top: 5px;">
         </button>
-        <button onclick="document.querySelector('#alertServerAction').css('display: block;')" id="addChat"></button>
         <hr style="margin: 3px 5px;">
         <span id="serverList"></span>
+        <button onclick="document.querySelector('#alertServerAction').css('display: block;')" id="addChat"></button>
     </div>
-    <div class="left" id="friends">
-        <div id="friends-main" w_if="toChat.startsWith('$') || toChat == 'main'">
+    <div class="left" id="leftPanel">
+        <div id="leftPanel-main" w_if="toChat.startsWith('$') || toChat == 'main'">
             <button onclick="logout()">WYLOGUJ SIĘ 🔚</button><br />
             <pc w_if="toChat == 'main'"><button onclick="zezwolNaNotif()">Powiadomienia 🔔</button><br /></pc>
             <button onclick="addFriends()" w_if="toChat == 'main'">Dodaj Znajomego 🤝</button>
-            <button onclick="settingsChange('main')">Ustawienia ⚙️</button>
+            <button onclick="settingsChange('main', true)">Ustawienia ⚙️</button>
             <button onclick="kodLog()" w_if="toChat == 'main'">Kod logowania 🔐</button>
             <button onclick="callToFunc()" w_if="toChat != 'main'" id="callToBtn">Zadzwoń do... ☎️</button>
             <button onclick="exportMess()" w_if="toChat != 'main'">Wyeksportuj ⬆️</button>
@@ -25,10 +25,11 @@
             <br /><br />
             <span id="invites"></span>
         </div>
-        <div id="friends-server" w_if="!toChat.startsWith('$') && toChat != 'main'">
+        <div id="leftPanel-server" w_if="!toChat.startsWith('$') && toChat != 'main'">
             <br />
             <h2 id="serverName"></h2>
-            <!-- <br /><hr><br /> -->
+            <br /><hr><br />
+            <div id="serverChannels"></div>
         </div>
     </div>
 </div>

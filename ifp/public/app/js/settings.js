@@ -4,12 +4,16 @@ var ifpSettings = {
         "typ powiadomienia": "Dźwięk",
         "radio": false
     },
+    konto: {
+
+    }
 }
 
 var settingsRun = {
     main: () => {
         
-    }
+    },
+    konto: () => {},
 }
 
 if(localStorage.getItem("settings")){
@@ -19,14 +23,14 @@ if(localStorage.getItem("settings")){
 
 var ifpSettingsCreator = {}
 
-function settingsChange(name){
+function settingsChange(name, fade=false){
     if(!ifpSettingsCreator[name]){
         var json = cw.get("settings/"+name+".json5");
         ifpSettingsCreator[name] = JSON5.parse(json);
     }
     var e = document.querySelector("#settingsDiv");
     e.css("");
-    e.fadeIn();
+    if(fade) e.fadeIn();
     settingsInit(document.getElementById("settingsDivC"), ifpSettingsCreator[name], ifpSettings[name], () => {
         closeSettings();
         localStorage.setItem("settings", JSON5.stringify(ifpSettings));

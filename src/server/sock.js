@@ -87,9 +87,9 @@ io.of("/").on("connection", (socket) => {
     socket.on("mess", async (req) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
-            var { to, msg, channel } = req;
-            if(!to || !msg || !channel) return socket.emit("error", "to & msg & channel is required");
-            var encrypt = req.encrypt || "plain";
+            var { to, msg, chnl } = req;
+            if(!to || !msg || !chnl) return socket.emit("error", "to & msg & chnl is required");
+            var enc = req.enc || "plain";
             
             var friendChat = to.startsWith("$");
             if(friendChat){
@@ -106,10 +106,10 @@ io.of("/").on("connection", (socket) => {
             if(msg.length > 90) return socket.emit("error", "msg jest za długie");
             
             var data = {
-                from: socket.user._id,
+                fr: socket.user._id,
                 msg: message,
-                channel,
-                encrypt,
+                chnl,
+                enc,
             }
             if(req.res) data.res = req.res;
 
@@ -121,11 +121,11 @@ io.of("/").on("connection", (socket) => {
             data._id = _id._id;
             if(req.silent) data.silent = silent;
             sendToSocket(socket.user._id, "mess", {
-                from: socket.user._id,
+                fr: socket.user._id,
                 msg: data.msg,
-                channel,
+                chnl,
                 _id: _id._id,
-                encrypt,
+                enc,
                 to: "@"
             });
             chat.users.forEach(u => {
@@ -137,7 +137,7 @@ io.of("/").on("connection", (socket) => {
         }
     });
 
-    socket.on("getMessage", async (to, start, finish, opt) => {
+    socket.on("getMessage", async (to, chnl, start, finish, opt) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
@@ -158,17 +158,38 @@ io.of("/").on("connection", (socket) => {
                 if(!user.o.chats.includes(to)) return socket.emit("error", "you not is this chat");
             }
 
-            var responeAll = await global.db.chat.mess.find(to, {});
+            const responeAll = await global.db.chat.mess.find(to, { chnl });
 
-            var selectedMessages = responeAll.reverse().slice(start, finish);
+            const selectedMessages = responeAll.reverse().slice(start, finish);
 
-            var respone = selectedMessages.map((val) => {
+            const respone = selectedMessages.map((val) => {
                 return val.o;
             });
 
             socket.emit("getMessage", respone, opt);
         }catch(e){
             lo("error: ", e)
+        }
+    });
+
+    socket.on("setUpServer", async id => {
+        try{
+            if(!socket.user) return socket.emit("error", "not auth");
+
+            // --- temp ---
+            categories = [
+                {
+                    name: "main",
+                    channels: [
+                        { name: "main", id: "main", type: "text" },
+                        { name: "main", id: "mainV", type: "voice" },
+                    ]
+                }
+            ]
+
+            socket.emit("setUpServer", categories);
+        }catch(e){
+            lo(e);
         }
     });
 
@@ -216,7 +237,7 @@ io.of("/").on("connection", (socket) => {
 
             var mess = await global.db.chat.mess.findOne(to, { _id });
             if(!mess) return socket.emit("error", "msg is not exists");
-            if(mess.o.from != socket.user._id) return socket.emit("error", "not");
+            if(mess.o.fr != socket.user._id) return socket.emit("error", "not");
 
             const time = genId(0);
             await global.db.chat.mess.updateOne(to, { _id }, { msg, edit: true, lastEdit: time });
@@ -239,7 +260,7 @@ io.of("/").on("connection", (socket) => {
 
             var mess = await global.db.chat.mess.findOne(to, { _id });
             if(!mess) return socket.emit("error", "msg is not exists");
-            if(mess.o.from != socket.user._id) return socket.emit("error", "not");
+            if(mess.o.fr != socket.user._id) return socket.emit("error", "not");
 
             await global.db.chat.mess.removeOne(to, { _id });
             sendToChatUsers(to, "delMess", _id);
@@ -284,7 +305,8 @@ io.of("/").on("connection", (socket) => {
         }
     });
     
-    socket.on("getUserStatus", async (id) => {        
+    socket.on("getUserStatus", async (id) => {    
+        if(!socket.user) return socket.emit("error", "not auth");    
         if(!socket.isUser) return socket.emit("error", "bot");
         var user = await usrDB.findOne({_id: id});
         if(!user) return socket.emit("error", "user is not exsists");
@@ -312,6 +334,27 @@ io.of("/").on("connection", (socket) => {
             to = messInter.combinateId(p1, p2);
         }
         socket.emit("getChatIdFriends", to);
+    });
+
+    socket.on("getProfile", async id => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        let user = await usrDB.findOne({ _id: id });
+        if(!user) return socket.emit("error", "user is not exsists");
+        user = user.o;
+
+        let status = await global.db.userStatus.findOne({ _id: id });
+        if(!status) status = "brak";
+
+        let data = {
+            name: user.name,
+            opis: user.opis,
+            time: user._id.split("-")[0],
+            status,
+        };
+
+        socket.emit("getProfile", data);
     });
 });
 

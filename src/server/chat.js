@@ -1,22 +1,43 @@
 var mess = new (require("../db/db-adv"))("data/mess-db");
 var meta = new (require("../db/database"))("data/mess-meta.db");
-var more = require("../db/more");
+const getId = require("../db/gen");
 const crc = require('crc');
 
-async function createChat(name, creater, id=false){
-    if(!id) id = more.getId();
+async function createChat(name, creater){
+    const id = getId();
     mess.checkFile(id);
-    await meta.add({
+
+    await meta.add({ // meta data
         id,
         users: [],
-        name,
-        admin: [creater]
+        own: creater,
+        name
     });
-    await global.db.ic.add({ id: more.getId(), chat: id, time: -1, count: -5 });
+
+    const settings = {
+        ...require("../chatAppLogicData/serverSettings")
+    };
+    await global.db.serverSettings.add({ // server settings
+        id, settings
+    });
+
+    await global.db.permission.add(id, { // add admin role
+        name: "admin", roleId: getId(), perm: "all", parrent: "all"
+    });
+
+    await global.db.ic.add({ id: getId(), chat: id, time: -1, count: -5 }); //add base inv
+
     return id;
 }
 
-async function addUser(id, user, addChat=true){
+async function createPriv(id, users){
+    await meta.add({
+        id,
+        users
+    });
+}
+
+async function addUser(id, user){
     var chat = await meta.findOne({ id });
     if(!chat) return { err: true, msg: "chat is not found" };
     var userI = await global.db.user.findOne({ _id: user });
@@ -29,11 +50,9 @@ async function addUser(id, user, addChat=true){
     
     users.push(user);
     await meta.updateOne({ id }, { users });
-    if(addChat){
-        userI = userI.o.chats || [];
-        userI.push(id);
-        await global.db.user.updateOne({ _id: user }, { chats: userI });
-    }
+    userI = userI.o.chats || [];
+    userI.push(id);
+    await global.db.user.updateOne({ _id: user }, { chats: userI });
     
     return { err: false, msg: "ok" };
 }
@@ -84,6 +103,7 @@ function removeArrayItem(item, array){
 
 var obj = {
     createChat,
+    createPriv,
     addUser,
     exitChat,
     combinateId,

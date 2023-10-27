@@ -4,9 +4,9 @@ function urlParams(){
         let b = document.createElement("button");
         b.innerHTML = "join";
         b.addEventListener("click", () => {
-            renczneCall("tak");
+            serverCall("tak");
         })
-        document.querySelector("#friends-main").appendChild(b);
+        document.querySelector("#leftPanel-main").appendChild(b);
     }
 
 }

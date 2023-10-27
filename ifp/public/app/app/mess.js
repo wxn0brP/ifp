@@ -18,10 +18,10 @@ function sendMess(){
     if(msg.length > 90) return uiMsg("msg jest za długie", 1);
 
     let data = {
-        from: localUser.id,
+        fr: localUser.id,
         to: toChat,
         msg: encryptV.enc(msg),
-        channel: "main",
+        chnl: toChatChannel,
         res: resMsgId ? resMsgId : "",
         silent
     }
@@ -35,11 +35,11 @@ function sendMess(){
 function loadMoreMess(){
     let tmp = actMess;
     actMess += messCount;
-    if(toChat != "main") socket.emit("getMessage", toChat, tmp, actMess, true);
+    if(to != "main") socket.emit("getMessage", to, tmp, actMess, true);
 }
 
 function addMess(msg, socroll=true, up=false){
-    var from = changeIdToName(msg.from);
+    var from = changeIdToName(msg.fr);
     var div = document.createElement("div");
     if(utils.ss()){ //if mobile
         div.addEventListener("dblclick", (e) => contMenu.mess(from == localUser.fr, msg._id, e));
@@ -59,9 +59,18 @@ function addMess(msg, socroll=true, up=false){
     }
     content = formatText(content);
     if(msg.e) content += edit_txt.replace("$$", formatDateFormUnux(parseInt(msg.e, 16)));
-    div.innerHTML = 
-        `<div><b>${from}</b></div>`+
-        `<div id="${msg._id}_mess" _plain="${msg.msg}">${content}</div>`;
+
+    let userName = document.createElement("div");
+    userName.innerHTML = `<b>${from}</b>`;
+    userName.addEventListener("click", () => userProfile(msg.fr));
+
+    let divMsg = document.createElement("div");
+    divMsg.id = msg._id + "_mess";
+    divMsg.setAttribute("_plain", msg.msg);
+    divMsg.innerHTML = content;
+
+    div.appendChild(userName);
+    div.appendChild(divMsg);
     
     up ? msgDiv.addUp(div) : msgDiv.add(div);
 
@@ -128,7 +137,7 @@ document.querySelector("#alertLink_ok").on("click", () => {
 function reloadMsg(time){
     function f(){
         msgDiv.html("");
-        socket.emit("getMessage", toChat, 0, messCount, false);
+        getMessages();
     }
     time ? setTimeout(f, time*1000) : f();
 }

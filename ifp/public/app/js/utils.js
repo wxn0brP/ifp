@@ -17,3 +17,12 @@ const utils = {
         return window.innerWidth < 700;
     }
 }
+
+function updateObject(obj, newVal){
+    for(let key in newVal){
+        if(newVal.hasOwnProperty(key)){
+            obj[key] = newVal[key];
+        }
+    }
+    return obj;
+}

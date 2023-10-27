@@ -1,81 +1,76 @@
-function settingsBuilder(div, obj, settings){
-    obj.forEach(optionDef => {
-        const optionDiv = document.createElement("div");
+function settingsBuilder(div, categories, settings){
+    categories.forEach(category => {
+        const categoryDiv = document.createElement("div");
+        categoryDiv.innerHTML = `<h1>${category.name}</h1>`;
 
-        const label = document.createElement("label");
-        label.textContent = optionDef.name;
+        category.cat.forEach(optionDef => {
+            const optionDiv = document.createElement("div");
+            optionDiv.clA("setting_ele");
 
-        if(optionDef.type === "slider"){
-            const sliderDiv = document.createElement("div");
-
-            const slider = document.createElement("input");
-            slider.type = "range";
-            slider.min = optionDef.min || 0;
-            slider.max = optionDef.max || 100;
-            slider.value = settings[optionDef.name];
-
-            slider.addEventListener("input",(event) => {
-                settings[optionDef.name] = parseFloat(event.target.value);
-                valueLabel.textContent = `${settings[optionDef.name]} / ${slider.max}`
-            });
-
-            const valueLabel = document.createElement("span");
-            valueLabel.textContent = `${settings[optionDef.name]} / ${slider.max}`;
-
-            sliderDiv.appendChild(slider);
-            sliderDiv.appendChild(valueLabel);
-
+            const label = document.createElement("label");
+            label.textContent = optionDef.name;
             optionDiv.appendChild(label);
-            optionDiv.appendChild(sliderDiv);
-        }else if(optionDef.type === "button"){
-            const button = document.createElement("button");
-            button.textContent = settings[optionDef.name] ? "Wyłącz" : "Włącz";
 
-            button.addEventListener("click",() => {
-                settings[optionDef.name] = !settings[optionDef.name];
-                button.textContent = settings[optionDef.name] ? "Wyłącz" : "Włącz";
-            });
+            if(optionDef.type === "slider"){
+                const sliderDiv = document.createElement("span");
 
-            optionDiv.appendChild(label);
-            optionDiv.appendChild(button);
-        }else if(optionDef.type === "list"){
-            const select = document.createElement("select");
+                const slider = document.createElement("input");
+                slider.type = "range";
+                slider.min = optionDef.min || 0;
+                slider.max = optionDef.max || 100;
+                slider.value = settings[optionDef.name];
 
-            optionDef.options.forEach(optionValue => {
-                const option = document.createElement("option");
-                option.value = optionValue;
-                option.textContent = optionValue;
-                if(optionValue === settings[optionDef.name]){
-                    option.selected = true;
-                }
-                select.appendChild(option);
-            });
+                slider.addEventListener("input",(event) => {
+                    settings[optionDef.name] = parseFloat(event.target.value);
+                    valueLabel.textContent = `${settings[optionDef.name]} / ${slider.max}`
+                });
 
-            select.addEventListener("change",(event) => {
-                settings[optionDef.name] = event.target.value;
-            });
+                const valueLabel = document.createElement("span");
+                valueLabel.textContent = `${settings[optionDef.name]} / ${slider.max}`;
 
-            optionDiv.appendChild(label);
-            optionDiv.appendChild(select);
-        }
+                sliderDiv.appendChild(slider);
+                sliderDiv.appendChild(valueLabel);
 
-        div.appendChild(optionDiv);
+                optionDiv.appendChild(sliderDiv);
+            }else if(optionDef.type === "checkbox"){
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = settings[optionDef.name];
+                checkbox.addEventListener("change", () => {
+                    settings[optionDef.name] = checkbox.checked;
+                });
+
+                optionDiv.appendChild(checkbox);
+            }else if(optionDef.type === "list"){
+                const select = document.createElement("select");
+
+                optionDef.options.forEach(optionValue => {
+                    const option = document.createElement("option");
+                    option.value = optionValue;
+                    option.textContent = optionValue;
+                    if(optionValue === settings[optionDef.name]){
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+
+                select.addEventListener("change",(event) => {
+                    settings[optionDef.name] = event.target.value;
+                });
+
+                optionDiv.appendChild(select);
+            }
+
+            categoryDiv.appendChild(optionDiv);
+        });
+        div.appendChild(categoryDiv);
     });
 }
 
-function settingsInit(div, obj, settings, callBack){
-    function updateObject(obj, newVal){
-        for(let key in newVal){
-            if(newVal.hasOwnProperty(key)){
-                obj[key] = newVal[key];
-            }
-        }
-        return obj;
-    }
-
+function settingsInit(div, categories, settings, callBack){
     function createSettings(){
         div.innerHTML = "";
-        settingsBuilder(div, obj, settingsTmp);
+        settingsBuilder(div, categories, settingsTmp);
         
         const optionDiv = document.createElement("div");
         

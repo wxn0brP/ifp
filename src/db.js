@@ -7,8 +7,10 @@ global.db = {
     token: new databaseC(getPath("token")),
     ic: new databaseC(getPath("ic")),
     bot: new databaseC(getPath("bot")),
+    feed: new databaseC(getPath("feed")),
     permission: new advDatabaseC("data/perm-db"),
     serverSettings: new databaseC(getPath("server-settings")),
+    userStatus: new databaseC(getPath("userStatus")),
 }
 
 function getPath(name){

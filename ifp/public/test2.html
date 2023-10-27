@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ustawienia Aplikacji</title>
+    <style>
+        /* Dodaj tutaj stylizację dla popup-u ustawień */
+    </style>
+</head>
+<body>
+    <a href="#" id="ustawieniaLink">Otwórz Ustawienia</a>
+
+    <script>
+        function UstawieniaPopup(options) {
+            const defaultOptions = {
+                categories: [],
+                onSave: () => {},
+            };
+            this.options = { ...defaultOptions, ...options };
+            this.popup = document.createElement("div");
+            this.popup.id = "popupUstawien";
+            this.popup.style.display = "none";
+
+            this.options.categories.forEach((category) => {
+                const categoryElement = document.createElement("div");
+                categoryElement.innerHTML = `<h3>${category.name}</h3>`;
+                category.options.forEach((option) => {
+                    const label = document.createElement("label");
+                    label.textContent = option.label;
+                    if (option.type === "checkbox") {
+                        const checkbox = document.createElement("input");
+                        checkbox.type = "checkbox";
+                        checkbox.checked = option.checked;
+                        checkbox.addEventListener("change", () => {
+                            option.checked = checkbox.checked;
+                        });
+                        label.appendChild(checkbox);
+                    } else if (option.type === "list") {
+                        const select = document.createElement("select");
+                        option.choices.forEach((choice) => {
+                            const optionElement = document.createElement("option");
+                            optionElement.value = choice.value;
+                            optionElement.text = choice.label;
+                            select.appendChild(optionElement);
+                        });
+                        select.value = option.selected;
+                        select.addEventListener("change", () => {
+                            option.selected = select.value;
+                        });
+                        label.appendChild(select);
+                    } else if (option.type === "range") {
+                        const range = document.createElement("input");
+                        range.type = "range";
+                        range.min = option.min;
+                        range.max = option.max;
+                        range.value = option.value;
+                        range.addEventListener("input", () => {
+                            option.value = parseFloat(range.value);
+                        });
+                        label.appendChild(range);
+                    }
+                    categoryElement.appendChild(label);
+                });
+                this.popup.appendChild(categoryElement);
+            });
+
+            document.body.appendChild(this.popup);
+
+            this.open = function () {
+                this.popup.style.display = "block";
+            };
+
+            this.save = function () {
+                this.options.onSave(this.options.categories);
+                this.close();
+            };
+
+            this.close = function () {
+                this.popup.style.display = "none";
+            };
+        }
+
+        const ustawieniaLink = document.getElementById("ustawieniaLink");
+
+        const ustawienia = new UstawieniaPopup({
+            categories: [
+                {
+                    name: "Dźwięki powiadomień",
+                    options: [
+                        { label: "Włącz dźwięki", type: "checkbox", checked: false },
+                    ],
+                },
+                {
+                    name: "Wybierz opcję",
+                    options: [
+                        { label: "Wybór z listy", type: "list", choices: [
+                            { value: "opcja1", label: "Opcja 1" },
+                            { value: "opcja2", label: "Opcja 2" },
+                        ], selected: "opcja1" },
+                    ],
+                },
+                {
+                    name: "Ustaw głośność",
+                    options: [
+                        { label: "Głośność", type: "range", min: 0, max: 100, value: 50 },
+                    ],
+                },
+            ],
+            onSave: (categories) => {
+                // Tutaj możesz obsłużyć zapisywanie ustawień
+                console.log("Zapisano ustawienia:", categories);
+            },
+        });
+
+        ustawieniaLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            ustawienia.open();
+        });
+
+        // Zamknięcie popup-u po zapisaniu
+        // Możesz dodać przycisk "Zapisz" i "Anuluj" do obsługi zamykania popup-u
+    </script>
+</body>
+</html>

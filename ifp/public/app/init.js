@@ -30,6 +30,7 @@ async function loadJs(){
         "js/apis.js",
         "js/cont-menu.js",
         "js/func.js",
+        "js/uiFunc.js",
         "js/audioFunc.js",
         "js/callsApi.js",
         "/js/generateResCss.js",
@@ -42,13 +43,15 @@ async function loadJs(){
     ];
     let assets = document.querySelector("#assets");
     async function load(p){
-        return await new Promise((r) => {
-            const src = document.createElement("script");
-            src.src = p;
-            src.addEventListener("load", () => {
-                r();
-            });
-            assets.appendChild(src);
+        return await new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = p;
+            const loadEvt = () => {
+                resolve();
+                script.removeEventListener("load", loadEvt);
+            }
+            script.addEventListener("load", loadEvt);
+            assets.appendChild(script);
         })
     }
     for(let i=0; i<srcs.length; i++){

@@ -1,4 +1,5 @@
 var toChat = "main";
+var toChatChannel = "main";
 
 const localUser = {
     fr: localStorage.getItem("from") || null,

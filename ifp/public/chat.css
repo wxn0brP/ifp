@@ -6,6 +6,8 @@
 @import url("css/pop.css");
 @import url("css/screen.css");
 @import url("css/send.css");
+@import url("css/settings.css");
+@import url("css/userProfile.css");
 
 :root{
     --f1: #9b5de5;
@@ -47,6 +49,13 @@ button{
 .mar{
     margin-left: auto;
     margin-right: auto;
+}
+
+.nonsel{
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 @media only screen and (max-width: 850px){

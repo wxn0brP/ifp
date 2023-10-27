@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Zmiana Kolejności Listy z SortableJS</title>
+    <style>
+        .slider-container {
+            width: 200px;
+        }
+
+        .slider {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .slider li {
+            display: block;
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <ul class="slider">
+            <li>Element 1</li>
+            <li>Element 2</li>
+            <li>Element 3</li>
+            <li>Element 4</li>
+            <li>Element 5</li>
+        </ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script>
+        const slider = document.querySelector(".slider");
+        new Sortable(slider, {
+            animation: 150, // Czas trwania animacji w milisekundach
+            onEnd: () => {
+                const items = Array.from(slider.children);
+                const newOrder = items.map(item => item.textContent);
+                console.log('Nowa kolejność:', newOrder);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -64,8 +64,8 @@ module.exports = (socket) => {
             fromId.push(invite.to);
             toId.push(invite.from);
             
-            await usrDB.updateOne({_id: socket.user._id}, {friends: toId});
-            await usrDB.updateOne({_id: invite.from}, {friends: fromId});
+            await usrDB.updateOne({ _id: socket.user._id }, { friends: toId });
+            await usrDB.updateOne({ _id: invite.from }, { friends: fromId });
 
             await global.db.invites.removeOne({_id: inviteId});
             
@@ -74,9 +74,7 @@ module.exports = (socket) => {
             var cid = chat.combinateId(p1, p2);
             var isChat = await chat.meta.findOne({ id: cid });
             if(!isChat){
-                var res = await chat.createChat("priv", "*", cid);
-                await chat.addUser(res, p1, false);
-                await chat.addUser(res, p2, false);
+                await chat.createPriv(cid, [p1, p2]);
             }
 
             sendToSocket(invite.from, "inviteAccept", invite.to);
@@ -90,7 +88,7 @@ module.exports = (socket) => {
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
         
-            var invite = await global.db.invites.findOne({_id: friendId});
+            var invite = await global.db.invites.findOne({ _id: friendId });
             if(!invite) return socket.emit("error", "invite not found");
             invite = invite.o;
             await global.db.invites.removeOne({ _id: friendId });

@@ -40,8 +40,16 @@
 </div>
 
 <div id="settingsDiv" style="display: none;">
-    <button id="settingsDivBtn" onclick="closeSettings()">X</button>
-    <div id="settingsDivC" class="s m_8 l_8"></div>
+    <div class="s m_11 l_8 u_7 mar">
+        <button id="settingsCloseBtn" onclick="closeSettings()">X</button>
+        <div id="settingsList">
+            <button onclick="settingsChange('main')">main</button>
+            <button onclick="settingsChange('konto')">konto</button>
+        </div>
+        <mob><div></div></mob>
+        <div id="settingsDivC"></div>
+        <div style="clear: both;"></div>
+    </div>
 </div>
 
 <div id="cats" style="display: none;"></div>
@@ -53,4 +61,23 @@
     <svg _name="logo"><use xlink:href="/img/logo.svg#ifp-logo"/></svg>
     <svg _name="sowa"><use xlink:href="/img/sowa.svg#ifp-sowa"/></svg>
     <svg _name="wilk"><use xlink:href="/img/wilk.svg#ifp-wilk"/></svg>
+</div>
+
+<div id="userProfile" style="display: none;">
+    <div class="userProfile" id="userProfile_baner"></div>
+    <div class="userProfile" id="userProfile_name">
+        <img src="/favicon.ico" alt="">
+        <div id="userProfile_name_content" title="wxn0brP">wxn0brP</div>
+    </div>
+    <div class="userProfile" id="userProfile_data">
+        <b>STATUS</b>
+        <div id="userProfile_status">to jest jakiś tam status np słucha spotify</div>
+        <b>O MNIE</b>
+        <div id="userProfile_opis">to jest jakiś tam opis profilu / bio</div>
+        <b>CZŁONE IFP OD</b>
+        <div id="userProfile_ifp_date">27.10.2023
+        </div>
+        <!-- <b>NOTATKA</b>
+        <div id="userProfile_note">Jakś nota o 2 user</div> -->
+    </div>
 </div>

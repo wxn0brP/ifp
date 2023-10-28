@@ -1,8 +1,9 @@
 const mailer = require('nodemailer');
+const cfg = require("../../data/mailConfig.json");
 
 module.exports = (type, to, subject, ...params) => {
     try{
-        var smtpProtocol = mailer.createTransport(require("../../data/mailConfig.json"));
+        var smtpProtocol = mailer.createTransport(cfg);
 
         var pod = "";
         switch(type){
@@ -43,7 +44,7 @@ module.exports = (type, to, subject, ...params) => {
         `.trim();
         
         var mailoption = {
-            from: "ifp@ifp.projektares.tk",
+            from: cfg.from,
             to,
             subject,
             html

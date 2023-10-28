@@ -9,11 +9,8 @@
     </div>
     <div class="left" id="leftPanel">
         <div id="leftPanel-main" w_if="toChat.startsWith('$') || toChat == 'main'">
-            <button onclick="logout()">WYLOGUJ SIĘ 🔚</button><br />
             <pc w_if="toChat == 'main'"><button onclick="zezwolNaNotif()">Powiadomienia 🔔</button><br /></pc>
             <button onclick="addFriends()" w_if="toChat == 'main'">Dodaj Znajomego 🤝</button>
-            <button onclick="settingsChange('main', true)">Ustawienia ⚙️</button>
-            <button onclick="kodLog()" w_if="toChat == 'main'">Kod logowania 🔐</button>
             <button onclick="callToFunc()" w_if="toChat != 'main'" id="callToBtn">Zadzwoń do... ☎️</button>
             <button onclick="exportMess()" w_if="toChat != 'main'">Wyeksportuj ⬆️</button>
             <button onclick="importMess()" w_if="toChat == 'main'">Importuj ⬇️</button>

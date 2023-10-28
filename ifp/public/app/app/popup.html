@@ -1,4 +1,4 @@
-<div id="alertLink" style="display: none;" class="s m_7 l_5">
+<div id="alertLink" style="display: none;" class="s m_7 l_5 popUp">
     <br />
     <h1>
         Czy na pewno chcesz pójść pod ten link: <br />
@@ -10,7 +10,7 @@
     <br /><br />
 </div>
 
-<div id="alertServerAction" style="display: none;" class="s m_7 l_5">
+<div id="alertServerAction" style="display: none;" class="s m_7 l_5 popUp">
     <br />
     <button onclick="createChat()">Chce stowrzyć czat +</button>
     <button onclick="inivteAchat()">Chce dołączyć do czatu -></button>
@@ -18,9 +18,9 @@
     <br /><br />
 </div>
 
-<div id="errMesses"></div>
+<div id="errMesses" class="popUp"></div>
 
-<div id="callMedia" style="display: none;">
+<div id="callMedia" style="display: none;" class="popUp">
     <div class="s" id="callMediaMov" style="text-align: center;">➕</div>
     <div style="display: flex; justify-content: space-between;">
         <div class="s_5">
@@ -39,22 +39,23 @@
     <div id="callContenerM"></div>
 </div>
 
-<div id="settingsDiv" style="display: none;">
+<div id="settingsDiv" style="display: none;" class="popUp">
     <div class="s m_11 l_8 u_7 mar">
         <button id="settingsCloseBtn" onclick="closeSettings()">X</button>
         <div id="settingsList">
             <button onclick="settingsChange('main')">main</button>
             <button onclick="settingsChange('konto')">konto</button>
+            <button onclick="logout()" style="color: red;">WYLOGUJ SIĘ</button>
         </div>
-        <mob><div></div></mob>
+        <mob><br /><br /></mob>
         <div id="settingsDivC"></div>
         <div style="clear: both;"></div>
     </div>
 </div>
 
-<div id="cats" style="display: none;"></div>
+<div id="cats" style="display: none;" class="popUp"></div>
 
-<div id="imgSelector" class="s m_5" style="display: none;">
+<div id="imgSelector" class="s m_5 popUp" style="display: none;">
     <svg _name="eagle"><use xlink:href="/img/eagle.svg#ifp-eagle"/></svg>
     <svg _name="krasnolud"><use xlink:href="/img/krasnolud.svg#ifp-krasnolud"/></svg>
     <svg _name="lis"><use xlink:href="/img/lis.svg#ifp-lis"/></svg>
@@ -63,7 +64,7 @@
     <svg _name="wilk"><use xlink:href="/img/wilk.svg#ifp-wilk"/></svg>
 </div>
 
-<div id="userProfile" style="display: none;">
+<div id="userProfile" style="display: none;" class="popUp">
     <div class="userProfile" id="userProfile_baner"></div>
     <div class="userProfile" id="userProfile_name">
         <img src="/favicon.ico" alt="">
@@ -82,7 +83,7 @@
     </div>
 </div>
 
-<div id="statusPopUp" style="display: none;">
+<div id="statusPopUp" style="display: none;" class="popUp">
     <h2>Ustaw swój własny status!</h2>
     <br />
     <input id="statusPopUp_status">

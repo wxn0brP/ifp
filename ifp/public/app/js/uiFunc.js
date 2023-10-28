@@ -210,3 +210,25 @@ function setUpServer(categories){
 function getMessages(opt=false){
     socket.emit("getMessage", toChat, toChatChannel, 0, messCount, opt);
 }
+
+function menuClickEvent(div, call){
+    if(!utils.ss()){
+        div.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+            call(e);
+            return false;
+        });
+        return;
+    }
+    //if mobile
+    let time;
+    div.addEventListener("dblclick", call);
+    div.addEventListener("mousedown", () => time = new Date());
+    div.addEventListener("touchstart", () => time = new Date());
+    div.addEventListener("touchend", end);
+    div.addEventListener("mouseup", end);
+    function end(e){
+        time = new Date() - time;
+        if(time > 1000) setTimeout(() => call(e), 100);
+    }
+}

@@ -1,3 +1,7 @@
+.popUp{
+    z-index: 99;
+}
+
 #mobileMenuToogler{
     position: absolute;
     left: 2px;

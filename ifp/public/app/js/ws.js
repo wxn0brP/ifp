@@ -105,16 +105,7 @@ socket.on("friends", (g) => {
         });
         var span = document.createElement("span");
         span.id = "f-"+f;
-
-        if(utils.ss()){ //if mobile
-            btn.addEventListener("dblclick", (e) => contMenu.friendBtn(f, e));
-        }else{
-            btn.addEventListener("contextmenu", (e) => {
-                e.preventDefault();
-                contMenu.friendBtn(f, e);
-                return false;
-            });
-        }
+        menuClickEvent(btn, (e) => contMenu.friendBtn(f, e));
 
         btn.appendChild(span);
         friendsList.add(btn);
@@ -145,15 +136,7 @@ socket.on("getChats", (g) => {
             btn.classList.add("a-active");
         });
 
-        if(utils.ss()){
-            btn.addEventListener("dblclick", (e) => contMenu.server(f, e));
-        }else{
-            btn.addEventListener("contextmenu", (e) => {
-                e.preventDefault();
-                contMenu.server(f, e);
-                return false;
-            });
-        }
+        menuClickEvent(btn, (e) => contMenu.friendBtn(f, e));
         serverList.add(btn);
         serverList.add(document.createElement("br"));
     })

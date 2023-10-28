@@ -45,24 +45,29 @@
 }
 
 #settingsList{
-    width: 100px;
+    width: 130px;
     height: 100%;
     float: left;
     margin-right: 10px;
 }
 
 #settingsList button{
-    width: 95%;
+    width: 98%;
     border-radius: 1rem;
-    background-color: var(--menu);
     color: var(--txt);
+    background-color: var(--back);
     height: 2rem;
-    margin-top: 10px;
+    margin-top: 13px;
+    border: none;
+}
+
+#settingsList button:hover{
+    background-color: var(--menu);
 }
 
 #settingsDivC{
     float: left;
-    width: calc(100% - 120px); 
+    width: calc(100% - 150px); 
 }
 
 @media screen and (max-width: 850px){
@@ -72,5 +77,6 @@
 
     #settingsDivC{
         float: none;
+        width: 100%;
     }
 }

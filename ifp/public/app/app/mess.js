@@ -41,15 +41,7 @@ function loadMoreMess(){
 function addMess(msg, socroll=true, up=false){
     var from = changeIdToName(msg.fr);
     var div = document.createElement("div");
-    if(utils.ss()){ //if mobile
-        div.addEventListener("dblclick", (e) => contMenu.mess(from == localUser.fr, msg._id, e));
-    }else{
-        div.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-            contMenu.mess(from == localUser.fr, msg._id, e);
-            return false;
-        });
-    }
+    menuClickEvent(div, (e) => contMenu.mess(from == localUser.fr, msg._id, e));
     div.classList.add("mess");
     div.setAttribute("_id", msg._id);
 
@@ -61,8 +53,11 @@ function addMess(msg, socroll=true, up=false){
     if(msg.e) content += edit_txt.replace("$$", formatDateFormUnux(parseInt(msg.e, 16)));
 
     let userName = document.createElement("div");
-    userName.innerHTML = `<b>${from}</b>`;
-    userName.addEventListener("click", () => userProfile(msg.fr));
+    let b = document.createElement("b");
+    b.innerHTML = from;
+    b.addEventListener("click", () => userProfile(msg.fr));
+    b.style.cursor = "pointer";
+    userName.appendChild(b);
 
     let divMsg = document.createElement("div");
     divMsg.id = msg._id + "_mess";

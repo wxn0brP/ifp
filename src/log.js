@@ -6,18 +6,17 @@ if(!fs.existsSync("./logs")) fs.mkdirSync("./logs");
 if(!fs.existsSync(pathLog)) fs.writeFileSync(pathLog, "");
 else fs.appendFileSync(pathLog, "\n");
 
-global.log = function(...datas){
-    var line = new Error().stack.split('\n')[2].trim();
-    var path = line.slice(line.indexOf("(")).replace(process.env.basePath ,"");
-    var data = datas.join(" :: ");
+function logF(path, ...datas){
+    const data = datas.join(" :: ");
     const now = new Date();
-    var dataToLog = `[${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}] ${path}: ${data}\n`;
+    const dataToLog = `[${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}] ${path}: ${data}\n`;
     fs.appendFileSync(pathLog, dataToLog);
 }
 
-global.log.m = function(path, ...datas){
-    var data = datas.join(" :: ");
-    const now = new Date();
-    var dataToLog = `[${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}] ${path}: ${data}\n`;
-    fs.appendFileSync(pathLog, dataToLog);
+global.log = function(...datas){
+    const line = new Error().stack.split('\n')[2].trim();
+    const path = line.slice(line.indexOf("(")).replace(process.env.basePath, "");
+    logF(path, ...datas);
 }
+
+global.log.m = logF;

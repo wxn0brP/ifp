@@ -76,3 +76,5 @@ setInterval(handleWifElements, 500);
         }
     });
 })();
+
+document.querySelector("#accountPanel_name").innerHTML = localUser.fr;

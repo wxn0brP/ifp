@@ -24,12 +24,21 @@
             <span id="err" style="color: var(--txt);"></span>
             <br /><br />
             <span id="invites"></span>
+
         </div>
         <div id="leftPanel-server" w_if="!toChat.startsWith('$') && toChat != 'main'">
             <br />
             <h2 id="serverName"></h2>
             <br /><hr><br />
             <div id="serverChannels"></div>
+        </div>
+    </div>
+    <div class="left" id="accountPanel">
+        <div style="position: relative;">
+            <img src="/favicon.ico" alt="">
+            <div id="accountPanel_name" onclick="userProfile(localUser.id)"></div>
+            <div id="accountPanel_status" onclick="showStatusPopUp()"></div>
+            <div id="accountPanel_settings" onclick="settingsChange('main', true)">⚙️</div>
         </div>
     </div>
 </div>

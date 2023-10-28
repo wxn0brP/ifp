@@ -179,3 +179,30 @@
     padding: 10px;
     cursor: pointer;
 }
+
+#statusPopUp{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: var(--panel);
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+}
+
+#statusPopUp :is(button, input){
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--back);
+    color: var(--txt);
+}
+
+#statusPopUp button{
+    width: 50px;
+}
+
+#statusPopUp input{
+    width: 200px;
+    height: 2rem;
+}

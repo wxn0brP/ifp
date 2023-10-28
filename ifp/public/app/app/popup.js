@@ -1,15 +1,24 @@
-function userProfile(profile){
-    socket.emit("getProfile", profile);
-    const profileDiv = document.querySelector("#userProfile");
-    profileDiv.fadeIn();
+function popUpSetUp(div){
+    div.fadeIn();
 
     function close(){
-        profileDiv.fadeOut();
+        div.fadeOut();
         document.body.removeEventListener("click", close);
     }
     setTimeout(() => {
         document.body.addEventListener("click", close);
-    }, 1000);
+    }, 500);
+
+    div.addEventListener("click", (e) => e.stopPropagation());
 }
 
-document.querySelector("#userProfile").addEventListener("click", (e) => e.stopPropagation());
+function userProfile(profile){
+    socket.emit("getProfile", profile);
+    const profileDiv = document.querySelector("#userProfile");
+    popUpSetUp(profileDiv);
+}
+
+function showStatusPopUp(){
+    const statusPopUp = document.querySelector("#statusPopUp");
+    popUpSetUp(statusPopUp);
+}

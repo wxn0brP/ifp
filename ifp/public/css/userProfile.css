@@ -68,3 +68,40 @@
 #userProfile_data div{
     margin-bottom: 1rem;
 }
+#accountPanel img{
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 50px;
+}
+
+#accountPanel_name, #accountPanel_status{
+    position: absolute;
+    left: 60px;
+    width: 120px;
+    height: 20px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    cursor: pointer;
+}
+
+#accountPanel_name{
+    top: 10px;
+    font-weight: 700;
+}
+
+#accountPanel_status{
+    top: 32px;
+    font-size: 0.9rem;
+}
+
+#accountPanel_settings{
+    position: absolute;
+    left: 190px;
+    top: 12px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}

@@ -2,14 +2,7 @@ const mailer = require('nodemailer');
 
 module.exports = (type, to, subject, ...params) => {
     try{
-        var smtpProtocol = mailer.createTransport({
-            host: "s1.ct8.pl",
-            port: 465,
-            auth: {
-                user: "ifp@ifp.projektares.tk",
-                pass: "!=e-.P6H7L)57c%"
-            }
-        });
+        var smtpProtocol = mailer.createTransport(require("../../data/mailConfig.json"));
 
         var pod = "";
         switch(type){

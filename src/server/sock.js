@@ -344,8 +344,9 @@ io.of("/").on("connection", (socket) => {
         if(!user) return socket.emit("error", "user is not exsists");
         user = user.o;
 
-        let status = await global.db.userStatus.findOne({ _id: id });
+        let status = await global.db.userStatus.findOne({ id });
         if(!status) status = "brak";
+        else status = status.o.s;
 
         let data = {
             name: user.name,
@@ -355,6 +356,42 @@ io.of("/").on("connection", (socket) => {
         };
 
         socket.emit("getProfile", data);
+    });
+
+    socket.on("setProfile", async data => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        let obj = {};
+        if(data.opis) obj.opis = data.opis;
+
+        await usrDB.updateOne({ _id: socket.user._id }, obj);
+    });
+
+    socket.on("setStatus", async data => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        if(typeof data !== "string") return socket.emit("error", "not text!");
+
+        if(data.length > 100){
+            data = data.slice(0, 100);
+        }
+
+        let update = await global.db.userStatus.updateOne({ id: socket.user._id }, { s: data });
+        if(!update){
+            await global.db.userStatus.add({ id: socket.user._id, s: data });
+        }
+        socket.emit("getMyStatus", data);
+    });
+
+    socket.on("getMyStatus", async () => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        let status = await global.db.userStatus.findOne({ id: socket.user._id });
+        if(!status) status = "brak";
+        else status = status.o.s;
+
+        socket.emit("getMyStatus", status);
     });
 });
 

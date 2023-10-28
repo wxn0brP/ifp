@@ -24,11 +24,17 @@
 
 #menu #leftPanel{
     overflow: auto;
-    height: 100vh;
+    height: calc(100vh - 60px);
     background-color: var(--panel);
     z-index: 20;
     padding: 0 4px;
     width: 240px;
+}
+
+#accountPanel{
+    height: 60px;
+    width: 240px;
+    background-color: var(--menu);
 }
 
 #goMain{

@@ -18,6 +18,7 @@ socket.on("connect", () => {
     socket.emit("getChats");
     socket.emit("invites");
     socket.emit("friends");
+    socket.emit("getMyStatus");
 });
 
 // socket.on("config", (data) => {
@@ -288,4 +289,9 @@ socket.on("getProfile", data => {
     document.querySelector("#userProfile_status").innerHTML = data.status;
     document.querySelector("#userProfile_opis").innerHTML = data.opis;
     document.querySelector("#userProfile_ifp_date").innerHTML = formatDateFormUnux(parseInt(data.time, 16));
+});
+
+socket.on("getMyStatus", data => {
+    document.querySelector("#statusPopUp_status").value = data;
+    document.querySelector("#accountPanel_status").innerHTML = data;
 });

@@ -81,3 +81,11 @@
         <div id="userProfile_note">Jakś nota o 2 user</div> -->
     </div>
 </div>
+
+<div id="statusPopUp" style="display: none;">
+    <h2>Ustaw swój własny status!</h2>
+    <br />
+    <input id="statusPopUp_status">
+    <br /><br />
+    <button onclick="socket.emit('setStatus', document.querySelector('#statusPopUp_status').value)">ok</button>
+</div>

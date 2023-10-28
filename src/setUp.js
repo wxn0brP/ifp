@@ -1,14 +1,14 @@
 const fs = require("fs");
-const data = "data/";
 
 function dir(path){
     if(!fs.existsSync(path)) fs.mkdirSync(path);
 }
-function file(path, value="", prefix="data/"){
+function file(path, value="", prefix="config/"){
     if(!fs.existsSync(prefix+path)) fs.writeFileSync(prefix+path, value);
 }
 
-dir(data);
+dir("data");
+dir("config");
 file("banedIP.json", "[]");
 file("song.json", "[]");
 file("mailConfig.json", "{}");

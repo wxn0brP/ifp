@@ -1,5 +1,5 @@
 const mailer = require('nodemailer');
-const cfg = require("../../data/mailConfig.json");
+const cfg = require("../../config/mailConfig.json");
 
 module.exports = (type, to, subject, ...params) => {
     try{

@@ -11,7 +11,7 @@ function random(min, max){
     return Math.round(Math.random() * (max-min) + min);
 }
 
-let songList = require("../../data/song.json");
+let songList = require("../../config/song.json");
 let current_song;
 let timeout;
 let songIndex = random(0, songList.length-1);

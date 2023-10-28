@@ -34,7 +34,7 @@
 #accountPanel{
     height: 60px;
     width: 240px;
-    background-color: var(--menu);
+    background-color: var(--userProfile);
 }
 
 #goMain{

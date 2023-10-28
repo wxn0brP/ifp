@@ -1,5 +1,5 @@
 .contexMenu{
-    width: 15rem;
+    width: 20rem;
     position: absolute;
     background-color: var(--menu);
     padding: 6px 0;
@@ -7,7 +7,7 @@
 }
 
 .contexMenu button{
-    width: 14rem;
+    width: 19rem;
     background-color: var(--menu);
     color: var(--txt);
     padding: 5px 15px;

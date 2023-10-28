@@ -1,4 +1,4 @@
-const path = "../../data/banedIP.json";
+const path = "../../config/banedIP.json";
 var banedIP = require(path);
 
 module.exports = async (req, res, next) => {

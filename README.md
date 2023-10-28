@@ -4,7 +4,7 @@ IFP jest czatem internetowym który podnosi komunikację na wyższy poziom.
 ## Konfiguracja
 Zmień ```.env.txt``` na ```.env``` i edytuj wedle woli
 
-Zajrzyj też do ```data/``` aby dokonać konfiguracji, ```mail```, ```banedIP```, listy utworów w radiu (```song```). Zrób to dopiero po uruchomienia serwera (```po wygenerowaniu plików```), następnie po edycji uruchom serwer ponownie na nowych ustawieniach.
+Zajrzyj też do ```config/``` aby dokonać konfiguracji, ```mail```, ```banedIP```, listy utworów w radiu (```song```). Zrób to dopiero po uruchomienia serwera (```po wygenerowaniu plików```), następnie po edycji uruchom serwer ponownie na nowych ustawieniach.
 
 Zajrzyj też do ```config.js```
 

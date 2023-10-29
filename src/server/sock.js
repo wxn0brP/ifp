@@ -103,7 +103,7 @@ io.of("/").on("connection", (socket) => {
             chat = chat.o;
 
             var message = msg.trim();
-            if(msg.length > 90) return socket.emit("error", "msg jest za długie");
+            if(msg.length > 500) return socket.emit("error", "msg jest za długie");
             
             var data = {
                 fr: socket.user._id,
@@ -344,15 +344,14 @@ io.of("/").on("connection", (socket) => {
         if(!user) return socket.emit("error", "user is not exsists");
         user = user.o;
 
-        let status = await global.db.userStatus.findOne({ id });
-        if(!status) status = "brak";
-        else status = status.o.s;
+        let statusD = await statusOpt(id);
 
         let data = {
             name: user.name,
             opis: user.opis,
             time: user._id.split("-")[0],
-            status,
+            status: statusD.s,
+            statusType: statusD.t,
         };
 
         socket.emit("getProfile", data);
@@ -368,30 +367,28 @@ io.of("/").on("connection", (socket) => {
         await usrDB.updateOne({ _id: socket.user._id }, obj);
     });
 
-    socket.on("setStatus", async data => {
+    socket.on("setStatus", async (data, type) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
 
         if(typeof data !== "string") return socket.emit("error", "not text!");
+        if(typeof type !== "string") return socket.emit("error", "not text!");
 
-        if(data.length > 100){
-            data = data.slice(0, 100);
-        }
+        if(data.length > 100) data = data.slice(0, 100);
+        if(type.length > 20) type = type.slice(0, 20);
 
-        let update = await global.db.userStatus.updateOne({ id: socket.user._id }, { s: data });
+        let update = await global.db.userStatus.updateOne({ id: socket.user._id }, { s: data, t: type });
         if(!update){
-            await global.db.userStatus.add({ id: socket.user._id, s: data });
+            await global.db.userStatus.add({ id: socket.user._id, s: data, t: type });
         }
-        socket.emit("getMyStatus", data);
+        sendToSocket(socket.user._id, "getMyStatus", data, type);
     });
 
     socket.on("getMyStatus", async () => {
         if(!socket.user) return socket.emit("error", "not auth");
-        let status = await global.db.userStatus.findOne({ id: socket.user._id });
-        if(!status) status = "brak";
-        else status = status.o.s;
+        let statusD = await statusOpt(socket.user._id);
 
-        socket.emit("getMyStatus", status);
+        socket.emit("getMyStatus", statusD.s, statusD.t);
     });
 });
 
@@ -433,4 +430,16 @@ function cookieParse(cookie){
         res[name] = value;
     });
     return res;
+}
+
+async function statusOpt(id){
+    let statusDb = await global.db.userStatus.findOne({ id });
+    if(!statusDb) return { s: "brak", t: "i" };
+
+    let activy = getSocket(id).length > 0;
+    if(!activy) return { s: "brak", t: "i" };
+    let type = statusDb.o.t;
+    if(type == "i") return { s: "brak", t: "i" };
+    
+    return { s: statusDb.o.s, t:  type };
 }

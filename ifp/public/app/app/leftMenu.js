@@ -170,3 +170,8 @@ function exportMess(){
     downloadLink.download = "IFP-"+localUser.fr+"-"+changeIdToName(toChat.replace("$",""))+".json5";
     downloadLink.click();
 }
+
+function displayServerMgmt(){
+    socket.emit("getServerPerm", toChat);
+    // TODO zrealizować w UI zarządznie serwerem
+}

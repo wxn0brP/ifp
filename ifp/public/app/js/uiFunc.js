@@ -26,16 +26,6 @@ function changeTo(f){
         if(!toChat.startsWith("$")){
             document.querySelector("#serverChannels").innerHTML = "";
             socket.emit("setUpServer", toChat);
-            // setUpServer([
-            //     {
-            //         name: "kategoria",
-            //         channels: [
-            //             { name: "rest", type: "text", id: "aaa" },
-            //             { name: "rest", type: "text", id: "aaa" },
-            //             { name: "rest", type: "text", id: "aaa" },
-            //         ]
-            //     }
-            // ])
         }
         /* in socket */
 
@@ -230,5 +220,37 @@ function menuClickEvent(div, call){
     function end(e){
         time = new Date() - time;
         if(time > 1000) setTimeout(() => call(e), 100);
+    }
+}
+
+function setUserStatus(div, type, big=true){
+    div.classList.remove('user-active-icon', 'user-inactive-icon', 'user-sleeping-icon', 'user-dnd-icon');
+
+    switch(type){
+        case 'a':
+            div.classList.add('user-active-icon');
+        break;
+        case 'i':
+            div.classList.add('user-inactive-icon');
+        break;
+        case 's':
+            div.classList.add('user-sleeping-icon');
+            let t, l, s, b;
+            if(big){
+                t = "-5px"; l = "40%"; s = "30px"; b = "var(--menu)";
+            }else{
+                t = "0"; l = "30%"; s = "10px"; b = "var(--userProfile)";
+            }
+            div.style.setProperty("--top", t)
+            div.style.setProperty("--left", l)
+            div.style.setProperty("--bg", b)
+            div.style.setProperty("--s", s)
+        break;
+        case 'd':
+            div.classList.add('user-dnd-icon');
+        break;
+        default:
+            div.classList.add('user-inactive-icon');
+        break;
     }
 }

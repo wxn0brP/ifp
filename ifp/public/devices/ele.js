@@ -1,4 +1,5 @@
 sendNotif = (data) => {
+    if(notSound) return;
     notifSound();
     window.parent.postMessage({
         type: "sendNotif",

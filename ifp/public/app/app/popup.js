@@ -22,3 +22,9 @@ function showStatusPopUp(){
     const statusPopUp = document.querySelector("#statusPopUp");
     popUpSetUp(statusPopUp);
 }
+
+function setStatus(){
+    let data = document.querySelector('#statusPopUp_status').value;
+    let type = document.querySelector('#statusPopUp_typ').value;
+    socket.emit('setStatus', data, type)
+}

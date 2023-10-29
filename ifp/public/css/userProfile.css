@@ -55,6 +55,16 @@
     overflow: hidden;
 }
 
+#userProfile_status_type{
+    position: absolute;
+    top: 10px;
+    left: 120px;
+
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
 #userProfile_data{
     margin: 20px;
     background-color: var(--panel);
@@ -105,4 +115,14 @@
     top: 12px;
     font-size: 1.5rem;
     cursor: pointer;
+}
+
+#accountPanel_status_type{
+    position: absolute;
+    top: 37px;
+    left: 42px;
+
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
 }

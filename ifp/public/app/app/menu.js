@@ -47,13 +47,17 @@ function responeMsgE(){
     document.querySelector("#responeMsgCloseMenu").css("");
 }
 
-function sendFile(){
-    var input = document.createElement("input");
-    input.type = "file";
-    input.click();
+function sendFile(f){
+    if(f){
+        read(f);
+    }else{
+        var input = document.createElement("input");
+        input.type = "file";
+        input.click();
+        input.addEventListener("change", e => read(e.target.files[0]));
+    }
 
-    input.addEventListener("change", function(event) {
-        var file = event.target.files[0];
+    function read(file){
         if(file.size > 8 * 1024 * 1024){
             alert('File size exceeds 8MB limit.');
             return;
@@ -73,7 +77,7 @@ function sendFile(){
         };
 
         reader.readAsArrayBuffer(file);
-    });
+    }
 }
 
 function exitChat(){

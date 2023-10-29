@@ -24,9 +24,9 @@
 
         </div>
         <div id="leftPanel-server" w_if="!toChat.startsWith('$') && toChat != 'main'">
-            <br />
             <h2 id="serverName"></h2>
-            <br /><hr><br />
+            <button onclick="displayServerMgmt()" style="width: 10px;">&#9776;</button>
+            <div style="margin-top: 10px;"></div><hr><br />
             <div id="serverChannels"></div>
         </div>
     </div>
@@ -35,6 +35,7 @@
             <img src="/favicon.ico" alt="">
             <div id="accountPanel_name" onclick="userProfile(localUser.id)"></div>
             <div id="accountPanel_status" onclick="showStatusPopUp()"></div>
+            <div id="accountPanel_status_type"></div>
             <div id="accountPanel_settings" onclick="settingsChange('main', true)">⚙️</div>
         </div>
     </div>

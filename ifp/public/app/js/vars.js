@@ -13,6 +13,7 @@ const config = {
 const messCount = 50;
 var actMess = 0;
 var isType = false;
+var notSound = false;
 
 const serversId = {};
 const friendsId = {};

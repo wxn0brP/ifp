@@ -59,6 +59,10 @@
     background-color: var(--back);
 }
 
+#leftPanel-server{
+    padding-top: 10px;
+}
+
 #leftPanel-server details{
     margin-top: 10px;
 }
@@ -76,8 +80,11 @@
 }
 
 #serverName{
-    color: red;
     word-wrap: break-word;
+    text-align: left;
+    padding-left: 5px;
+    width: 190px;
+    display: inline-block;
 }
 
 #responeMsgCloseMenu{

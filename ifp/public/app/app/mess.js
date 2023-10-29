@@ -15,7 +15,7 @@ function sendMess(){
         msg = msg.replace("/silent ");
     }
 
-    if(msg.length > 90) return uiMsg("msg jest za długie", 1);
+    if(msg.length > 500) return uiMsg("msg jest za długie", 1);
 
     let data = {
         fr: localUser.id,
@@ -35,7 +35,7 @@ function sendMess(){
 function loadMoreMess(){
     let tmp = actMess;
     actMess += messCount;
-    if(to != "main") socket.emit("getMessage", to, tmp, actMess, true);
+    if(to != "main") socket.emit("getMessage", toChat, toChatChannel, tmp, actMess, true);
 }
 
 function addMess(msg, socroll=true, up=false){
@@ -177,5 +177,17 @@ document.addEventListener('keydown', (e) => {
     var tLen = msgInput.value.length;
     if(tLen > 0){
         msgInput.setSelectionRange(tLen, tLen);
+    }
+});
+
+msgInput.addEventListener("paste", function(e){
+    var items = (e.clipboardData || e.originalEvent.clipboardData).items;
+
+    for(let i=0; i<items.length; i++){
+        if(items[i].type.indexOf("image") === -1) continue;
+        e.preventDefault();
+        let file = items[i].getAsFile();
+        sendFile(file)
+        lo(file)
     }
 });

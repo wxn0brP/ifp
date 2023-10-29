@@ -1,0 +1,38 @@
+.user-sleeping-icon{
+    background-color: yellow;
+}
+
+.user-sleeping-icon::after{
+    content: '';
+    position: absolute;
+    top: var(--top);
+    left: var(--left);
+    background-color: var(--bg);
+    width: var(--s);
+    height: var(--s);
+    border-radius: 50%;
+}
+
+.user-dnd-icon{
+    background-color: #ce3434;
+}
+
+.user-dnd-icon::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    transform: translateY(-50%);
+    background-color: white;
+    width: 70%;
+    height: 13%;
+    border-radius: 3px;
+}
+
+.user-active-icon{
+    background-color: #4CAF50;
+}
+
+.user-inactive-icon{
+    background-color: #444;
+}

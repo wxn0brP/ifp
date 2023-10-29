@@ -5,6 +5,7 @@ document.addEventListener("blur", () => webStart.hid = true);
 document.addEventListener("focus", () => webStart.hid = false);
 
 sendNotif = (data) => {
+    if(notSound) return;
     notifSound();
     if(!webStart.hid) return;
     if(Notification.permission === "granted"){

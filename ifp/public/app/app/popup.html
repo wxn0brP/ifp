@@ -68,6 +68,7 @@
     <div class="userProfile" id="userProfile_baner"></div>
     <div class="userProfile" id="userProfile_name">
         <img src="/favicon.ico" alt="">
+        <div id="userProfile_status_type"></div>
         <div id="userProfile_name_content" title="wxn0brP">wxn0brP</div>
     </div>
     <div class="userProfile" id="userProfile_data">
@@ -88,5 +89,12 @@
     <br />
     <input id="statusPopUp_status">
     <br /><br />
-    <button onclick="socket.emit('setStatus', document.querySelector('#statusPopUp_status').value)">ok</button>
+    <select id="statusPopUp_typ">
+        <option value="a">Dostępny</option>
+        <option value="s">Zaraz wracam</option>
+        <option value="d">Nie przeszkadzać</option>
+        <option value="i">Niewidoczny</option>
+    </select>
+    <br /><br />
+    <button onclick="setStatus()">ok</button>
 </div>

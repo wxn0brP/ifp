@@ -210,7 +210,9 @@ socket.on("fileRes", res => {
     var link = location.origin + "/" + res.msg;
     if(toChat == "main") return;
     var data = {
-        from: localUser.fr, to: toChat, channel: "main",
+        from: localUser.fr,
+        to: toChat,
+        chnl: toChatChannel,
         msg: link
     }
     socket.emit("mess", data)
@@ -270,11 +272,18 @@ socket.on("setUpServer", (categories) => {
 socket.on("getProfile", data => {
     document.querySelector("#userProfile_name_content").innerHTML = data.name;
     document.querySelector("#userProfile_status").innerHTML = data.status;
-    document.querySelector("#userProfile_opis").innerHTML = data.opis;
+    document.querySelector("#userProfile_opis").innerHTML = data.opis || "brak";
     document.querySelector("#userProfile_ifp_date").innerHTML = formatDateFormUnux(parseInt(data.time, 16));
+    setUserStatus(document.querySelector("#userProfile_status_type"), data.statusType);
 });
 
-socket.on("getMyStatus", data => {
+socket.on("getMyStatus", (data, type) => {
     document.querySelector("#statusPopUp_status").value = data;
     document.querySelector("#accountPanel_status").innerHTML = data;
+    setUserStatus(document.querySelector("#accountPanel_status_type"), type, big=false);
+    document.querySelector("#statusPopUp_status").value = data;
+    document.querySelector("#statusPopUp_typ").value = type;
+    
+    if(type == "d") notSound = true;
+    else notSound = false;
 });

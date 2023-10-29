@@ -5,11 +5,11 @@
 .user-sleeping-icon::after{
     content: '';
     position: absolute;
-    top: var(--top);
-    left: var(--left);
+    top: 5%;
+    left: 35%;
     background-color: var(--bg);
-    width: var(--s);
-    height: var(--s);
+    width: 75%;
+    height: 75%;
     border-radius: 50%;
 }
 

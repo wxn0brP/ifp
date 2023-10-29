@@ -16,7 +16,7 @@ var vInne = [
     require("./socket/invite"),
     require("./socket/file"),
     require("./socket/vc"),
-    require("./socket//serverMgmt"),
+    require("./socket/serverMgmt"),
 ];
 const genId = require("../db/gen");
 
@@ -78,6 +78,14 @@ io.of("/").use((socket, next) => {
 });
 
 io.of("/").on("connection", (socket) => {
+    async function statusStart(){
+        let update = await global.db.userStatus.findOne({ id: socket.user._id });
+        if(update) return;
+        await global.db.userStatus.add({ id: socket.user._id, s: "", t: "a" });
+        sendToSocket(socket.user._id, "getMyStatus", "", "a");
+    }
+    statusStart();
+
     socket.on("disconnect", () => {
         
     });
@@ -304,15 +312,6 @@ io.of("/").on("connection", (socket) => {
             lo("error: ", e)
         }
     });
-    
-    socket.on("getUserStatus", async (id) => {    
-        if(!socket.user) return socket.emit("error", "not auth");    
-        if(!socket.isUser) return socket.emit("error", "bot");
-        var user = await usrDB.findOne({_id: id});
-        if(!user) return socket.emit("error", "user is not exsists");
-        var sock = getSocket(id);
-        socket.emit("getUserStatus", { id, data: sock.length > 0 });
-    });
 
     socket.on("getInivteFromId", async (id) => {
         if(!socket.user) return socket.emit("error", "not auth");
@@ -390,6 +389,21 @@ io.of("/").on("connection", (socket) => {
 
         socket.emit("getMyStatus", statusD.s, statusD.t);
     });
+
+    socket.on("getFirendsActivity", async () => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        let user = await usrDB.findOne({ _id: socket.user._id });
+        let friends = user.o.friends;
+        for(let i=0; i<friends.length; i++){
+            let id = friends[i];
+            let statusD = await statusOpt(id);
+            friends[i] =  { id, s: statusD.s, t: statusD.t };
+        }
+        friends = friends.filter(f => f.t != "i");
+        socket.emit("getFirendsActivity", friends);
+    });
 });
 
 global.getSocket = (to) => {
@@ -434,12 +448,12 @@ function cookieParse(cookie){
 
 async function statusOpt(id){
     let statusDb = await global.db.userStatus.findOne({ id });
-    if(!statusDb) return { s: "brak", t: "i" };
+    if(!statusDb) return { s: "", t: "i" };
 
     let activy = getSocket(id).length > 0;
-    if(!activy) return { s: "brak", t: "i" };
+    if(!activy) return { s: "", t: "i" };
     let type = statusDb.o.t;
-    if(type == "i") return { s: "brak", t: "i" };
+    if(type == "i") return { s: "", t: "i" };
     
     return { s: statusDb.o.s, t:  type };
 }

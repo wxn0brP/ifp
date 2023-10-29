@@ -111,3 +111,34 @@
 .channel_voice::before{
     content: "🔊";
 }
+
+.firednsActivityPanel{
+    width: 95%;
+    height: 60px;
+    background-color: var(--panel);
+    border-radius: 1rem;
+    margin: 10px;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    padding: 0 10px;
+
+    position: relative;
+}
+
+.firednsActivityPanel img{
+    width: 40px;
+}
+
+.firednsActivityPanel_typ{
+    border-radius: 10px;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 35px;
+    left: 37px;
+}
+
+

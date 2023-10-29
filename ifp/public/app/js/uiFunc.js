@@ -6,7 +6,7 @@ function changeTo(f){
         e.classList.remove("a-active")
     });
     if(f == "main"){
-        msgDiv.html("nic");
+        socket.emit("getFirendsActivity");
         sendDiv.css({ display: "none" });
         document.getElementById("goMain").clA("a-active");
     }else{
@@ -223,7 +223,7 @@ function menuClickEvent(div, call){
     }
 }
 
-function setUserStatus(div, type, big=true){
+function setUserStatus(div, type, color="#333"){
     div.classList.remove('user-active-icon', 'user-inactive-icon', 'user-sleeping-icon', 'user-dnd-icon');
 
     switch(type){
@@ -235,16 +235,7 @@ function setUserStatus(div, type, big=true){
         break;
         case 's':
             div.classList.add('user-sleeping-icon');
-            let t, l, s, b;
-            if(big){
-                t = "-5px"; l = "40%"; s = "30px"; b = "var(--menu)";
-            }else{
-                t = "0"; l = "30%"; s = "10px"; b = "var(--userProfile)";
-            }
-            div.style.setProperty("--top", t)
-            div.style.setProperty("--left", l)
-            div.style.setProperty("--bg", b)
-            div.style.setProperty("--s", s)
+            div.style.setProperty("--bg", color)
         break;
         case 'd':
             div.classList.add('user-dnd-icon');

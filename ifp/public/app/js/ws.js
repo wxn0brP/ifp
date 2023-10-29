@@ -103,18 +103,12 @@ socket.on("friends", (g) => {
             changeTo("$"+f, false);
             btn.classList.add("a-active");
         });
-        var span = document.createElement("span");
-        span.id = "f-"+f;
+        btn.id = "f-"+f;
         menuClickEvent(btn, (e) => contMenu.friendBtn(f, e));
 
-        btn.appendChild(span);
         friendsList.add(btn);
         friendsList.add(document.createElement("br"));
-        socket.emit("getUserStatus", f);
     });
-    setInterval(() => {
-        g.forEach(f => socket.emit("getUserStatus", f));
-    }, 10 * 1000);
 });
 
 socket.on("exitChat", () => {
@@ -170,10 +164,6 @@ socket.on("invites", (invites) => {
 socket.on("invite", () => {
     uiMsg("Otrzymano zaprosznie");
 });
-
-// socket.on("getUserStatus", (data) => {
-//     __("#f-"+data.id).html(data.data ? "✅" : "❌");
-// });
 
 socket.on("editMess", (id, msg, time) => {
     const messageDiv = document.getElementById(id + "_mess");
@@ -274,16 +264,54 @@ socket.on("getProfile", data => {
     document.querySelector("#userProfile_status").innerHTML = data.status;
     document.querySelector("#userProfile_opis").innerHTML = data.opis || "brak";
     document.querySelector("#userProfile_ifp_date").innerHTML = formatDateFormUnux(parseInt(data.time, 16));
-    setUserStatus(document.querySelector("#userProfile_status_type"), data.statusType);
+    setUserStatus(document.querySelector("#userProfile_status_type"), data.statusType, "var(--menu)");
 });
 
 socket.on("getMyStatus", (data, type) => {
-    document.querySelector("#statusPopUp_status").value = data;
-    document.querySelector("#accountPanel_status").innerHTML = data;
-    setUserStatus(document.querySelector("#accountPanel_status_type"), type, big=false);
+    document.querySelector("#accountPanel_status").innerHTML = data || "brak";
+    setUserStatus(document.querySelector("#accountPanel_status_type"), type, "var(--userProfile)");
     document.querySelector("#statusPopUp_status").value = data;
     document.querySelector("#statusPopUp_typ").value = type;
     
     if(type == "d") notSound = true;
     else notSound = false;
+});
+
+socket.on("getFirendsActivity", friends => {
+    if(friends.length == 0){
+        msgDiv.html("Nikt nie jest aktywny.");
+        return;
+    }
+    msgDiv.html("");
+    friends.forEach(f => {
+        let div = document.createElement("div");
+        div.clA("firednsActivityPanel");
+        div.innerHTML = `<img src="/favicon.ico">`;
+        div.style.cursor = "pointer";
+        div.addEventListener("click", () => {
+            changeTo("$"+f.id);
+            document.querySelector("#f-"+f.id).clA("a-active");
+        });
+
+        let statusT = document.createElement("div");
+        setUserStatus(statusT, f.t, "var(--panel)");
+        statusT.clA("firednsActivityPanel_typ");
+        div.appendChild(statusT);
+
+        let name = document.createElement("div");
+        name.innerHTML = changeIdToName(f.id);
+        name.style.fontWeight = "700";
+        name.style.marginLeft = "10px";
+        name.style.marginRight = "10px";
+        div.appendChild(name);
+
+        if(f.s){
+            let status = document.createElement("div");
+            status.innerHTML = `<div style="font-weight: 700;">Status:</div>`+f.s;
+            status.style.marginLeft = "10px";
+            div.appendChild(status);
+        }
+
+        msgDiv.appendChild(div);
+    });
 });

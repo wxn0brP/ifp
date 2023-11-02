@@ -9,18 +9,20 @@ require("./otherSock");
 require("./radio");
 require("./socket/bot");
 
-var botTest = require("./socket/bot");
-var messInter = require("./chat");
-var vInne = [
+const valid = require("../validData");
+const genId = require("../db/gen");
+
+const botTest = require("./socket/bot");
+const messInter = require("./chat");
+const vInne = [
     require("./socket/inne"),
     require("./socket/invite"),
     require("./socket/file"),
     require("./socket/vc"),
     require("./socket/serverMgmt"),
 ];
-const genId = require("../db/gen");
 
-const { user: usrDB, mess: messDB } = global.db;
+const { user: usrDB } = global.db;
 
 io.of("/").use((socket, next) => {
     function authError(str){
@@ -188,6 +190,7 @@ io.of("/").on("connection", (socket) => {
             categories = [
                 {
                     name: "main",
+                    id: "t",
                     channels: [
                         { name: "main", id: "main", type: "text" },
                         { name: "main", id: "mainV", type: "voice" },

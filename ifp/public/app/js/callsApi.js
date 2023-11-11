@@ -10,24 +10,10 @@ const peerVars = {
 function makePeerConnect(a, b){
     const peer = new Peer(peerVars.pod+a+"2"+b, {
         secure: true,
-        port: 443
+        port: 443,
+        restartIce: true,
     });
     return peer;
-}
-
-function connectToNewUser(userId){
-    let call = peer.call(pod+userId, my_stream);
-    if(!call){
-        uiMsg("Nie udało się połączyć!", 1);
-        return
-    }
-    let vid = false;
-    call.on('stream', userVideoStream => {
-        if(vid) return;
-        vid = true;
-        addVideoStream(userVideoStream, userId);
-    });
-    // call.on("close", () => callApi.endF(false));
 }
 
 function addVideoStream(stream, user, video=document.createElement('video'), other=true){
@@ -57,8 +43,6 @@ function addVideoStream(stream, user, video=document.createElement('video'), oth
     }
     // lo("2 os dołączyła");
 }
-
-// alert(!!navigator.getUserMedia + " " +!!navigator.mediaDevices?.getUserMedia + " " + !!navigator.webkitGetUserMedia + " " + !!navigator.mozGetUserMedia)
 
 async function joinVC(id){
     debugMsg("Join to "+id);
@@ -142,6 +126,16 @@ function callTor(to, peer){
         debugMsg("add stream, mt")
         addVideoStream(userVideoStream, to)
     });
+    call.on("iceConnectionStateChange", () => {
+        if(call.iceConnectionState === 'failed' || call.iceConnectionState === 'disconnected'){
+            console.log('Wystąpiły problemy z połączeniem. Restartuję ICE...');
+            call.restartIce();
+        
+            // Możesz również zamknąć istniejące połączenie i ponownie nawiązać połączenie, jeśli to konieczne
+            // call.close(); // Zamknij istniejące połączenie
+            // Następnie ponownie nawiąż połączenie z peer.call('inny_peer_id', yourStream);
+          }
+    })
     // call.on("close", () => callApi.endF(false));
 }
 

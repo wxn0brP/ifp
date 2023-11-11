@@ -70,3 +70,9 @@
     border-radius: 5px;
     margin-top: 5px;
 }
+
+.msgTagsUser{
+    background-color: #741a79;
+    border-radius: 3px;
+    cursor: pointer;
+}

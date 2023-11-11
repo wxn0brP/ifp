@@ -56,3 +56,15 @@ io.of("/te").on("connection", socket => {
         socket.broadcast.emit("cmd", d);
     })
 });
+
+const gen = require("./../db/gen");
+const vcFree = require("./socket/vc");
+io.of("/vcFree").on("connection", socket => {
+    let id = gen();
+    socket.user = {
+        _id: id,
+        name: "user"+id,
+    }
+    vcFree(socket);
+    socket.emit("con", socket.user.name, socket.user._id);
+});

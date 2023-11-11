@@ -37,6 +37,7 @@
     width: 5rem;
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
 }
 
 #send button{

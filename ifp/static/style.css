@@ -9,6 +9,7 @@
     size-adjust: 130%;
     src: url('emocji.woff2') format('woff2');
 }
+@import url("/reset.css");
 
 
 :root{

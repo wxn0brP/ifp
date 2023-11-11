@@ -170,7 +170,7 @@ socket.on("editMess", (id, msg, time) => {
     if(!messageDiv) return;
     messageDiv.setAttribute("_plain", msg);
     messageDiv.innerHTML = formatText(msg);
-    messageDiv.innerHTML += edit_txt.replace("$$", formatDateFormUnux(parseInt(time, 16)));
+    messageDiv.innerHTML += edit_txt.replace("$$", formatDateFormUnux(parseInt(time, 36)));
 });
 
 socket.on("delMess", (id) => {
@@ -263,7 +263,7 @@ socket.on("getProfile", data => {
     document.querySelector("#userProfile_name_content").innerHTML = data.name;
     document.querySelector("#userProfile_status").innerHTML = data.status;
     document.querySelector("#userProfile_opis").innerHTML = data.opis || "brak";
-    document.querySelector("#userProfile_ifp_date").innerHTML = formatDateFormUnux(parseInt(data.time, 16));
+    document.querySelector("#userProfile_ifp_date").innerHTML = formatDateFormUnux(parseInt(data.time, 36));
     setUserStatus(document.querySelector("#userProfile_status_type"), data.statusType, "var(--menu)");
 });
 

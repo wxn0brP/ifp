@@ -21,11 +21,9 @@
         <script src="js/utils.js" defer></script>
 
         <script src="init.js" defer></script>
-
-        <style>.loading{background-color:#1e1f23;}</style>
     </head>
-    <body class="loading">
-        <script class="delete" time="500">setTimeout(() => document.body.classList.remove('loading'),100);</script>
+    <body style="background-color:#1e1f23;">
+        <script class="delete" time="500">setTimeout(() => document.body.style.backgroundColor="",100);</script>
         <noscript class="delete" time="500">Ta strona wymaga js (javascript) do poprawnego działania</noscript>
         <div id="app">
             <span id="confetti" style="display: none;"></span>

@@ -2,6 +2,7 @@ function formatText(text){
     text = changeText(text);
     text = changeEmo(text);
     text = formatInv(text);
+    text = changeTags(text);
 
 
     try{
@@ -77,6 +78,18 @@ function changeEmo(text){
         if(!inMap) continue;
         text = text.replaceAll(":"+emo+":", inMap);
     }
+    return text;
+}
+
+function changeTags(text){
+    text = text.replace(/&lt;@(\w+-\w+-\w+)&gt;/g, function(match, fnResult){
+        let span = document.createElement("span");
+        span.innerHTML = "@" + changeIdToName(fnResult);
+        span.setAttribute("onclick", `userProfile("${fnResult}")`);
+        span.setAttribute("class", "msgTagsUser");
+        return span.outerHTML;
+    });
+
     return text;
 }
 

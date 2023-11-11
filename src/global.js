@@ -1,6 +1,8 @@
 global.lo = function(...data){
-    var line = new Error().stack.split('\n')[2].trim();
-    var path = line.slice(line.indexOf("(")).replace(process.env.basePath ,"");
+    let line = new Error().stack.split('\n')[2].trim();
+    let path = line.slice(line.indexOf("(")).replace(process.env.basePath ,"");
+
+    if(path.length < 2) path = line; // if path is 2 (callback):
 
     console.log("\x1b[36m"+path+":\x1b[0m", ...data);
     if(process.env.lo == "true") global.log.m(path, ...data)

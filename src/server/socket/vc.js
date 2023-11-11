@@ -30,7 +30,7 @@ module.exports = (socket) => {
         rooms[id] = rooms[id].filter(s => s.id != socket.id);
         sendUserCount(id, "leave");
         rooms[id].forEach(s => s.emit("VCUserLeave", socket.user._id));
-    })
+    });
 
     socket.on("leaveVC", id => {
         if(!socket.user) return socket.emit("error", "not auth");

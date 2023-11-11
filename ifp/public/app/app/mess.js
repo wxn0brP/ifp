@@ -50,7 +50,7 @@ function addMess(msg, socroll=true, up=false){
         setTimeout(() => responeMess(div, msg.res), 1000);
     }
     content = formatText(content);
-    if(msg.e) content += edit_txt.replace("$$", formatDateFormUnux(parseInt(msg.e, 16)));
+    if(msg.e) content += edit_txt.replace("$$", formatDateFormUnux(parseInt(msg.e, 36)));
 
     let userName = document.createElement("div");
     let b = document.createElement("b");

@@ -16,6 +16,7 @@ function userProfile(profile){
     socket.emit("getProfile", profile);
     const profileDiv = document.querySelector("#userProfile");
     popUpSetUp(profileDiv);
+    document.querySelector("#userProfile_ifp_id").innerHTML = profile;
 }
 
 function showStatusPopUp(){

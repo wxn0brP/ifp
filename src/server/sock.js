@@ -317,73 +317,97 @@ io.of("/").on("connection", (socket) => {
     });
 
     socket.on("getInivteFromId", async (id) => {
-        if(!socket.user) return socket.emit("error", "not auth");
-        if(!socket.isUser) return socket.emit("error", "bot");
-        var ic = await global.db.ic.findOne({ chat: id });
-        socket.emit("getInivteFromId", ic.o.id);
+        try{
+            if(!socket.user) return socket.emit("error", "not auth");
+            if(!socket.isUser) return socket.emit("error", "bot");
+            var ic = await global.db.ic.findOne({ chat: id });
+            socket.emit("getInivteFromId", ic.o.id);
+        }catch(e){
+            lo("error: ", e)
+        }
     });
 
     socket.on("botPod", () => {
-        if(!socket.user) return socket.emit("error", "not auth");
-        socket.isUser = false;
+        try{
+            if(!socket.user) return socket.emit("error", "not auth");
+            socket.isUser = false;
+        }catch(e){
+            lo("error: ", e)
+        }
     });
 
     socket.on("getChatIdFriends", (to) => {
-        if(!socket.user) return socket.emit("error", "not auth");
-        if(to.startsWith("$")){
-            var p1 = socket.user._id;
-            var p2 = to.replace("$", "");
-            to = messInter.combinateId(p1, p2);
-        }
-        socket.emit("getChatIdFriends", to);
+        try{
+            if(!socket.user) return socket.emit("error", "not auth");
+            if(to.startsWith("$")){
+                var p1 = socket.user._id;
+                var p2 = to.replace("$", "");
+                to = messInter.combinateId(p1, p2);
+            }
+            socket.emit("getChatIdFriends", to);
+            }catch(e){
+                lo("error: ", e)
+            }
     });
 
     socket.on("getProfile", async id => {
-        if(!socket.user) return socket.emit("error", "not auth");
-        if(!socket.isUser) return socket.emit("error", "bot");
+        try{
+            if(!socket.user) return socket.emit("error", "not auth");
+            if(!socket.isUser) return socket.emit("error", "bot");
 
-        let user = await usrDB.findOne({ _id: id });
-        if(!user) return socket.emit("error", "user is not exsists");
-        user = user.o;
+            let user = await usrDB.findOne({ _id: id });
+            if(!user) return socket.emit("error", "user is not exsists");
+            user = user.o;
 
-        let statusD = await statusOpt(id);
+            let statusD = await statusOpt(id);
 
-        let data = {
-            name: user.name,
-            opis: user.opis,
-            time: user._id.split("-")[0],
-            status: statusD.s,
-            statusType: statusD.t,
-        };
+            let data = {
+                name: user.name,
+                opis: user.opis,
+                time: user._id.split("-")[0],
+                status: statusD.s,
+                statusType: statusD.t,
+            };
 
-        socket.emit("getProfile", data);
+            socket.emit("getProfile", data);
+            }catch(e){
+                lo("error: ", e)
+            }
     });
 
     socket.on("setProfile", async data => {
-        if(!socket.user) return socket.emit("error", "not auth");
-        if(!socket.isUser) return socket.emit("error", "bot");
+        try{
+            if(!socket.user) return socket.emit("error", "not auth");
+            if(!socket.isUser) return socket.emit("error", "bot");
 
-        let obj = {};
-        if(data.opis) obj.opis = data.opis;
+            let obj = {};
+            if(data.opis) obj.opis = data.opis;
 
-        await usrDB.updateOne({ _id: socket.user._id }, obj);
+            await usrDB.updateOne({ _id: socket.user._id }, obj);
+        }catch(e){
+            lo("error: ", e)
+        }
     });
 
     socket.on("setStatus", async (data, type) => {
-        if(!socket.user) return socket.emit("error", "not auth");
-        if(!socket.isUser) return socket.emit("error", "bot");
+        try{
+            if(!socket.user) return socket.emit("error", "not auth");
+            if(!socket.isUser) return socket.emit("error", "bot");
 
-        if(typeof data !== "string") return socket.emit("error", "not text!");
-        if(typeof type !== "string") return socket.emit("error", "not text!");
+            if(typeof data !== "string") return socket.emit("error", "not text!");
+            if(typeof type !== "string") return socket.emit("error", "not text!");
 
-        if(data.length > 100) data = data.slice(0, 100);
-        if(type.length > 20) type = type.slice(0, 20);
+            if(data.length > 100) data = data.slice(0, 100);
+            if(type.length > 20) type = type.slice(0, 20);
 
-        let update = await global.db.userStatus.updateOne({ id: socket.user._id }, { s: data, t: type });
-        if(!update){
-            await global.db.userStatus.add({ id: socket.user._id, s: data, t: type });
+            let update = await global.db.userStatus.updateOne({ id: socket.user._id }, { s: data, t: type });
+            if(!update){
+                await global.db.userStatus.add({ id: socket.user._id, s: data, t: type });
+            }
+            sendToSocket(socket.user._id, "getMyStatus", data, type);
+        }catch(e){
+            lo("error: ", e)
         }
-        sendToSocket(socket.user._id, "getMyStatus", data, type);
     });
 
     socket.on("getMyStatus", async () => {
@@ -394,18 +418,22 @@ io.of("/").on("connection", (socket) => {
     });
 
     socket.on("getFirendsActivity", async () => {
-        if(!socket.user) return socket.emit("error", "not auth");
-        if(!socket.isUser) return socket.emit("error", "bot");
+        try{
+            if(!socket.user) return socket.emit("error", "not auth");
+            if(!socket.isUser) return socket.emit("error", "bot");
 
-        let user = await usrDB.findOne({ _id: socket.user._id });
-        let friends = user.o.friends;
-        for(let i=0; i<friends.length; i++){
-            let id = friends[i];
-            let statusD = await statusOpt(id);
-            friends[i] =  { id, s: statusD.s, t: statusD.t };
+            let user = await usrDB.findOne({ _id: socket.user._id });
+            let friends = user.o.friends;
+            for(let i=0; i<friends.length; i++){
+                let id = friends[i];
+                let statusD = await statusOpt(id);
+                friends[i] =  { id, s: statusD.s, t: statusD.t };
+            }
+            friends = friends.filter(f => f.t != "i");
+            socket.emit("getFirendsActivity", friends);
+        }catch(e){
+            lo("error: ", e)
         }
-        friends = friends.filter(f => f.t != "i");
-        socket.emit("getFirendsActivity", friends);
     });
 });
 

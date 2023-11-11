@@ -1,0 +1,22 @@
+{
+  "name": "ele-app",
+  "version": "0.0.1",
+  "description": "IFP desktip app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "IFP",
+    "Infinite",
+    "Fusion",
+    "Project"
+  ],
+  "author": "wxn0brP",
+  "license": "MIT",
+  "dependencies": {
+      "active-win": "^8.1.0",
+      "axios": "^1.4.0",
+      "electron-notifications": "^1.0.0"
+  }
+}

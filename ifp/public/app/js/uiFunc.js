@@ -85,7 +85,10 @@ function uiMsg(data, type=0){
 function debugMsg(data, i=false){
     if(!config.debug) return;
     if(i) uiMsg(data.toString(), 2);
-    lo(data)
+    const line = new Error().stack.split('\n')[2].trim();
+    const path = line.slice(line.indexOf("@")+1);
+    const shortPath = path.replace(location.origin+"/", "");
+    lo(shortPath || path, data)
 }
 
 function movableDiv(movableDiv, area=movableDiv){

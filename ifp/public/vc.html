@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">IFP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="IFP - Infinite Fusion Project">
+		<meta name="keywords" content="ifp, IFP, Infinite Fusion Project">
+        <link href="/favicon.ico" rel="shortcut icon">
+        <link href="/style.css" rel="stylesheet">
+        <script src="/core.js" defer></script>
+        <script src="js/generateResCss.js" defer></script>
+        <script src="app/js/audioFunc.js" defer></script>
+        <script src="app/js/callsApi.js" defer></script>
+        <script src="js/socket.io.min.js" defer></script>
+        <script src="/js/peerjs.min.js" defer></script>
+        <script src="js/vc.html.js" defer></script>
+        <style>
+            #app{
+                margin-top: 30px;
+                text-align: left;
+                min-width: 400px;
+                max-width: 70vw;
+                border: 1px solid magenta;
+                padding: 1rem;
+                border-radius: 1rem;
+            }
+
+            button{
+                background-color: var(--back);
+                color: var(--txt);
+                border: var(--border);
+                padding: 10px;
+                border-radius: 10px;
+                margin-top: 5px;
+            }
+
+            li{
+                margin-left: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="assets"></div>
+        <div id="app" class="mar">
+            <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
+            <div style="display: flex; justify-content: space-between;">
+            <br /><br />
+            
+            <div class="s_5">
+                <button onclick="callEnd()" style="background-color: red;">End</button>
+                <br />
+                <button id="togleMic" onclick="togleMic()">Mic = wył</button>
+                <br />
+                <meter id="callMeter" min="0" max="0.3" low="0.01" high="0.1" optimum="0.2"></meter>
+            </div>
+            <div class="s_5">
+                <ul id="callUsers"></ul>
+            </div>
+            <br /><br />
+            <div id="callContener" style="display: none;"></div>
+            <div id="callContenerM"></div>
+            <div id="callMedia"></div>
+        </div>
+    </body>
+</html>

@@ -15,8 +15,11 @@
   "author": "wxn0brP",
   "license": "MIT",
   "dependencies": {
-      "active-win": "^8.1.0",
-      "axios": "^1.4.0",
-      "electron-notifications": "^1.0.0"
+    "active-win": "^8.1.0",
+    "axios": "^1.4.0",
+    "electron-notifications": "^1.0.0",
+    "pacote": "^17.0.4",
+    "pkg-install": "^1.0.0",
+    "tar": "^6.2.0"
   }
 }

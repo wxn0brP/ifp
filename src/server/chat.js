@@ -78,6 +78,7 @@ function combinateId(id1, id2){
     var p1 = id1.split("-")[0];
     var p2 = id2.split("-")[0];
     var rev = false;
+    var mix = (a, b) => a.split("-")[1].slice(0, 3) + b.split("-")[1].slice(0, 3);
 
     if(crc.crc32(p1) < crc.crc32(p2)){
         rev = true;
@@ -85,12 +86,7 @@ function combinateId(id1, id2){
         p2 = p1;
         p1 = t;
     }
-    var pp;
-    if(!rev){
-        pp = id1.split("-")[1].slice(0, 3) + id2.split("-")[1].slice(0, 3);
-    }else{
-        pp = id2.split("-")[1].slice(0, 3) + id1.split("-")[1].slice(0, 3);
-    }
+    var pp = (rev ? mix(id2, id1) : mix(id1, id2));
     var p3 = crc.crc24(pp);
     return [p1, p2, p3].join("-");
 }

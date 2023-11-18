@@ -52,7 +52,7 @@ io.of("/").use((socket, next) => {
     if(isBotFlag+"" == "true"){
         socket.isUser = false;
     }else{
-        socket.isUser = botTest.connect(socket.handshake.headers) >= 70;
+        socket.isUser = true;//botTest.connect(socket.handshake.headers) >= 70;
     }
 
     if(socket.isUser){

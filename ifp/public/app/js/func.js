@@ -12,20 +12,6 @@ function readText(obj){
     sounds.lektorSpeak(text);
 }
 
-function changeIdToName(id){
-    if(friendsId[id]) return friendsId[id];
-    var data = getInServer("/userId?user="+id);
-    friendsId[id] = data;
-    return data;
-}
-
-function changeIdToServer(id){
-    if(serversId[id]) return serversId[id];
-    var data = getInServer("/serverId?s="+id);
-    serversId[id] = data;
-    return data;
-}
-
 function genId(){
     var unix = Math.floor(new Date().getTime() / 1000).toString(16);
     var unixPod = Math.pow(10, unix.length);

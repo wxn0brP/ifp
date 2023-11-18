@@ -1,12 +1,14 @@
 {
     "name": "ifp",
-    "version": "0.0.13",
-    "description": "",
+    "version": "0.0.32",
+    "description": "IFP",
     "main": "index.js",
     "scripts": {
         "start": "nodemon -dev",
-        "n": "electron .",
-        "build": "electron-builder"
+        "build": "electron-builder build --publish never",
+        "deploy": "electron-builder build -wl --publish always",
+        "deploy-win": "electron-builder build --win --publish always",
+        "deploy-linux": "electron-builder build --linux --publish always"
     },
     "author": {
         "name": "wxn0brP",
@@ -18,22 +20,32 @@
         "electron": "^25.1.0"
     },
     "build": {
+        "productName": "IFP",
+        "appId": "com.wxn0brP.ifp",
+        "publish": {
+            "provider": "github",
+            "owner": "wxn0brP",
+            "repo": "ifp"
+        },
         "win": {
             "icon": "icon.ico"
         },
         "linux": {
-            "target": "deb",
+            "target": ["deb"],
             "icon": "icon.png"
         },
         "files": [
             "index.js",
             "favicon.png",
+            "icon.png",
             "icon.ico"
         ]
     },
     "dependencies": {
         "active-win": "^8.1.0",
         "axios": "^1.4.0",
-        "electron-notifications": "^1.0.0"
+        "electron-notifications": "^1.0.0",
+        "electron-updater": "^6.1.4",
+        "update-electron-app": "^3.0.0"
     }
 }

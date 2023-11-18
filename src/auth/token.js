@@ -31,14 +31,14 @@ var token = {
     },
     active: [],
 
-    getRToken(usr){
+    getRToken(usr, time=43200){
         var hashSrc = mod.getInUser(usr) + "%%" + mod.getRandom() + ":" + mod.getTime(0);
         var hashBase = mod.Whirlpool(hashSrc);
 
         global.db.token.add({
             token: hashBase,
             data: {
-                t: mod.getTime(43200),
+                t: mod.getTime(time),
                 user: {
                     name: usr.name,
                     _id: usr._id,

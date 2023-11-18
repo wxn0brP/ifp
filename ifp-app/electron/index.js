@@ -6,13 +6,11 @@ const {
     Notification,
     ipcMain,
     Tray,
-    Menu
+    Menu,
 } = require('electron');
-const child_process = require("child_process");
+const { autoUpdater } = require('electron-updater');
+
 const activeWin = require('active-win');
-const axios = require("axios");
-const os = require("os");
-const fs = require("fs");
 const lo = console.log;
 
 const version = app.getVersion();
@@ -28,7 +26,6 @@ var conf = {};
 const osType = process.platform;
 
 async function createWindow(){
-    await updateApp();
     mainWin = new BrowserWindow({
         width: 1300,
         height: 700,
@@ -66,7 +63,20 @@ async function createWindow(){
     mainWin.loadURL(link+"index.html");
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+    autoUpdater.setFeedURL({
+        provider: 'github',
+        owner: 'wxn0brP',
+        repo: 'ifp',
+        token: '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',
+    });
+    
+    autoUpdater.on('error', (error) => {
+        dialog.showErrorBox('Błąd aktualizacji', error == null ? 'Unknown' : (error.stack || error).toString());
+    });
+    autoUpdater.on('update-not-available', createWindow)
+    autoUpdater.checkForUpdatesAndNotify();
+});
 
 app.on('window-all-closed', () => {
     if(process.platform !== 'darwin'){
@@ -90,103 +100,6 @@ if(!dev){
         globalShortcut.unregister('CommandOrControl+R');
         globalShortcut.unregister('F5');
     });
-}
-
-async function updateApp(){
-    var system = osType;
-    var ext = "";
-    switch(system){
-        case "win32": ext = "exe"; break;
-        case "darwin": ext = "dmg"; break;
-        case "linux": ext = "deb"; break;
-    }
-    try{
-        var tok = `"`+os.tmpdir() + "/ifp Setup"+version+"."+ext+`"`;
-        if(fs.existsSync(tok)){
-            fs.unlinkSync(tok);
-        }
-    }catch{}
-    var versionServerS = await getFileSync(link+"ver.json");
-    var versionServer = versionServerS[system];
-    if(!versionServer){
-        dialog.showMessageBox({
-            type: 'warning',
-            buttons: ['OK'],
-            defaultId: 0,
-            message: 'IFP aktualnie nie wspiera twojego systemu :(',
-            detail: 'Aktualizacja jest NIE MOŻLIWA!',
-        });
-        return;
-    }
-    var bool = parseVersion(versionServer, version);
-    if(!bool) return;
-    var tmpLink = link + "rele/install.exe";
-    var nameApp = `install.${ext}`;
-    var file = "\"" + os.tmpdir() + "\\" + nameApp + "\"";
-    dialog.showMessageBox({
-        type: 'info',
-        buttons: [],
-        message: `Aplikacja aktualizuje się :)`,
-        detail: `Towja wersja: ${version} Aktualna wesja: ${versionServer}; Plik aktualizacji: ${file}`,
-    });
-    await downloadFileSync(tmpLink, file);
-    dialog.showMessageBox({
-        type: 'info',
-        buttons: [],
-        message: `Zakończono pobieranie`
-    });
-    await new Promise(r => {
-        setTimeout(r, 7000);
-    });
-
-    try{
-        child_process.execSync(file);
-        app.exit();
-    }catch{
-        dialog.showMessageBox({
-            type: 'info',
-            buttons: ["OK"],
-            message: 'Aktualizacja nie powiodła się :(',
-        });
-    }
-}
-
-
-async function getFileSync(url){
-    return (await axios.get(url)).data;
-}
-
-async function downloadFileSync(url, name){
-    var command = "exit";
-    if(osType == "win32"){
-        command = "start cmd /c curl "+url+" -o "+name;
-    }else if(osType == "linux"){
-        command = "curl "+url+" -o "+name;
-    }
-    child_process.execSync(command);
-}
-
-function parseVersion(serverVer, clientVer){
-    var a = serverVer.split(".");
-    var b = clientVer.split(".");
-    if(a.length > b.length){
-        let tmp = a.length-b.length;
-        for(let i=0; i<tmp; i++){
-            b.push("0");
-        }
-    }else
-    if(a.length < b.length){
-        let tmp = b.length-a.length;
-        for(let i=0; i<tmp; i++){
-            a.push("0");
-        }
-    }
-    for(let i=0; i<a.length; i++){
-        if(parseInt(a[i]) > parseInt(b[i])){
-            return true;
-        }
-    }
-    return false;
 }
 
 function createNotif(title, body){

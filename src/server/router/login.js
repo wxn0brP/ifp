@@ -9,11 +9,11 @@ module.exports = async (req, res) => {
 
     var hashPass = usr.o.password;
     if(!comparePassword(pass, hashPass)){
-        return res.json({err: true, msg: "Nie prawidłowy login lub hasło"});
+        return res.json({err: true, msg: "Nie prawidłowy login lub hasł.o"});
     }
 
     req.session.user = usr;
-    var rToken = global.tokens.getRToken(usr.o);
+    var rToken = global.tokens.getRToken(usr.o, req.body.temp || undefined);
     var tmpToken = await global.tokens.getTempToken(usr.o, rToken);
 
     res.json({

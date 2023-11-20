@@ -16,7 +16,7 @@ module.exports = (app) => {
             return res.json({err: true, msg: "Nie prawidłowy login lub hasło"});
         }
 
-        var rToken = global.tokens.getRToken(user.o, 60);
+        var rToken = global.tokens.getRToken(user.o, (req.body.temp ? 0.1 : undefined));
         var token = await global.tokens.getTempToken(user.o, rToken);
         res.json({
             err: false,

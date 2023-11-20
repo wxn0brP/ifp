@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     }
 
     req.session.user = usr;
-    var rToken = global.tokens.getRToken(usr.o, req.body.temp || undefined);
+    var rToken = global.tokens.getRToken(usr.o, (req.body.temp ? 0.1 : undefined));
     var tmpToken = await global.tokens.getTempToken(usr.o, rToken);
 
     res.json({

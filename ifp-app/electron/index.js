@@ -8,11 +8,12 @@ const {
     Tray,
     Menu,
 } = require('electron');
+const config = require("./config");
 const { autoUpdater } = require('electron-updater');
-
 const activeWin = require('active-win');
 const lo = console.log;
 
+process.env.GH_TOKEN = config.GH_TOKEN;
 const version = app.getVersion();
 var linkPod = "https://ifp.projektares.tk/";
 var dev = process.argv.length > 2 && process.argv[2] == "-dev";
@@ -68,7 +69,7 @@ app.on('ready', () => {
         provider: 'github',
         owner: 'wxn0brP',
         repo: 'ifp',
-        token: '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',
+        token: config.GH_TOKEN,
     });
     
     autoUpdater.on('error', (error) => {

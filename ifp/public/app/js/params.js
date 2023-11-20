@@ -8,6 +8,9 @@ function urlParams(){
         })
         document.querySelector("#leftPanel-main").appendChild(b);
     }
+    if(params.get("socketUrl")){
+        socketUrl = params.get("socketUrl");
+    }
 
 }
 

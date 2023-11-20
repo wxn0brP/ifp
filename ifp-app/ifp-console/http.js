@@ -20,7 +20,7 @@ async function loginUser(login, pass){
 async function getInServer(url){
     let data = (await axios.get(url)).data;
     if(data.err){
-        log("Error getInServer: url: "+url+"  ::  "+data);
+        lo("Error getInServer: url: "+url+"  ::  "+JSON.stringify(data));
         return null;
     }
     return data.msg;

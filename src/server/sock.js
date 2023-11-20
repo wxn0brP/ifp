@@ -92,6 +92,10 @@ io.of("/").on("connection", (socket) => {
         
     });
 
+    socket.on("testMsg", (data) => {
+        lo(data)
+    })
+
     vInne.forEach(v => v(socket));
 
     socket.on("mess", async (req) => {

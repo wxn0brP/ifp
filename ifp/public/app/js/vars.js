@@ -52,3 +52,5 @@ confetti.setCount(250);
 confetti.setSize(1);
 confetti.setPower(20);
 confetti.maxsiu = false;
+
+var socketUrl = "/";

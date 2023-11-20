@@ -25,6 +25,7 @@ async function loadJs(){
         "js/settingsLib.js",
         "js/settings.js",
         "js/vars.js",
+        "js/params.js",
         "js/ws.js",
         "js/format.js",
         "js/apis.js",
@@ -39,7 +40,6 @@ async function loadJs(){
         "js/egg.js",
         "js/encrypt.js",
         "js/run.js",
-        "js/params.js"
     ];
     let assets = document.querySelector("#assets");
     async function load(p){

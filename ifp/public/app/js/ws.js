@@ -315,3 +315,7 @@ socket.on("getFirendsActivity", friends => {
         msgDiv.appendChild(div);
     });
 });
+
+socket.on("box_open", (items, item) => {
+    casesOpen(items, item);
+});

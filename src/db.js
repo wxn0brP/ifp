@@ -11,6 +11,8 @@ global.db = {
     permission: new advDatabaseC("data/perm-db"),
     serverSettings: new databaseC(getPath("server-settings")),
     userStatus: new databaseC(getPath("userStatus")),
+    userGold: new databaseC(getPath("userGold")),
+    cases: new databaseC(getPath("cases")),
 }
 
 function getPath(name){

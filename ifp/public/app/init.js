@@ -40,6 +40,8 @@ async function loadJs(){
         "js/egg.js",
         "js/encrypt.js",
         "js/run.js",
+        "js/snakes.js",
+        "js/cases.js",
     ];
     let assets = document.querySelector("#assets");
     async function load(p){

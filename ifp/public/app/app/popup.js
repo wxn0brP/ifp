@@ -1,15 +1,17 @@
-function popUpSetUp(div){
+function popUpSetUp(div, end=()=>{}){
     div.fadeIn();
 
     function close(){
         div.fadeOut();
         document.body.removeEventListener("click", close);
+        end();
     }
     setTimeout(() => {
         document.body.addEventListener("click", close);
     }, 500);
 
     div.addEventListener("click", (e) => e.stopPropagation());
+    return close;
 }
 
 function userProfile(profile){

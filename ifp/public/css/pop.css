@@ -210,3 +210,52 @@
     width: 200px;
     height: 2rem;
 }
+
+#snakesPopUp{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: var(--panel);
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+}
+
+#snakesPopUp canvas{
+    width: max(85vh, 400px);
+    height: max(85vh, 400px);
+    background-color: #333;
+}
+
+#snakesPopUp button{
+    border-radius: 50%;
+    padding: 10px;
+    left: -35px;
+    top: -35px;
+    position: absolute;
+    color: var(--txt);
+    background-color: var(--menu);
+}
+
+#casesPopUp{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: var(--panel);
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+}
+
+#casesPopUp canvas{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: var(--panel);
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+}

@@ -13,6 +13,7 @@ const resetKodA = require("./router/reset-kod");
 const inviteChatA = require("./router/inviteChat");
 const inviteChatGetA = require("./router/inviteChatGet");
 const feedA = require("./router/feed");
+const genIdA = require("./router/genId");
 
 module.exports = (app) => {
     require("./router/fs")(app);
@@ -33,6 +34,7 @@ module.exports = (app) => {
         app.post("/ic", inviteChatA);
         app.get("/ic/get", inviteChatGetA);
         app.post("/feed", feedA);
+        app.get("/genId", genIdA);
         // app.post("/github-webhook", (req, res) => {
         //     const eventType = req.headers['x-github-event'];
         //     lo(eventType, req.body);

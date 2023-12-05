@@ -20,6 +20,7 @@ const vInne = [
     require("./socket/file"),
     require("./socket/vc"),
     require("./socket/serverMgmt"),
+    require("./socket/cases"),
 ];
 
 const { user: usrDB } = global.db;
@@ -441,8 +442,8 @@ io.of("/").on("connection", (socket) => {
     });
 });
 
-global.getSocket = (to) => {
-    var map = io.of("/").sockets;
+global.getSocket = (to, room="") => {
+    var map = io.of("/"+room).sockets;
     var all = [...map].map(([key, value]) => {
         value.ids = key;
         return value;

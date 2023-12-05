@@ -68,3 +68,5 @@ io.of("/vcFree").on("connection", socket => {
     vcFree(socket);
     socket.emit("con", socket.user.name, socket.user._id);
 });
+
+require("./socket/snakes");

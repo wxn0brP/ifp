@@ -45,4 +45,15 @@ module.exports = (socket) => {
         });
         socket.emit("box_open", box.drop, item);
     });
+
+    socket.on("items_get", async () => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        let user = await global.db.userGold.findOne({ id: socket.user._id });
+        if(!user) return socket.emit("error", "not $");
+        user = user.o;
+
+        socket.emit("items_get", user.items, user.gold);
+    })
 }

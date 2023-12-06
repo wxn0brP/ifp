@@ -319,3 +319,21 @@ socket.on("getFirendsActivity", friends => {
 socket.on("box_open", (items, item) => {
     casesOpen(items, item);
 });
+
+socket.on("items_get", (items, gold) => {
+    let pop = document.querySelector("#itemsPopUp");
+    pop.innerHTML = "";
+
+    let goldD = document.createElement("div");
+    goldD.innerHTML = "GOLD: " + gold;
+    pop.appendChild(goldD);
+
+    items.forEach(item => {
+        let img = document.createElement("img");
+        img.src = location.origin + "/cases/" + item + ".png";
+        img.title = item;
+        pop.appendChild(img);
+    });
+
+    popUpSetUp(pop);
+})

@@ -18,7 +18,7 @@
     <br /><br />
 </div>
 
-<div id="errMesses" class="popUp"></div>
+<div id="errMesses" style="z-index: 999;"></div>
 
 <div id="callMedia" style="display: none;" class="popUp">
     <div class="s" id="callMediaMov" style="text-align: center;">➕</div>
@@ -100,13 +100,22 @@
     <button onclick="setStatus()">ok</button>
 </div>
 
-<div id="snakesPopUp" style="display: none;" class="popUp">
+<div id="snakesPopUp" style="display: none;" class="popUp s_11 m_8 l_5 u_4">
     <div style="position: relative; height: 0px; width: 0px;">
-        <button>X</button>
+        <button id="snakesPopUpX">X</button>
     </div>
     <canvas></canvas>
+    <mob>
+        <button onclick="mobileSnakeBtn('ArrowUp')" class="snakeMobileBtn">&utri;</button>
+        <br />
+        <button onclick="mobileSnakeBtn('ArrowLeft')" class="snakeMobileBtn">&lt;</button>
+        <button onclick="mobileSnakeBtn('ArrowDown')" class="snakeMobileBtn">&dtri;</button>
+        <button onclick="mobileSnakeBtn('ArrowRight')" class="snakeMobileBtn">&gt;</button>
+    </mob>
 </div>
 
-<div id="casesPopUp" style="display: none;" class="popUp">
-    <canvas></canvas>
+<div id="casesPopUp" style="display: none;" class="popUp s_11 m_8 l_8">
+    <canvas class="s"></canvas>
 </div>
+
+<div id="itemsPopUp" style="display: none;" class="popUp"></div>

@@ -22,13 +22,13 @@ function initSnake(){
 
     function close(){
         socketSnakes.emit("direction", "end");
-        setTimeout(end, 200);
     }
     
     const canvas = document.querySelector('#snakesPopUp canvas');
     const ctx = canvas.getContext('2d');
 
-    let blockSize = 20;
+    var blockSize = 20;
+    var directionLast;
 
     function drawEle(p){
         ctx.fillRect(p.x * blockSize, p.y * blockSize, blockSize, blockSize);
@@ -87,18 +87,23 @@ function initSnake(){
         let direction;
         switch(event.key){
             case 'ArrowUp':
-                direction = 'up';
-                break;
+                if(directionLast != "down") directionLast = direction = 'up';
+            break;
             case 'ArrowDown':
-                direction = 'down';
-                break;
+                if(directionLast != "up") directionLast = direction = 'down';
+            break;
             case 'ArrowLeft':
-                direction = 'left';
-                break;
+                if(directionLast != "right") directionLast = direction = 'left';
+            break;
             case 'ArrowRight':
-                direction = 'right';
-                break;
+                if(directionLast != "left") directionLast = direction = 'right';
+            break;
         }
         if(direction) socketSnakes.emit('direction', direction);
     });
+}
+
+function mobileSnakeBtn(key){
+    const event = new KeyboardEvent('keydown', { key });
+    document.dispatchEvent(event);
 }

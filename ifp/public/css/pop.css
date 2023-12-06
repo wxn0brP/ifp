@@ -1,5 +1,10 @@
 .popUp{
     z-index: 99;
+    position: absolute;
+    background-color: var(--panel);
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
 }
 
 #mobileMenuToogler{
@@ -166,13 +171,9 @@
 }
 
 #imgSelector{
-    position: absolute;
     top: 1%;
     left: 50%;
     transform: translate(-50%);
-    background-color: var(--panel);
-    padding: 1rem;
-    border-radius: 1rem;
 
     display: flex;
     justify-content: space-between;
@@ -185,14 +186,9 @@
 }
 
 #statusPopUp{
-    position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%);
-    background-color: var(--panel);
-    padding: 1rem;
-    border-radius: 1rem;
-    border: 1px solid var(--border);
 }
 
 #statusPopUp :is(button, input){
@@ -212,23 +208,18 @@
 }
 
 #snakesPopUp{
-    position: absolute;
     top: 5%;
     left: 50%;
     transform: translate(-50%);
-    background-color: var(--panel);
-    padding: 1rem;
-    border-radius: 1rem;
-    border: 1px solid var(--border);
 }
 
 #snakesPopUp canvas{
-    width: max(85vh, 400px);
-    height: max(85vh, 400px);
+    width: 98%;
+    height: 98%;
     background-color: #333;
 }
 
-#snakesPopUp button{
+#snakesPopUp #snakesPopUpX{
     border-radius: 50%;
     padding: 10px;
     left: -35px;
@@ -238,24 +229,35 @@
     background-color: var(--menu);
 }
 
+#snakesPopUp .snakeMobileBtn{
+    width: 50px;
+    height: 50px;
+    background-color: var(--panel);
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    color: var(--txt);
+    margin: 10px;
+}
+
 #casesPopUp{
     position: absolute;
     top: 5%;
     left: 50%;
     transform: translate(-50%);
-    background-color: var(--panel);
-    padding: 1rem;
-    border-radius: 1rem;
-    border: 1px solid var(--border);
 }
 
-#casesPopUp canvas{
+#itemsPopUp{
     position: absolute;
     top: 5%;
     left: 50%;
     transform: translate(-50%);
-    background-color: var(--panel);
-    padding: 1rem;
-    border-radius: 1rem;
-    border: 1px solid var(--border);
+    height: 440px;
+    width: 300px;
+    overflow: auto;
+}
+
+#itemsPopUp img{
+    height: 70px;
+    padding: 0 5px;
 }

@@ -73,7 +73,7 @@ function endGame(player, playerId){
             obj.gold += length;
             return obj;
         });
-        if(!ok) await global.db.userGold.add({ id: playerId, gold: 0, items: [], daily: "0"});
+        if(!ok) await global.db.userGold.add({ id: playerId, gold: length, items: [], daily: "0"});
     })();
 }
 
@@ -102,7 +102,7 @@ function getSockInRoom(room){
 function sendSockRoom(room, chanel, ...more){
     var sockse = getSockInRoom(room);
     sockse.forEach(socket => {
-        socket.emit(chanel, ...more);
+        socket.volatile.emit(chanel, ...more);
     });
 }
 

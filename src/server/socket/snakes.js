@@ -73,7 +73,7 @@ function endGame(player, playerId){
             obj.gold += length;
             return obj;
         });
-        if(!ok) await global.db.userGold.add({ id: playerId, gold: 0, items: []});
+        if(!ok) await global.db.userGold.add({ id: playerId, gold: 0, items: [], daily: "0"});
     })();
 }
 

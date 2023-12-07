@@ -336,4 +336,40 @@ socket.on("items_get", (items, gold) => {
     });
 
     popUpSetUp(pop);
-})
+});
+
+socket.on("box_hub", (boxs, gold, daily) => {
+    let pop = document.querySelector("#casesHubPopUp");
+    popUpSetUp(pop);
+    let cases = pop.querySelector("#casesHubPopUpCases");
+    cases.innerHTML = "";
+
+    pop.querySelector("#casesHubPopUpGold").innerHTML = "Gold: "+gold;
+
+    boxs.forEach(box => {
+        let div = document.createElement("div");
+        div.clA("spaceDiv");
+
+        let span = document.createElement("span");
+        span.innerHTML = box.name;
+        span.setAttribute("onclick", `socket.emit('box_get_drop', '${box.id}')`);
+        div.appendChild(span);
+
+        let btn = document.createElement("button");
+        btn.setAttribute("onclick", `socket.emit('box_open', '${box.id}');clsPopUp();`);
+        btn.innerHTML = "Open, Cena: "+box.p;
+        div.appendChild(btn);
+
+        cases.appendChild(div);
+    });
+
+    timeToDailyCase = parseInt(daily, 36) + 86400;
+    updateCountdown();
+});
+
+socket.on("box_get_drop", (drop) => {
+    let txt = "Drop: \n"+drop.map(drop => {
+        return "- " + drop.name + " - " + drop.per + "%"
+    }).join("\n");
+    alert(txt);
+});

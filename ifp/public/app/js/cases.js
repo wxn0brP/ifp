@@ -1,8 +1,6 @@
 function casesOpen(pos, res){
     const popUp = document.querySelector("#casesPopUp");
     popUp.fadeIn();
-    const openBtn = document.querySelector("#case_open_btn");
-    openBtn.disabled = true;
 
     const canvas = document.querySelector("#casesPopUp canvas");
     const ctx = canvas.getContext("2d");
@@ -91,9 +89,6 @@ function casesOpen(pos, res){
                     speed = 0;
                     setTimeout(() => {
                         popUp.fadeOut();
-                        setTimeout(() => {
-                            openBtn.disabled = false;
-                        }, 1000);
                     }, 4444);
                 }
 
@@ -105,3 +100,4 @@ function casesOpen(pos, res){
         animate();
     }
 }
+

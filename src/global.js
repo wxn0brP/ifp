@@ -11,7 +11,8 @@ global.lo = function(...data){
 global.delay = ms => new Promise(res => setTimeout(res, ms));
 
 global.vars = {
-    month: 2592000000
+    month: 2592000000,
+    day: 86400000
 }
 
 global.appConfig = require("../config.js");

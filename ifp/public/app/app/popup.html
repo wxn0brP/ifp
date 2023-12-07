@@ -119,3 +119,12 @@
 </div>
 
 <div id="itemsPopUp" style="display: none;" class="popUp"></div>
+
+<div id="casesHubPopUp" style="display: none;" class="popUp">
+    <div id="casesHubPopUpGold"></div>
+    <div class="spaceDiv" id="casesHubPopUpDaily">
+        <span onclick="socket.emit('box_get_drop', 'daily')">Dzienna Skrzynka</span>
+        <button id="casesHubDaily">Open</button>
+    </div>
+    <div id="casesHubPopUpCases"></div>
+</div>

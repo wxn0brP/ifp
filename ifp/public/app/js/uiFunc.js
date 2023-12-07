@@ -248,3 +248,19 @@ function setUserStatus(div, type, color="#333"){
         break;
     }
 }
+
+function updateCountdown(){
+    let currentTime = Math.floor(new Date().getTime() / 1000);
+    let timeDifference = timeToDailyCase - currentTime;
+
+    if(timeDifference > 0){
+        let hours = Math.floor(timeDifference / 3600);
+        let minutes = Math.floor((timeDifference % 3600) / 60);
+        let seconds = timeDifference % 60;
+
+        dailyBtn.innerHTML = `Pozostało: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }else{
+        dailyBtn.innerHTML = "Open";
+    }
+}
+setInterval(() => {updateCountdown()}, 1000);

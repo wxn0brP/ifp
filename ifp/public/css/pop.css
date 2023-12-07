@@ -261,3 +261,39 @@
     height: 70px;
     padding: 0 5px;
 }
+
+#casesHubPopUp{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    height: 440px;
+    width: 300px;
+    overflow: auto;
+}
+
+#casesHubPopUp div{
+    margin-top: 8px;
+}
+
+#casesHubPopUp .spaceDiv{
+    display: flex;
+    justify-content: space-between;
+}
+
+#casesHubPopUp .spaceDiv span{
+    cursor: pointer;
+}
+
+#casesHubPopUp button{
+    background-color: var(--back);
+    color: var(--txt);
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+#casesHubPopUpCases > :not(:last-child), #casesHubPopUpDaily{
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+}

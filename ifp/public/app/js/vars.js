@@ -54,3 +54,4 @@ confetti.setPower(20);
 confetti.maxsiu = false;
 
 var socketUrl = "/";
+var timeToDailyCase = 0;

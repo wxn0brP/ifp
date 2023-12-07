@@ -1,6 +1,6 @@
 {
     "name": "ifp",
-    "version": "0.0.32",
+    "version": "0.0.33",
     "description": "IFP",
     "main": "index.js",
     "scripts": {
@@ -12,9 +12,9 @@
     },
     "author": {
         "name": "wxn0brP",
-        "email": "ares@projektares.tk"
+        "email": "ifp@ifp.ct8.pl"
     },
-    "homepage": "https://ifp.projektares.tk",
+    "homepage": "https://ifp.ct8.pl",
     "license": "MIT",
     "devDependencies": {
         "electron": "^25.1.0"

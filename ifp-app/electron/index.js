@@ -15,7 +15,7 @@ const lo = console.log;
 
 process.env.GH_TOKEN = config.GH_TOKEN;
 const version = app.getVersion();
-var linkPod = "https://ifp.projektares.tk/";
+var linkPod = "https://ifp.ct8.pl/";
 var dev = process.argv.length > 2 && process.argv[2] == "-dev";
 if(dev){
     linkPod = process.argv[3] || "http://localhost:1478/"

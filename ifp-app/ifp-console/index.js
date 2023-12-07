@@ -4,7 +4,7 @@ const { getListAsync, getUserInputAsync, getBoolAsync } = require("./console");
 const readline = require('readline');
 require("./enc");
 
-global.baseUrl = "https://ifp.projektares.tk";
+global.baseUrl = "https://ifp.ct8.pl";
 if(process.argv.length > 2){
     let p = process.argv[2];
     if(p == "-dev") global.baseUrl = "http://localhost:1478";
@@ -59,6 +59,7 @@ function refresh(call){
 
 async function chatMode(){
     rlChat = readline.createInterface({ input: process.stdin, output: process.stdout });
+    refresh();
     return new Promise(resolve => {
         function prCmd(input){
             if(input == "::quit"){

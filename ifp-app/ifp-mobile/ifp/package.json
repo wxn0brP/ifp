@@ -11,6 +11,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "appcenter": "5.0.0",
+    "appcenter-analytics": "5.0.0",
+    "appcenter-crashes": "5.0.0",
     "react": "18.2.0",
     "react-native": "0.73.0",
     "react-native-webview": "^13.6.3"

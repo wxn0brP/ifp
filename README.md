@@ -9,9 +9,9 @@ Zajrzyj też do ```config/``` aby dokonać konfiguracji, ```mail```, ```banedIP`
 Zajrzyj też do ```config.js```
 
 ## Współpraca
-https://ifp.projektares.tk
+https://ifp.ct8.pl
 
-Osoby chętne niech piszą do: Filip
+Osoby chętne niech piszą do: ```Filip```
 
 ## GITHUB
 Commit na gh są aktualnie całkowicie losowe.

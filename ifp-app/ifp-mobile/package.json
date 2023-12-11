@@ -1,14 +1,23 @@
 {
-  "name": "ifp-mobile",
-  "main": "app/app.js",
+  "name": "io.cordova.hellocordova",
+  "displayName": "HelloCordova",
   "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "@nativescript/core": "~8.6.0",
-    "@nativescript/theme": "~3.0.2"
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
   "devDependencies": {
-    "@nativescript/android": "8.6.2",
-    "@nativescript/webpack": "~5.0.18"
+    "cordova-android": "^12.0.1"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
   }
 }

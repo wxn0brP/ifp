@@ -38,41 +38,67 @@
             <script>menuBuilder.menuBuildUrl();</script>
             <h1>Pobierz Aplikację</h1>
             <br /><br />
-            <button class="download-button" onclick="downloadApp('desktop', 'windows')" style="--c: #0046e8;">Pobierz dla Windows</button>
-            <button class="download-button" onclick="downloadApp('desktop', 'linux')" style="--c: #e95420;">Pobierz dla Linux</button>
-            <button class="download-button" onclick="downloadApp('apk')" style="--c: #11c511;">Pobierz APK dla Androida</button>
+            <button class="download-button" onclick="downloadApp('ifp-electron', 'windows')" style="--c: #0046e8;">Pobierz dla Windows</button>
+            <button class="download-button" onclick="downloadApp('ifp-electron', 'linux')" style="--c: #e95420;">Pobierz dla Linux</button>
+            <button class="download-button" onclick="downloadApp('ifp-mobile', 'android')" style="--c: #11c511;">Pobierz APK dla Androida</button>
             <br /><br />
-            <button class="download-button" onclick="downloadApp('console', 'windows')"  style="--c: #1e5ef3;">Pobierz Console dla Windows</button>
-            <button class="download-button" onclick="downloadApp('console', 'linux')" style="--c: #ff5214;">Pobierz Console dla Linux</button>
+            <button class="download-button" onclick="downloadApp('ifp-console', 'windows')"  style="--c: #1e5ef3;">Pobierz Console dla Windows</button>
+            <button class="download-button" onclick="downloadApp('ifp-console', 'linux')" style="--c: #ff5214;">Pobierz Console dla Linux</button>
         </div>
         <script>
-            async function downloadApp(type, platform){
+            async function downloadApp(repo, platform){
                 try{
-                    const response = await fetch('https://api.github.com/repos/wxn0brP/ifp/releases/latest');
-                    const data = await response.json();
-
+                    let data = await getInfo(repo);
                     let file;
 
-                    if(type === 'desktop' && platform === 'windows'){
-                        file = data.assets.find(asset => asset.name.endsWith('.exe') && asset.name.startsWith("IFP-Setup"));
-                    }else if(type === 'desktop' && platform === 'linux'){
-                        file = data.assets.find(asset => asset.name.endsWith('.deb') && asset.name.startsWith("ifp_"));
-                    }else if(type === 'console' && platform === 'windows'){
-                        file = data.assets.find(asset => asset.name.includes('ifp-console.exe'));
-                    }else if(type === 'console' && platform === 'linux'){
-                        file = data.assets.find(asset => asset.name.includes('ifp-console'));
-                    }else if(type === 'apk'){
-                        file = data.assets.find(asset => asset.name.endsWith('.apk'));
+                    switch(repo){
+                        case 'ifp-electron':
+                            if(platform === 'windows'){
+                                file = data.assets.find(asset => asset.name.endsWith('.exe') && asset.name.startsWith("IFP-Setup"));
+                            }else if(platform === 'linux'){
+                                file = data.assets.find(asset => asset.name.endsWith('.deb') && asset.name.startsWith("ifp_"));
+                            }
+                        break;
+
+                        case 'ifp-console':
+                            if(platform === 'windows'){
+                                file = data.assets.find(asset => asset.name.includes('ifp-console.exe'));
+                            }else if(platform === 'linux'){
+                                file = data.assets.find(asset => asset.name.includes('ifp-console'));
+                            }
+                        break;
+
+                        case 'ifp-mobile':
+                            if(platform === 'android'){
+                                file = data.assets.find(asset => asset.name.endsWith('.apk'));
+                            }
+                        break;
+
+                        default:
+                            console.error('Nieobsługiwany typ aplikacji:', type);
+                            return;
                     }
-
-                    let a = document.createElement("a");
-                    a.href = file.browser_download_url;
-                    a.target = "_blank";
-                    a.click();
-
+                    if(file){
+                        download(file.browser_download_url);
+                    }
                 }catch(error){
                     console.error('Błąd podczas pobierania informacji o releasie:', error);
                 }
+            }
+            async function getInfo(name){
+                try{
+                    const response = await fetch(`https://api.github.com/repos/wxn0brP/${name}/releases/latest`);
+                    const data = await response.json();
+                    return data;
+                }catch(error){
+                    console.error('Błąd podczas pobierania informacji o releasie:', error);
+                }
+            }
+            function download(link){
+                let a = document.createElement("a");
+                a.href = link;
+                a.target = "_blank";
+                a.click();
             }
         </script>
     </body>

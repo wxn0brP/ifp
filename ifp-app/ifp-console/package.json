@@ -1,10 +1,12 @@
 {
   "name": "ifp-console",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-windows": "nexe -i index.js -o ifp-console.exe --target windows-x64-14.15.3",
+    "build-linux": "nexe -i index.js -o ifp-console --target linux-x64-14.15.3",
+    "build": "npm run build-windows && npm run build-linux"
   },
   "author": "wxn0brP",
   "license": "MIT",

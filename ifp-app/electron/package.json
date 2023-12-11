@@ -25,7 +25,7 @@
         "publish": {
             "provider": "github",
             "owner": "wxn0brP",
-            "repo": "ifp"
+            "repo": "ifp-electron"
         },
         "win": {
             "icon": "icon.ico"

@@ -3,6 +3,7 @@ const io = require("socket.io-client");
 const { getListAsync, getUserInputAsync, getBoolAsync } = require("./console");
 const readline = require('readline');
 require("./enc");
+require("./update")();
 
 global.baseUrl = "https://ifp.ct8.pl";
 if(process.argv.length > 2){

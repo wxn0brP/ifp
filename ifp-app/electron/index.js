@@ -68,7 +68,7 @@ app.on('ready', () => {
     autoUpdater.setFeedURL({
         provider: 'github',
         owner: 'wxn0brP',
-        repo: 'ifp',
+        repo: 'ifp-electron',
         token: config.GH_TOKEN,
     });
     

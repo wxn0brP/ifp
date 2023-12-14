@@ -2,7 +2,7 @@
 node_modules/
 
 # Ignoruj pliki budowane i katalogi platformy
-android/
+android/app/build
 ios/
 
 # Ignoruj pliki projektu Xcode
@@ -40,3 +40,6 @@ android/app/build/
 # Ignoruj pliki budowania
 *.apk
 *.aab
+
+# Ignoruj pliki większe niż 10 MB
+*.[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]M

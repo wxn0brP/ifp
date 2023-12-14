@@ -65,18 +65,22 @@ async function createWindow(){
 }
 
 app.on('ready', () => {
-    autoUpdater.setFeedURL({
-        provider: 'github',
-        owner: 'wxn0brP',
-        repo: 'ifp-electron',
-        token: config.GH_TOKEN,
-    });
-    
-    autoUpdater.on('error', (error) => {
-        dialog.showErrorBox('Błąd aktualizacji', error == null ? 'Unknown' : (error.stack || error).toString());
-    });
-    autoUpdater.on('update-not-available', createWindow)
-    autoUpdater.checkForUpdatesAndNotify();
+    if(!dev){
+        autoUpdater.setFeedURL({
+            provider: 'github',
+            owner: 'wxn0brP',
+            repo: 'ifp-electron',
+            token: config.GH_TOKEN,
+        });
+        
+        autoUpdater.on('error', (error) => {
+            dialog.showErrorBox('Błąd aktualizacji', error == null ? 'Unknown' : (error.stack || error).toString());
+        });
+        autoUpdater.on('update-not-available', createWindow)
+        autoUpdater.checkForUpdatesAndNotify();
+    }else{
+        createWindow();
+    }
 });
 
 app.on('window-all-closed', () => {

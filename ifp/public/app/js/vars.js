@@ -31,16 +31,14 @@ const sounds = {
     notifVaw: new Audio("/notif.wav"),
     join: new Audio("/join.mp3"),
     leave: new Audio("/leave.mp3"),
-    lektor: new SpeechSynthesisUtterance(),
 
     init(){
         this.notifVaw.volume = ifpSettings.main["głośność powiadomień"] / 100;
-        this.lektor.lang = "pl-PL";
     },
 
     lektorSpeak(data){
-        this.lektor.text = data;
-        speechSynthesis.speak(this.lektor);
+        lo(data)
+        // TODO del lektor in IFP APP
     }
 }
 sounds.init();

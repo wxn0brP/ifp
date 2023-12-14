@@ -29,12 +29,14 @@ function loadApis(){
     const dev = {
         isElectron: navigator.userAgent.toLowerCase().includes('electron'),
         isInIframe: window.self !== window.top,
+        isReactNative: !!window.ReactNativeWebView,
         // isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     };
     
     const script = document.createElement("script");
     var path = "";
     if(dev.isElectron) path = "ele";
+    else if(dev.isReactNative) path = "rn";
     else if(dev.isInIframe) path = "if";
     else path = "web";
 

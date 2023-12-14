@@ -40,11 +40,14 @@
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                translate: -50% -50%;
-                width: 500px;
-                height: 500px;
+                transform: translate(-50%, -50%);
+                max-width: 500px;
+                max-height: 500px;
+                width: 99vw;
+                height: 99vw;
                 background-color: #aaa;
                 padding: 50px;
+                border-radius: 10px;
             }
             #Xcode{
                 width: 2rem;
@@ -195,6 +198,8 @@
                     correctLevel : QRCode.CorrectLevel.H
                 });
                 qrcode.makeCode(url);
+                document.querySelector("#qrcode canvas").classList = "s m_12 l_12 u_12"
+                document.querySelector("#qrcode img").classList = "s m_12 l_12 u_12"
             }
 
             function createCode(){
@@ -221,6 +226,10 @@
                     Podaj kod <b>LOGOWANIA</b>:<br />
                     <input id="qrcode-inp" onkeydown="search(this)"/>
                     <button onclick="getPassF()">OK</button>
+                    <br /><br /><br />
+                    Gdzie znajdę kod?
+                    <br />
+                    W zalogowanej applikacji: <br />⚙️ (Settings) > Konto > Kod Logowania
                 `;
             }
 

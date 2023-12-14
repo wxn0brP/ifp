@@ -35,6 +35,10 @@ module.exports = (app) => {
         app.get("/ic/get", inviteChatGetA);
         app.post("/feed", feedA);
         app.get("/genId", genIdA);
+        app.get("/checkForNewMessages", (req, res) => {
+            lo("aa")
+            res.json([]);
+        })
         // app.post("/github-webhook", (req, res) => {
         //     const eventType = req.headers['x-github-event'];
         //     lo(eventType, req.body);

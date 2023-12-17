@@ -60,13 +60,13 @@ class permisionSystem{
 
     /* role menager */
 
-    async createRole(name, perm, parrent){
+    async createRole(name, perm, parent){
         const id = genId();
         const role = {
             name,
             roleId: id,
             perm,
-            parrent
+            parent
         }
         await this._addToDb(role);
         return id;
@@ -78,9 +78,9 @@ class permisionSystem{
         const roleIndex = roles.findIndex(r => r.roleId == roleId);
         if(roleIndex == -1) throw new Error("db obj is not exsists");
         if(roleIndex + 1 < roles.length){
-            const parrentRole = roles[roleIndex].parrent;
+            const parentRole = roles[roleIndex].parent;
             const nextRole = roles[roleIndex + 1];
-            await this._updateDb({ roleId: nextRole.roleId }, { parrent: parrentRole });
+            await this._updateDb({ roleId: nextRole.roleId }, { parent: parentRole });
         }
         await this._removeFromDb({ roleId: roleId });
     }

@@ -34,6 +34,7 @@ async function loadJs(){
         "js/uiFunc.js",
         "js/audioFunc.js",
         "js/callsApi.js",
+        "js/serverMgmt.js",
         "/js/generateResCss.js",
         "js/anty.js",
         "js/warning.js",

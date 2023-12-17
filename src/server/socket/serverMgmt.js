@@ -130,5 +130,19 @@ module.exports = (socket) => {
         }  
     });
 
+    socket.on("getServerPerm", async (server) => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        try{
+            const perm = new permSys(server);
+            if(!await perm.userPermison(socket.user._id, "get")) return socket.emit("error", "permission");
+
+            socket.emit("getServerPerm")
+        }catch(e){
+            socket.emit("error", "error");
+        }  
+    });
+
 
 }

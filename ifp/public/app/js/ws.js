@@ -373,3 +373,7 @@ socket.on("box_get_drop", (drop) => {
     }).join("\n");
     alert(txt);
 });
+
+socket.on("getServerPerm", data => {
+    getServerPerm(data);
+})

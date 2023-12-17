@@ -1,123 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Ustawienia Aplikacji</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Hierarchy Editor</title>
     <style>
-        /* Dodaj tutaj stylizację dla popup-u ustawień */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: white;
+            background-color: #333;
+        }
+
+        #roleHierarchy {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .roleItem {
+            margin-bottom: 5px;
+        }
+
+        .roleItem button {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
-    <a href="#" id="ustawieniaLink">Otwórz Ustawienia</a>
 
-    <script>
-        function UstawieniaPopup(options) {
-            const defaultOptions = {
-                categories: [],
-                onSave: () => {},
-            };
-            this.options = { ...defaultOptions, ...options };
-            this.popup = document.createElement("div");
-            this.popup.id = "popupUstawien";
-            this.popup.style.display = "none";
+<div id="roleHierarchyContainer">
+    <ul id="roleHierarchy"></ul>
+</div>
 
-            this.options.categories.forEach((category) => {
-                const categoryElement = document.createElement("div");
-                categoryElement.innerHTML = `<h3>${category.name}</h3>`;
-                category.options.forEach((option) => {
-                    const label = document.createElement("label");
-                    label.textContent = option.label;
-                    if (option.type === "checkbox") {
-                        const checkbox = document.createElement("input");
-                        checkbox.type = "checkbox";
-                        checkbox.checked = option.checked;
-                        checkbox.addEventListener("change", () => {
-                            option.checked = checkbox.checked;
-                        });
-                        label.appendChild(checkbox);
-                    } else if (option.type === "list") {
-                        const select = document.createElement("select");
-                        option.choices.forEach((choice) => {
-                            const optionElement = document.createElement("option");
-                            optionElement.value = choice.value;
-                            optionElement.text = choice.label;
-                            select.appendChild(optionElement);
-                        });
-                        select.value = option.selected;
-                        select.addEventListener("change", () => {
-                            option.selected = select.value;
-                        });
-                        label.appendChild(select);
-                    } else if (option.type === "range") {
-                        const range = document.createElement("input");
-                        range.type = "range";
-                        range.min = option.min;
-                        range.max = option.max;
-                        range.value = option.value;
-                        range.addEventListener("input", () => {
-                            option.value = parseFloat(range.value);
-                        });
-                        label.appendChild(range);
-                    }
-                    categoryElement.appendChild(label);
-                });
-                this.popup.appendChild(categoryElement);
-            });
+<script src="/core.js"></script>
+<script>
+    let roles = [
+        { roleId: 5, name: 'Sub-Moderator', parent: 4 },
+        { roleId: 3, name: 'Member', parent: 2 },
+        { roleId: 1, name: 'Admin', parent: 'all' },
+        { roleId: 4, name: 'Sub-Admin', parent: 3 },
+        { roleId: 2, name: 'Moderator', parent: 1 },
+    ];
 
-            document.body.appendChild(this.popup);
+    function sortRolesByHierarchy(roles){
+        const len = roles.length;
 
-            this.open = function () {
-                this.popup.style.display = "block";
-            };
+        const rootRole = roles.find((role) => role.parent === "all");
+        const indexToRemove = roles.indexOf(rootRole);
+        if(indexToRemove !== -1) roles.splice(indexToRemove, 1);    
+        roles.unshift(rootRole);
 
-            this.save = function () {
-                this.options.onSave(this.options.categories);
-                this.close();
-            };
-
-            this.close = function () {
-                this.popup.style.display = "none";
-            };
+        for(let i=1; i<len; i++){
+            let role = roles[i];
+            let parrentIndex = roles.findIndex(r => r.roleId == role.parent);
+            if(i == parrentIndex + 1) continue;
+            roles.splice(i, 1);
+            roles.splice(parrentIndex + 1, 0, role);
+            i = 1;
         }
+        return roles;
+    }
 
-        const ustawieniaLink = document.getElementById("ustawieniaLink");
+    function renderRoleHierarchy(roles){
+        const roleHierarchyContainer = document.getElementById('roleHierarchy');
+        roleHierarchyContainer.innerHTML = '';
 
-        const ustawienia = new UstawieniaPopup({
-            categories: [
-                {
-                    name: "Dźwięki powiadomień",
-                    options: [
-                        { label: "Włącz dźwięki", type: "checkbox", checked: false },
-                    ],
-                },
-                {
-                    name: "Wybierz opcję",
-                    options: [
-                        { label: "Wybór z listy", type: "list", choices: [
-                            { value: "opcja1", label: "Opcja 1" },
-                            { value: "opcja2", label: "Opcja 2" },
-                        ], selected: "opcja1" },
-                    ],
-                },
-                {
-                    name: "Ustaw głośność",
-                    options: [
-                        { label: "Głośność", type: "range", min: 0, max: 100, value: 50 },
-                    ],
-                },
-            ],
-            onSave: (categories) => {
-                // Tutaj możesz obsłużyć zapisywanie ustawień
-                console.log("Zapisano ustawienia:", categories);
-            },
+        roles.forEach(role => {
+            const roleItem = document.createElement('li');
+            roleItem.classList.add('roleItem');
+
+            const moveUpButton = document.createElement('button');
+            moveUpButton.textContent = '↑';
+            moveUpButton.addEventListener('click', () => moveRoleUp(role.roleId));
+
+            const moveDownButton = document.createElement('button');
+            moveDownButton.textContent = '↓';
+            moveDownButton.addEventListener('click', () => moveRoleDown(role.roleId));
+
+            roleItem.textContent = `${role.name} (ID: ${role.roleId})`;
+            roleItem.appendChild(moveUpButton);
+            roleItem.appendChild(moveDownButton);
+
+            roleHierarchyContainer.appendChild(roleItem);
         });
+    }
 
-        ustawieniaLink.addEventListener("click", (e) => {
-            e.preventDefault();
-            ustawienia.open();
-        });
+    function moveRoleUp(roleId){
+        roles = sortRolesByHierarchy(roles);
+        const roleIndex = roles.findIndex(role => role.roleId === roleId);
+        if(roleIndex <= 0) return;
 
-        // Zamknięcie popup-u po zapisaniu
-        // Możesz dodać przycisk "Zapisz" i "Anuluj" do obsługi zamykania popup-u
-    </script>
+        let nadPar = roles[roleIndex - 1].parent;
+        let nadId  = roles[roleIndex - 1].roleId;
+        let rol    = roles[roleIndex]    .roleId;
+
+        roles[roleIndex - 1].parent = rol;
+        roles[roleIndex].parent = nadPar;
+        if(roleIndex < roles.length - 1)
+            roles[roleIndex + 1].parent = nadId;      
+        
+        render();
+    }
+
+    function moveRoleDown(roleId){
+        roles = sortRolesByHierarchy(roles);
+        const roleIndex = roles.findIndex(role => role.roleId === roleId);
+        if(roleIndex >= roles.length - 1) return;
+
+        let rolPar = roles[roleIndex]       .parent;
+        let rolId  = roles[roleIndex]       .roleId;
+        let par1   = roles[roleIndex + 1]   .roleId;
+
+        roles[roleIndex]    .parent = par1;
+        roles[roleIndex + 1].parent = rolPar;
+        if(roleIndex < roles.length - 2)
+            roles[roleIndex + 2].parent = rolId;
+
+        render();
+    }
+
+
+    function render(){
+        roles = sortRolesByHierarchy(roles)
+        renderRoleHierarchy(roles);
+    }
+    render();
+
+</script>
+
 </body>
 </html>

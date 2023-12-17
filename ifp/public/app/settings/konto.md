@@ -1,4 +1,4 @@
 /- ustawinia konta
 /+ name:'opis',type:'input'
-// <button onclick="kodLog()">Kod logowania 🔐</button>
+<button onclick="kodLog()">Kod logowania 🔐</button>
 //-

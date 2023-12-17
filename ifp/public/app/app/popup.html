@@ -43,9 +43,14 @@
     <div class="s m_11 l_8 u_7 mar">
         <button id="settingsCloseBtn" onclick="closeSettings()">X</button>
         <div id="settingsList">
-            <button onclick="settingsChange('main')">main</button>
-            <button onclick="settingsChange('konto')">konto</button>
-            <button onclick="logout()" style="color: red;">WYLOGUJ SIĘ</button>
+            <span id="settingsList_user">
+                <button onclick="settingsChange('main')">main</button>
+                <button onclick="settingsChange('konto')">konto</button>
+                <button onclick="logout()" style="color: red;">WYLOGUJ SIĘ</button>
+            </span>
+            <span id="settingsList_server">
+                <button onclick="settingsChangeSever('server_main')">server_main</button>
+            </span>
         </div>
         <mob><br /><br /></mob>
         <div id="settingsDivC"></div>

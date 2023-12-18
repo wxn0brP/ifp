@@ -27,6 +27,8 @@
             <button onclick="callEnd()" style="background-color: red;">End</button>
             <br />
             <button id="togleMic" onclick="togleMic()">Mic = wył</button>
+            <button id="toggleCamera" onclick="toggleCam()">Cam = wył</button>
+            <button onclick="getDevice(true)">Zmień urządzenia</button>
             <br />
             <meter id="callMeter" min="0" max="0.3" low="0.01" high="0.1" optimum="0.2"></meter>
         </div>
@@ -35,8 +37,14 @@
         </div>
     </div>
     <br /><br />
-    <div id="callContener" style="display: none;"></div>
+    <div id="callContener" style="display: block;"></div>
     <div id="callContenerM"></div>
+</div>
+
+<div id="deivceSelect" style="display: none;" class="popUp">
+    <select id="deivceSelect_audio"></select><br />
+    <select id="deivceSelect_video"></select><br />
+    <button id="deivceSelect_ok">ok</button>
 </div>
 
 <div id="settingsDiv" style="display: none;" class="popUp">

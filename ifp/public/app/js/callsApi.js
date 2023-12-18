@@ -3,6 +3,7 @@ const peerVars = {
     stream: null,
     callOk: false,
     micE: true,
+    cameraE: true,
     id: "",
     peers: []
 }
@@ -16,8 +17,11 @@ function makePeerConnect(a, b){
     return peer;
 }
 
-function addVideoStream(stream, user, video=document.createElement('video'), other=true){
+function addVideoStream(stream, user, r, video=document.createElement('video'), other=true){
     let setVolume = modifyAudioStream(stream, other ? undefined : 0);
+    video.classList.add("__"+r);
+    video.controls = true;
+    video.style.maxWidth = "300px";
 
     video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
@@ -49,9 +53,10 @@ async function joinVC(id){
     socket.emit("joinVC", id);
     peerVars.id = id;
     peerVars.callOk = true;
-    let stream
+    let stream;
     try{
-        stream = await getStream({ audio: true });
+        // stream = await getStream({ audio: true, video: true });
+        stream = await getDevice();
     }catch(e){
         alert(e);
     }
@@ -83,13 +88,14 @@ async function joinVC(id){
     peerVars.stream = stream;
     let v = document.createElement('video');
     v.muted = true;
-    addVideoStream(stream, localUser.id, v, false);
-    togleMic(true);
-    
+    addVideoStream(stream, localUser.id, "joinVC", v, false);
+    togleMic();
+    toggleCam();
 }
 
 function makeConnect(to){
     let peer = makePeerConnect(localUser.id, to);
+    peer.IFP_id = to;
     peerVars.peers.push(peer);
     peer.on('open', (id) => {
         console.log("my id:", id);
@@ -102,7 +108,7 @@ function makeConnect(to){
             if(vid) return;
             vid = true;
             debugMsg("add stream, peer on call");
-            addVideoStream(userVideoStream, to);
+            addVideoStream(userVideoStream, to, "makeConnect");
         });
         // call.on("close", () => callApi.endF(true))
     });
@@ -124,7 +130,7 @@ function callTor(to, peer){
         if(vid) return;
         vid = true;
         debugMsg("add stream, mt")
-        addVideoStream(userVideoStream, to)
+        addVideoStream(userVideoStream, to, "callTor")
     });
     call.on("iceConnectionStateChange", () => {
         if(call.iceConnectionState === 'failed' || call.iceConnectionState === 'disconnected'){
@@ -181,6 +187,18 @@ function togleMic(){
     document.querySelector("#togleMic").html("Mic = w" + (peerVars.micE ? "ł" : "ył"));
 }
 
+function toggleCam(){
+    peerVars.cameraE = !peerVars.cameraE;
+    const videoTracks = peerVars.stream.getVideoTracks();
+
+    videoTracks.forEach(track => {
+        track.enabled = peerVars.cameraE;
+    });
+
+    document.querySelector("#toggleCamera").html("Camera = w" + (peerVars.cameraE ? "ł" : "ył"));
+}
+
+
 function callEnd(){
     socket.emit("leaveVC", peerVars.id);
     peerVars.callOk = false;
@@ -188,7 +206,11 @@ function callEnd(){
     document.querySelector("#callMedia").css("display: none;");
     peerVars.peers.forEach(p => p.destroy());
     peerVars.peers = [];
-    if(peerVars.stream) peerVars.stream.getTracks().forEach(t => t.stop());
+    if(peerVars.stream){
+        peerVars.stream.getTracks().forEach(t => t.stop());
+        peerVars.stream = undefined;
+    }
+    document.querySelector("#callContener").innerHTML = "";
     document.querySelector("#callContenerM").innerHTML = "";
 }
 
@@ -198,3 +220,65 @@ async function getStream(obj){
     else if(navigator.mozGetUserMedia) return await nnavigator.mozGetUserMedia(obj);
     else return new MediaStream();
 }
+
+async function getDevice(re=false){
+    return new Promise(async (res) => {
+        await getStream({ audio: true, video: true });
+        let devices = await navigator.mediaDevices.enumerateDevices();
+        let audio = devices.filter(device => device.kind === 'audioinput');
+        let video = devices.filter(device => device.kind === 'videoinput');
+        let deivceSelect_audio = document.querySelector("#deivceSelect_audio");
+        let deivceSelect_video = document.querySelector("#deivceSelect_video");
+        let closePop = document.querySelector("#deivceSelect");
+        closePop.fadeIn();
+
+        function createOption(device){
+            const option = document.createElement("option");
+            option.value = device.deviceId;
+            option.text = device.label;
+            return option;
+        }
+        deivceSelect_audio.innerHTML = "";
+        deivceSelect_video.innerHTML = "";
+
+        audio.forEach(device => {
+            let opt = createOption(device);
+            deivceSelect_audio.appendChild(opt);
+        });
+        video.forEach(device => {
+            let opt = createOption(device);
+            deivceSelect_video.appendChild(opt);
+        });
+
+        document.querySelector("#deivceSelect_ok").on("click", async () => {
+            var audioSource = deivceSelect_audio.value;
+            var videoSource = deivceSelect_video.value;
+            if(!audioSource || !videoSource) return;
+
+            const constraints = {
+                audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
+                video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+            };
+            
+            var newStream = await getStream(constraints);
+            
+            if(peerVars.stream){
+                peerVars.stream.getAudioTracks().forEach(track => peerVars.stream.removeTrack(track));
+                peerVars.stream.getVideoTracks().forEach(track => peerVars.stream.removeTrack(track));
+                newStream.getTracks().forEach(track => peerVars.stream.addTrack(track));
+            }
+            res(newStream);
+            closePop.fadeOut();
+
+            if(re){
+                peerVars.peers.forEach(peerS => {
+                    let id = peerS.IFP_id;
+                    peerS.destroy();
+                    let peer = makeConnect(id);
+                    callTor(id, peer);
+                })
+            }
+        });
+    })
+}
+

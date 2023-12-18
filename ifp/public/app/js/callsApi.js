@@ -208,7 +208,6 @@ function callEnd(){
     peerVars.peers = [];
     if(peerVars.stream){
         peerVars.stream.getTracks().forEach(t => t.stop());
-        peerVars.stream = undefined;
     }
     document.querySelector("#callContener").innerHTML = "";
     document.querySelector("#callContenerM").innerHTML = "";
@@ -221,7 +220,7 @@ async function getStream(obj){
     else return new MediaStream();
 }
 
-async function getDevice(re=false){
+async function getDevice(){
     return new Promise(async (res) => {
         await getStream({ audio: true, video: true });
         let devices = await navigator.mediaDevices.enumerateDevices();
@@ -269,16 +268,17 @@ async function getDevice(re=false){
             }
             res(newStream);
             closePop.fadeOut();
-
-            if(re){
-                peerVars.peers.forEach(peerS => {
-                    let id = peerS.IFP_id;
-                    peerS.destroy();
-                    let peer = makeConnect(id);
-                    callTor(id, peer);
-                })
-            }
         });
     })
+}
+
+function changeMicAndCam(){
+    if(!peerVars.callOk) return;
+    let id = peerVars.id;
+    callEnd();
+    setTimeout(() => {
+        joinVC(id);
+        document.querySelector("#callMedia").css("");
+    }, 1000);
 }
 

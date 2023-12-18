@@ -1,15 +1,16 @@
 function readText(obj){
-    var text = "";
-    if(obj.text) text = obj.text;
-    if(obj.id){
-        let id = document.getElementById('messMenu').getAttribute('w_id');
-        let d = document.querySelector(`div[_id="${id}"]`);
-        if(!d) return;
-        text = d.children[0].innerHTML.replace("<b>","").replace("</b>","") + " powiedział ";
-        text += d.children[1].getAttribute("_plain");
-    }
-    if(!text) return;
-    sounds.lektorSpeak(text);
+    uiMsg("Funkcja chwilowa niedostępna");
+    // var text = "";
+    // if(obj.text) text = obj.text;
+    // if(obj.id){
+    //     let id = document.getElementById('messMenu').getAttribute('w_id');
+    //     let d = document.querySelector(`div[_id="${id}"]`);
+    //     if(!d) return;
+    //     text = d.children[0].innerHTML.replace("<b>","").replace("</b>","") + " powiedział ";
+    //     text += d.children[1].getAttribute("_plain");
+    // }
+    // if(!text) return;
+    // sounds.lektorSpeak(text);
 }
 
 function genId(){
@@ -21,14 +22,7 @@ function genId(){
 }
 
 function notifSound(){
-    switch(ifpSettings.main["typ powiadomienia"]){
-        case "Dźwięk":
-            sounds.notifVaw.play();
-        break;
-        case "Lektor":
-            sounds.lektorSpeak("Masz nową wiadomość");
-        break;
-    }
+    sounds.notifVaw.play();
 }
 
 function handleWifElements(){

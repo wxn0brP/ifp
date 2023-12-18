@@ -25,6 +25,8 @@ function sendMess(){
         res: resMsgId ? resMsgId : "",
         silent
     }
+    resMsgId = null;
+    document.querySelector("#responeMsgCloseMenu").css("display: none");
 
     socket.emit("mess", data);
     msgInput.value = "";
@@ -47,7 +49,8 @@ function addMess(msg, socroll=true, up=false){
 
     let content = msg.msg;
     if(msg.res){
-        setTimeout(() => responeMess(div, msg.res), 1000);
+        lo(msg.res)
+        setTimeout(() => responeMess(div, msg.res), 100);
     }
     content = formatText(content);
     if(msg.e) content += edit_txt.replace("$$", formatDateFormUnux(parseInt(msg.e, 36)));

@@ -14,6 +14,9 @@ function changeTo(f){
         sendDiv.css({ display: "block" });
         toChatChannel = "main"; //tmp
         getMessages();
+        setTimeout(() => {
+            msgDiv.scrollTop = msgDiv.scrollHeight;
+        }, 300);
         actMess = messCount;
         focusInp();
         if(inputChat[toChat]){

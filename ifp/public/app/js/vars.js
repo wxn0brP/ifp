@@ -34,11 +34,6 @@ const sounds = {
 
     init(){
         this.notifVaw.volume = ifpSettings.main["głośność powiadomień"] / 100;
-    },
-
-    lektorSpeak(data){
-        lo(data)
-        // TODO del lektor in IFP APP
     }
 }
 sounds.init();

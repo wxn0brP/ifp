@@ -8,7 +8,7 @@ movableDiv(document.getElementById("callMedia"), document.getElementById("callMe
 
 document.querySelector("#responeMsgCloseMenu").on("click", () => {
     resMsgId = null;
-    document.querySelector("#responeMsgCloseMenu").style("display: none");
+    document.querySelector("#responeMsgCloseMenu").css("display: none");
 });
 
 document.querySelector("#app").on("contextmenu", (e) => {

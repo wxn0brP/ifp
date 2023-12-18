@@ -75,6 +75,7 @@ socket.on("getMessage", (data) => {
                     msg: mess.msg,
                     _id: mess._id,
                     e: mess.edit ? mess.lastEdit : false,
+                    res: mess.res
                 }, false, true);
             }catch(e){
                 lo(e);

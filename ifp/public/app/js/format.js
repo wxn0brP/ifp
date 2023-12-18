@@ -115,6 +115,29 @@ function formatInv(text){
     return text;
 }
 
+function responeMess(msg, res_id){
+    var resMsgDiv = document.querySelector("#"+res_id+"_mess");
+    if(!resMsgDiv) return;
+    var res_msg = resMsgDiv.getAttribute("_plain");
+    if(res_msg.length > 20){
+        res_msg.slice(0, 20);
+        res_msg += "...";
+    }
+
+    var ele = document.createElement("div");
+    ele.classList.add("res-msg");
+    ele.innerHTML = "-> "+res_msg;
+    ele.addEventListener("click", () => {
+        utils.scrollTo(resMsgDiv);
+        setTimeout(() => {
+            resMsgDiv.classList.add("res-msg-anim");
+            setTimeout(() => resMsgDiv.classList.remove("res-msg-anim"), 1000);
+        }, 600);
+    })
+    msg.appendChild(ele);
+    msg.classList.add("res-msg-mess");
+}
+
 function changeMedia(link){
     const rozszerzenie = link.substring(link.lastIndexOf('.') + 1);
     var extRegex = /\.(js|html|css|py|c|cpp|java|cs|php|rb|swift|kt|ts|go|rs|pl|sh|sql|r|m|txt)$/i;

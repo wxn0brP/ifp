@@ -260,12 +260,6 @@ async function getDevice(){
             };
             
             var newStream = await getStream(constraints);
-            
-            if(peerVars.stream){
-                peerVars.stream.getAudioTracks().forEach(track => peerVars.stream.removeTrack(track));
-                peerVars.stream.getVideoTracks().forEach(track => peerVars.stream.removeTrack(track));
-                newStream.getTracks().forEach(track => peerVars.stream.addTrack(track));
-            }
             res(newStream);
             closePop.fadeOut();
         });

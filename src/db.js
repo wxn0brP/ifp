@@ -13,6 +13,7 @@ global.db = {
     userStatus: new databaseC(getPath("userStatus")),
     userGold: new databaseC(getPath("userGold")),
     cases: new databaseC(getPath("cases")),
+    items: new databaseC(getPath("items")),
 }
 
 function getPath(name){

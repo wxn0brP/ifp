@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">Admin Panel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="IFP - Infinite Fusion Project">
+		<meta name="keywords" content="ifp, IFP, Infinite Fusion Project">
+        <link href="/favicon.ico" rel="shortcut icon">
+        <link href="/style.css" rel="stylesheet">
+        <style>
+            th, td {
+                background-color: #333;
+                border: 1px solid;
+                min-width: 200px;
+            }
+            button{
+                border: 1px solid #222;
+                padding: 5px;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="/core.js"></script>
+        <div id="assets"></div>
+        <script src="/js/generateResCss.js"></script>
+        <div id="app">
+            <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
+            <table>
+                <thead>
+                    <tr>
+                        <th v-for="header in headers">{{ header }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in editedData" :key="index">
+                        <td v-for="(value, key) in item" :key="key" @click="editCell(index, key)">
+                            <template v-if="editingCell && editingCell.rowIndex === index && editingCell.field === key">
+                                <input v-model="editedData[index][key]" @blur="edit(index, key)">
+                            </template>
+                            <template v-else>
+                                {{ item[key] }}
+                            </template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br /><br />
+            <button @click="undo">Undo</button>
+            <button @click="saveEdit">Save</button>
+            <br /><br />
+            <input type="text" id="db" v-model="dbName">
+            <input type="text" id="arg" v-model="arg">
+            <button @click="changeDb">Change DB</button>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <script src="/js/socket.io.min.js"></script>
+        <script src="dc.admin.js"></script>
+    </body>
+</html>

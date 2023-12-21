@@ -19,6 +19,7 @@
                 border: 1px solid #222;
                 padding: 5px;
                 border-radius: 5px;
+                margin: 0 5px;
             }
         </style>
     </head>
@@ -38,7 +39,7 @@
                     <tr v-for="(item, index) in editedData" :key="index">
                         <td v-for="(value, key) in item" :key="key" @click="editCell(index, key)">
                             <template v-if="editingCell && editingCell.rowIndex === index && editingCell.field === key">
-                                <input v-model="editedData[index][key]" @blur="edit(index, key)">
+                                <input :value="formatInput(editedData[index][key])" @blur="edit(index, key, $event)">
                             </template>
                             <template v-else>
                                 {{ item[key] }}
@@ -54,6 +55,9 @@
             <input type="text" id="db" v-model="dbName">
             <input type="text" id="arg" v-model="arg">
             <button @click="changeDb">Change DB</button>
+            <br /><br />
+            <button @click="addItem">Add</button>
+            <button @click="removeItem">Remove</button>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
         <script src="/js/socket.io.min.js"></script>

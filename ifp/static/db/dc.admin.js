@@ -38,9 +38,10 @@ new Vue({
         editCell(rowIndex, field){
             this.editingCell = { rowIndex, field };
         },
-        edit(rowIndex, field){
+        edit(rowIndex, field, evt){
             this.editingCell = null;
             const _id = this.editedData[rowIndex]._id;
+            this.editedData[rowIndex][field] = evt.target.value;
             const updatedFields = { [field]: this.editedData[rowIndex][field] };
 
             this.addToUndoStack({ _id, originalFields: { ...this.original[rowIndex] }, updatedFields });
@@ -62,9 +63,12 @@ new Vue({
             const updatesMap = new Map();
             for(let i=this.undoStack.length-1; i>=0; i--){
                 const change = this.undoStack[i];
-    
-                if(updatesMap.has(change._id)) continue;
-                updatesMap.set(change._id, change.updatedFields);
+                let data = {};
+                if(updatesMap.has(change._id)){
+                    data = updatesMap.get(change._id);
+                };
+                data = { ...data, ...change.updatedFields };
+                updatesMap.set(change._id, data);
             }
             const updates = Array.from(updatesMap, ([_id, updatedFields]) => ({ _id, ...updatedFields }));
             return updates;
@@ -72,7 +76,6 @@ new Vue({
         saveEdit(){
             let undos = this.setUpdates();
             this.undoStack = [];
-            lo(undos);
             this.socket.emit("edit", this.dbName, undos);
         },
         changeDb(){
@@ -94,7 +97,7 @@ new Vue({
             }, []);
             data.forEach(item => {
                 allKeys.forEach(key => {
-                    if (!item.hasOwnProperty(key)) {
+                    if(!item.hasOwnProperty(key)) {
                         Vue.set(item, key, null);
                     }
                 });
@@ -102,5 +105,29 @@ new Vue({
 
             return allKeys;
         },
+        addItem(){
+            this.socket.emit("add", this.dbName);
+            setTimeout(() => {
+                this.socket.emit("get", this.dbName);
+            }, 100);
+        },
+        removeItem(){
+            const itemId = prompt("Enter _id to remove:");
+            if(!itemId) return;
+            this.socket.emit('remove', this.dbName, itemId);
+            setTimeout(() => {
+                this.socket.emit("get", this.dbName);
+            }, 100);
+        },
+        formatInput(data){
+            if(typeof data == "object"){
+                data = JSON.stringify(data);
+            }else
+            if(Array.isArray(data)){
+                data = JSON.stringify(data);
+            }
+            if(data == null || data == "null") data = "";
+            return data;
+        }
     },
 });

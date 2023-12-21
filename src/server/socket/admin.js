@@ -30,13 +30,26 @@ io.of("/admin").on("connection", socket => {
         data = data.map(a => a.o);
         socket.emit("get", data);
     });
+
     socket.on("edit", async (name, undos) => {
         let db = getDb(name);
         if(!db) return;
         for(let i=0; i<undos.length; i++){
             await db.update({ _id: undos[i]._id }, { ...undos[i] });
         }
-    })
+    });
+
+    socket.on("add", async name => {
+        let db = getDb(name);
+        if(!db) return;
+        await db.add({});
+    });
+
+    socket.on("remove", async (name, _id) => {
+        let db = getDb(name);
+        if(!db) return;
+        await db.removeOne({_id});
+    });
 });
 
 function getDb(name){

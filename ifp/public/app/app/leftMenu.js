@@ -8,6 +8,11 @@ function copyInvite(){
     socket.emit("getInivteFromId", id);
 }
 
+function copyIdServer(){
+    let id = document.getElementById("serverMenu").getAttribute("w_id");
+    navigator.clipboard.writeText(id);
+}
+
 function createChat(){
     var name = (prompt("Jak ma nazywać się serwer?") || "").trim();
     if(!name || name == "") return uiMsg("Podaj nazwę", 2);

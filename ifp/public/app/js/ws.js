@@ -131,7 +131,7 @@ socket.on("getChats", (g) => {
             btn.classList.add("a-active");
         });
 
-        menuClickEvent(btn, (e) => contMenu.friendBtn(f, e));
+        menuClickEvent(btn, (e) => contMenu.server(f, e));
         serverList.add(btn);
         serverList.add(document.createElement("br"));
     })

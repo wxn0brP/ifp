@@ -9,6 +9,7 @@
 @import url("css/settings.css");
 @import url("css/userProfile.css");
 @import url("css/userStatus.css");
+@import url("css/star.css");
 
 :root{
     --f1: #9b5de5;

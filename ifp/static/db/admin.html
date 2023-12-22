@@ -13,13 +13,32 @@
             th, td {
                 background-color: #333;
                 border: 1px solid;
-                min-width: 200px;
+                min-width: 60px;
+                width: auto;
             }
-            button{
-                border: 1px solid #222;
+            button, input, select{
+                border: 1px solid var(--border);
                 padding: 5px;
                 border-radius: 5px;
-                margin: 0 5px;
+                background-color: var(--panel);
+                color: var(--txt);
+            }
+            input{
+                width: 370px;
+                max-width: 95%;
+            }
+            #app{
+                text-align: left;
+            }
+            #geter{
+                margin-top: 7px;
+                margin-left: auto;
+                margin-right: auto;
+                border: 1px solid var(--border);
+                border-radius: 5px;
+                padding: 5px;
+                width: 400px;
+                max-width: 95vw;
             }
         </style>
     </head>
@@ -29,6 +48,44 @@
         <script src="/js/generateResCss.js"></script>
         <div id="app">
             <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
+
+            <div id="geter">
+                <label for="db">DataBase name:</label>
+                <input type="text" id="db" v-model="dbName">
+                <br /><br />
+    
+                <label for="operationSelect">Select Operation:</label>
+                <br />
+                <select v-model="selectedOperation">
+                    <option value="add">Add</option>
+                    <option value="find">Find</option>
+                    <option value="findOne">Find One</option>
+                    <option value="update">Update</option>
+                    <option value="updateOne">Update One</option>
+                    <option value="remove">Remove</option>
+                    <option value="removeOne">Remove One</option>
+                </select>
+                <br />
+    
+                <div v-if="showFinder">
+                    <br />
+                    <label for="finderInput">Finder:</label>
+                    <br />
+                    <input v-model="finder" id="finderInput" />
+                </div>
+                
+                <div v-if="showArg1">
+                    <br />
+                    <label for="arg1Input">Argument 1:</label>
+                    <br />
+                    <input v-model="arg1" id="arg1Input" />
+                </div>
+                
+                <br />
+                <button @click="exe">exe</button>
+            </div>
+            
+            <br /><br /><br />
             <table>
                 <thead>
                     <tr>
@@ -37,30 +94,16 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item, index) in editedData" :key="index">
-                        <td v-for="(value, key) in item" :key="key" @click="editCell(index, key)">
-                            <template v-if="editingCell && editingCell.rowIndex === index && editingCell.field === key">
-                                <input :value="formatInput(editedData[index][key])" @blur="edit(index, key, $event)">
-                            </template>
-                            <template v-else>
-                                {{ item[key] }}
-                            </template>
+                        <td v-for="(value, key) in item" :key="key">
+                            {{ item[key] }}
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <br /><br />
-            <button @click="undo">Undo</button>
-            <button @click="saveEdit">Save</button>
-            <br /><br />
-            <input type="text" id="db" v-model="dbName">
-            <input type="text" id="arg" v-model="arg">
-            <button @click="changeDb">Change DB</button>
-            <br /><br />
-            <button @click="addItem">Add</button>
-            <button @click="removeItem">Remove</button>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
         <script src="/js/socket.io.min.js"></script>
+        <script src="/js/json5.min.js"></script>
         <script src="dc.admin.js"></script>
     </body>
 </html>

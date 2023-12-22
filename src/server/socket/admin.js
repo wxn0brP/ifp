@@ -12,48 +12,56 @@ io.of("/admin").use((socket, next) => {
 io.of("/admin").on("connection", socket => {
     if(!socket.mrm) return;
 
-    socket.on("get", async (name, arg={}) => {
-        if(typeof arg == "object"){}
-        else if(typeof arg == "string"){
+    socket.on("exe", async (name, type, finder={}, arg={}) => {
+        if(typeof finder == "object"){}
+        else if(typeof finder == "string"){
             try{
-                arg = new Function('obj', 'return (obj) => ' + arg);
-                if(typeof arg == "function") arg = arg();
+                finder = new Function('obj', 'return (obj) => ' + finder);
+                if(typeof finder == "function") finder = finder();
                 else return socket.emit("err", "a");
             }catch{
-                arg = {};
+                finder = {};
             }
         }
+        if(!finder) finder = {};
 
-        let db = getDb(name);
+        let db = global.db[name];
         if(!db) return;
-        let data = await db.find(arg);
-        data = data.map(a => a.o);
-        socket.emit("get", data);
-    });
+        let data;
+        switch(type){
+            case "add":
+                data = await db.add(arg);
+            break;
 
-    socket.on("edit", async (name, undos) => {
-        let db = getDb(name);
-        if(!db) return;
-        for(let i=0; i<undos.length; i++){
-            await db.update({ _id: undos[i]._id }, { ...undos[i] });
+            case "find":
+                data = await db.find(finder);
+                data = data.map(a => a.o);
+            break;
+
+            case "findOne":
+                data = await db.findOne(finder);
+                if(data) data = data.o;
+                else data = false;
+            break;
+
+            case "update":
+                data = await db.update(finder, arg);
+            break;
+
+            case "updateOne":
+                data = await db.updateOne(finder, arg);
+            break;
+
+            case "remove":
+            case "delete":
+                data = await db.remove(finder);
+            break;
+
+            case "removeOne":
+            case "deleteOne":
+                data = await db.removeOne(finder);
+            break;
         }
-    });
-
-    socket.on("add", async name => {
-        let db = getDb(name);
-        if(!db) return;
-        await db.add({});
-    });
-
-    socket.on("remove", async (name, _id) => {
-        let db = getDb(name);
-        if(!db) return;
-        await db.removeOne({_id});
+        if(data) socket.emit("get", data);
     });
 });
-
-function getDb(name){
-    let data = global.db[name];
-    if(!data) return;
-    return data;
-}

@@ -232,13 +232,14 @@ io.of("/").on("connection", (socket) => {
         }
     });
 
-    socket.on("logout", async () => {
-        try{
-            global.db.token.removeOne({ token: socket.rToken });
-        }catch(e){
-            lo("error: ", e)
-        }
-    });
+    // TODO zmienić auth bo jest do ****
+    // socket.on("logout", async () => {
+    //     try{
+    //         global.db.token.removeOne({ token: socket.rToken });
+    //     }catch(e){
+    //         lo("error: ", e)
+    //     }
+    // });
 
     socket.on("editMess", async (to, _id, msg) => {
         try{

@@ -13,15 +13,18 @@
         <script>
             (function(){
                 function exit(){
-                    location.href = "/login?next=/lk?k="+param;
+                    location.href = "/login?err=Not_auth&next=/lk?k="+paramK;
                 }
 
-                var param = new URLSearchParams(location.search);
-                param = param.get("k");
-                if(!param){
+                var paramsURL = new URLSearchParams(location.search);
+                var paramK = paramsURL.get("k");
+                if(!paramK){
                     exit();
                     return;
                 }
+                var paramS = paramK.split("_");
+                var id = paramS[0];
+                var code = paramS[1];
 
                 var data = {
                     rToken: localStorage.getItem("rToken"),
@@ -34,13 +37,12 @@
                     return;
                 }
                 var json = JSON.stringify(data);
-                var key = data.user_id[0]+""+data.user_id[data.user_id.length-1]+"";
-                var dec = xorEncrypt(json, key);
+                var dec = xorEncrypt(json, code);
 
                 var socket = io("/qr_code");
                 socket.connect();
                 socket.on("connect", () => {
-                    socket.emit("send", dec, param);
+                    socket.emit("send", dec, id);
                     setTimeout(() => {
                         location.href = "/app";
                     }, 1000);

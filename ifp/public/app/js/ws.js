@@ -31,9 +31,9 @@ socket.on("connect_error", (err) => {
         sessionStorage.removeItem("token");
         const rToken = localStorage.getItem("rToken");
         if(!rToken){
-            location.href = `/login?err=No_Login!${next||""}`;
+            location.href = `/login?err=No_Login!${window.next||""}`;
         }else if(!reNewToken(rToken)){
-            location.href = `/login?err=Not_Auth!${next||""}`;
+            location.href = `/login?err=Not_Auth!${window.next||""}`;
         }
         socket.connect();
     }else if(err.type == "TransportError"){

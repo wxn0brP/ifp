@@ -42,6 +42,7 @@ async function loadJs(){
         "js/encrypt.js",
         "js/run.js",
         "js/snakes.js",
+        "js/theme.js",
         "js/cases.js",
     ];
     let assets = document.querySelector("#assets");

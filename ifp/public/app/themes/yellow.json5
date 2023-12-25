@@ -1,0 +1,18 @@
+{
+    f1: '#9b5de5',
+    messHover: '#110a0a',
+    menu: '#3d4247',
+    servery: '#111',
+    messBtnHover: '#444',
+    inp: '#2a2a2a',
+    userProfile: '#121518',
+    txt: '#ffcc00',
+    txtBold: '#ffcc66',
+    back: '#1e1f23',
+    a: '#38baaf',
+    aHover: '#98DBC6',
+    border: '#ff9900',
+    panel: '#17191b',
+    'inp-txt': '#db1414',
+    buttonHover: '#2a3036'
+}

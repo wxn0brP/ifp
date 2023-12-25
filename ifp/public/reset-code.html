@@ -59,15 +59,11 @@
         <div id="div-gen"></div>
         <form class="signin">
             <div class="content" id="loginC">
-                <h2>Register</h2>
+                <h2>Password Reset</h2>
                 <div class="form">
                     <div class="inputBox">
-                        <input type="text" id="login" required>
-                        <i>Username</i>
-                    </div>
-                    <div class="inputBox">
-                        <input type="email" id="email" required>
-                        <i>E-mail</i>
+                        <input type="number" id="code" min="100000" max="999999" required />
+                        <i>Code</i>
                     </div>
                     <div class="inputBox">
                         <input type="password" id="pass1" required>
@@ -89,7 +85,7 @@
                     </div>
                     <div id="err"></div>
                     <div class="inputBox">
-                        <input type="submit" value="Register">
+                        <input type="submit" value="Change Password">
                     </div>
                 </div>
             </div>
@@ -105,6 +101,6 @@
         </script>
         <script src="core.js"></script>
         <script src="js/pass-valid.js"></script>
-        <script src="js/register.js"></script>
+        <script src="js/reset.js"></script>
     </body>
 </html>

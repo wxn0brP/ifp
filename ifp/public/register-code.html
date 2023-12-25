@@ -59,37 +59,15 @@
         <div id="div-gen"></div>
         <form class="signin">
             <div class="content" id="loginC">
-                <h2>Register</h2>
+                <h2>Email Confirmation</h2>
                 <div class="form">
                     <div class="inputBox">
-                        <input type="text" id="login" required>
-                        <i>Username</i>
-                    </div>
-                    <div class="inputBox">
-                        <input type="email" id="email" required>
-                        <i>E-mail</i>
-                    </div>
-                    <div class="inputBox">
-                        <input type="password" id="pass1" required>
-                        <i>Password</i>
-                        <span onclick="passVis(1)">👁️</span>
-                    </div>
-                    <div class="inputBox">
-                        <input type="password" id="pass2" required>
-                        <i>Password</i>
-                        <span onclick="passVis(2)">👁️</span>
-                    </div>
-                    <meter max="4" low="2" high="3" optimum="4" id="strength-meter"></meter>
-                    <div id="requirements">
-                        <div class="requirement" id="length-req">Min. 8 characters</div>
-                        <div class="requirement" id="lowercase-req">At least 1 lowercase letter</div>
-                        <div class="requirement" id="uppercase-req">At least 1 uppercase letter</div>
-                        <div class="requirement" id="number-req">At least 1 number</div>
-                        <div class="requirement" id="special-req">At least 1 special character</div>
+                        <input type="number" id="code" min="100000" max="999999" required />
+                        <i>Code</i>
                     </div>
                     <div id="err"></div>
                     <div class="inputBox">
-                        <input type="submit" value="Register">
+                        <input type="submit" value="Finish">
                     </div>
                 </div>
             </div>
@@ -104,7 +82,25 @@
             for(let i=0; i<260; i++) genDiv();
         </script>
         <script src="core.js"></script>
-        <script src="js/pass-valid.js"></script>
-        <script src="js/register.js"></script>
+        <script>
+            var codeDiv = document.querySelector("#code");
+            var errDiv = document.querySelector("#err");
+
+            document.querySelector("form").on("submit", (e) => {
+                e.preventDefault();
+                var code = codeDiv.value;
+                if(!code)
+                    return errDiv.html("Code is required.");
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/register-kod", false);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({ kod: code }));
+                var res = JSON.parse(xhr.responseText);
+                if(res.err)
+                    return errDiv.html(res.msg);
+                location.href = "/login";
+            });
+        </script>
     </body>
 </html>

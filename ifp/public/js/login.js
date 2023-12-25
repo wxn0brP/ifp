@@ -41,7 +41,7 @@ var loginDiv = document.querySelector("#login");
 var passDiv = document.querySelector("#pass");
 var errDiv = document.querySelector("#err");
 
-document.querySelector(".signin").on("submit", (e) => {
+document.querySelector("form").on("submit", (e) => {
     e.preventDefault();
     var login = loginDiv.value;
     if(!login){

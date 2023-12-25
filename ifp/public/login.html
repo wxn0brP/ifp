@@ -6,11 +6,47 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="favicon.ico" rel="shortcut icon">
         <link href="style.css" rel="stylesheet">
-        <link href="css/login.css" rel="stylesheet">
+        <link href="css/ifp-form.css" rel="stylesheet">
+        <style>
+            #qrcode-div{
+                max-width: 380px;
+                max-height: 380px;
+                width: 99vw;
+                height: 99vw;
+                z-index: 50;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            #Xcode{
+                width: 2rem;
+                height: 2rem;
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                border-radius: 1rem;
+                background-color: var(--panel);
+                color: red;
+            }
+
+            #qrcode-qr{
+                padding: 8px;
+                border-radius: 5px;
+                background-color: grey;
+            }
+
+            form .content .form .inputBox button{
+                padding: 5px;
+                border: none;
+                background: red;
+                color: #000;
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
         <div id="div-gen"></div>
-        <form class="signin">
+        <form>
             <div class="content" id="loginC">
                 <h2>Sign In</h2>
                 <div class="form">

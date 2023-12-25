@@ -1,81 +1,105 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" >
     <head>
         <meta charset="UTF-8">
         <title id="title">ifp</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="favicon.ico" rel="shortcut icon">
         <link href="style.css" rel="stylesheet">
-
+        <link href="css/ifp-form.css" rel="stylesheet">
         <style>
-            form{
-                --hei: 187px;
-                height: var(--hei);
-                margin-top: calc(43vh - var(--hei) / 2 );
-                background-color: #222;
-                border-radius: 20px;
-                padding-top: 18px;
+            #requirements{
+                margin-top: 10px;
             }
-            input{
-                width: 60%;
-                height: 2rem;
-                margin: 8px;
-                border-radius: 6px;
-                padding: 5px;
+
+            .requirement{
+                margin-right: 10px;
+                font-size: 20px;
             }
-            button{
-                width: 50%;
-                height: 2.2rem;
-                margin: 4px;
+
+            .requirement::before{
+                position: absolute;
+                left: -20px;
             }
-            #err{
-                height: 1.5rem;
-                margin: 8px;
+
+            .requirement.x::before{
+                content: "X";
+                color: #ff6666;
             }
-            .napis{
-                color: aqua;
-                font-size: 1.1rem;
+
+            .requirement.v::before{
+                content: "V";
+                color: #66ff66;
+            }
+
+            .inputBox{
+                position: relative;
+            }
+
+            .inputBox span{
+                position: absolute;
+                right: 5px;
+                top: 1rem;
+                background-color: transparent;
+                border: none;
+                display: none;
+                cursor: pointer;
+                user-select: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+            }
+
+            .inputBox input:valid ~ span,
+            .inputBox input:focus ~ span{
+                display: block;
             }
         </style>
     </head>
     <body>
+        <div id="div-gen"></div>
+        <form class="signin">
+            <div class="content" id="loginC">
+                <h2>Password Reset - Enter Your Email</h2>
+                <div class="form">
+                    <div class="inputBox">
+                        <input type="email" id="email" required />
+                        <i>E-mail</i>
+                    </div>
+                    <div id="err"></div>
+                    <div class="inputBox">
+                        <input type="submit" value="Finish">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script>
+            let div_gen = document.querySelector("#div-gen");
+            function genDiv(){
+                let div = document.createElement("div");
+                div.classList.add("card");
+                div_gen.appendChild(div);
+            }
+            for(let i=0; i<260; i++) genDiv();
+        </script>
         <script src="core.js"></script>
-        <div id="assets"></div>
-        <script src="js/generateResCss.js"></script>
-        <div id="app">
-            <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
-            <form id="form" class="s m_6 l_4 u_4 mar">
-                <span class="napis">E-mail:</span>
-                <br />
-                <input type="text" id="email">
-                <br />
-                <div id="err"></div>
-                <button type="submit" value="">OK</button>
-            </form>
-        </div>
-
         <script>
             var emailDiv = document.querySelector("#email");
             var errDiv = document.querySelector("#err");
 
-            document.querySelector("#form").on("submit", (e) => {
+            document.querySelector("form").on("submit", (e) => {
                 e.preventDefault();
                 var email = emailDiv.value;
-                if(!email){
-                    errDiv.html("Pole E-mail nie może być pusty");
-                    return;
-                }
+                if(!email)
+                    return errDiv.html("Email is required.");
 
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "/reset", false);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify({ email }));
                 var res = JSON.parse(xhr.responseText);
-                if(res.err){
-                    errDiv.html(res.msg);
-                    return;
-                }
-                location.href = "/reset-kod";
+                if(res.err)
+                    return errDiv.html(res.msg);
+                location.href = "/reset-code";
             });
         </script>
     </body>

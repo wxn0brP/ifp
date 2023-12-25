@@ -39,7 +39,7 @@ body{
 	transition: 0s;
 }
 
-.signin{
+form{
 	position: absolute;
 	width: 400px;
     background: #222;  
@@ -52,7 +52,7 @@ body{
 	box-shadow: 0 15px 35px rgba(0,0,0,9);
 }
 
-.signin .content{
+form .content{
 	position: relative;
 	width: 100%;
 	display: flex;
@@ -62,25 +62,25 @@ body{
 	gap: 40px;
 }
 
-.signin .content h2{
+form .content h2{
 	font-size: 2em;
 	color: red;
 	text-transform: uppercase;
 }
 
-.signin .content .form{
+form .content .form{
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 25px;
 }
 
-.signin .content .form .inputBox{
+form .content .form .inputBox{
 	position: relative;
 	width: 100%;
 }
 
-.signin .content .form .inputBox input{
+form .content .form .inputBox input{
 	position: relative;
 	width: 100%;
 	background: #333;
@@ -93,7 +93,7 @@ body{
 	font-size: 1em;
 }
 
-.signin .content .form .inputBox i{
+form .content .form .inputBox i{
 	position: absolute;
 	left: 0;
 	padding: 15px 10px;
@@ -103,31 +103,31 @@ body{
 	pointer-events: none;
 }
 
-.signin .content .form .inputBox input:focus ~ i,
-.signin .content .form .inputBox input:valid ~ i{
+form .content .form .inputBox input:focus ~ i,
+form .content .form .inputBox input:valid ~ i{
 	transform: translateY(-7.5px);
 	font-size: 0.8em;
 	color: #fff;
 }
 
-.signin .content .form .links{
+form .content .form .links{
 	position: relative;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 }
 
-.signin .content .form .links a{
+form .content .form .links a{
 	color: #fff;
 	text-decoration: none;
 }
 
-.signin .content .form .links a:nth-child(2){
+form .content .form .links a:nth-child(2){
 	color: red;
 	font-weight: 600;
 }
 
-.signin .content .form .inputBox input[type="submit"]{
+form .content .form .inputBox input[type="submit"]{
 	padding: 10px;
 	background: red;
 	color: #000;
@@ -153,39 +153,4 @@ input[type="submit"]:active{
 		width: calc(20vw - 2px);
 		height: calc(20vw - 2px);
 	}
-}
-
-#qrcode-div{
-    max-width: 380px;
-    max-height: 380px;
-    width: 99vw;
-    height: 99vw;
-    z-index: 50;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#Xcode{
-    width: 2rem;
-    height: 2rem;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    border-radius: 1rem;
-    background-color: var(--panel);
-    color: red;
-}
-
-#qrcode-qr{
-    padding: 8px;
-    border-radius: 5px;
-    background-color: grey;
-}
-
-.signin .content .form .inputBox button{
-	padding: 5px;
-    border: none;
-	background: red;
-	color: #000;
-	cursor: pointer;
 }

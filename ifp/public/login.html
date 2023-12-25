@@ -27,6 +27,10 @@
                 border-radius: 1rem;
                 background-color: var(--panel);
                 color: red;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
             #qrcode-qr{
@@ -35,9 +39,8 @@
                 background-color: grey;
             }
 
-            form .content .form .inputBox button{
+            form .content .form .inputBox span{
                 padding: 5px;
-                border: none;
                 background: red;
                 color: #000;
                 cursor: pointer;
@@ -67,12 +70,12 @@
                         <input type="submit" value="Login">
                     </div>
                     <div class="inputBox">
-                        <button onclick="changeCodeStatus(true);">Login with QR Code</button>
+                        <span onclick="changeCodeStatus(true);">Login with QR Code</span>
                     </div>
                 </div>
             </div>
             <div id="qrcode-div" style="display: none;">
-                <button onclick="changeCodeStatus(false);" id="Xcode">X</button>
+                <div onclick="changeCodeStatus(false);" id="Xcode">X</div>
                 <br />
                 <div id="qrcode-qr"></div>
             </div>

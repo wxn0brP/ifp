@@ -135,6 +135,11 @@ form .content .form .inputBox input[type="submit"]{
 	font-size: 1.35em;
 	letter-spacing: 0.05em;
 	cursor: pointer;
+    transition: border-radius .5s;
+}
+
+form .content .form .inputBox input[type="submit"]:hover{
+    border-radius: 1.5rem;
 }
 
 input[type="submit"]:active{

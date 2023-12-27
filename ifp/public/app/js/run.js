@@ -78,3 +78,8 @@ setInterval(handleWifElements, 500);
 })();
 
 document.querySelector("#accountPanel_name").innerHTML = localUser.fr;
+
+document.querySelectorAll("#imgSelector div").forEach(img => {
+    const imageUrl = `/img/${img.getAttribute("_name")}.svg`;
+    img.style.setProperty('--url', `url(${imageUrl})`);
+});

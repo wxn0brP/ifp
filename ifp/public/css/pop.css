@@ -104,7 +104,6 @@
 #loadingScreen{
     top: 0;
     left: 0;
-    opacity: 0;
     z-index: 90;
     width: 100vw;
     height: 100vh;
@@ -113,17 +112,27 @@
     position: absolute;
     align-items: center;
     justify-content: center;
-    animation: animacja-load 3s;
+    animation: animacja-load 1.5s;
+    animation-delay: 3.2s;
     background-color: var(--back);
 }
 
 .ifp-svg{
     width: 20rem;
     height: 20rem;
+    background-color: red;
+    -webkit-mask: url(/img/wilk.svg) no-repeat center;
+    mask: url(/img/wilk.svg) no-repeat center;
 }
 
-.ifp-svg path{
-    fill: red;
+#imgSelector div{
+    -webkit-mask: var(--url) no-repeat center;
+    mask: var(--url) no-repeat center;
+    background-color: red;
+    width: 10rem;
+    aspect-ratio: 1 / 1;
+    display: inline-block;
+    cursor: pointer;
 }
 
 #callMedia{
@@ -303,4 +312,18 @@
     left: 50%;
     transform: translate(-50%, -70%);
     z-index: 9999;
+}
+
+.getPrompt{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.getPrompt input, .getPrompt button{
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--txt);
+    background-color: var(--back);
 }

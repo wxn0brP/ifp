@@ -141,7 +141,8 @@ io.of("/").on("connection", (socket) => {
                 chnl,
                 _id: _id._id,
                 enc,
-                to: "@"
+                to: "@",
+                res: data.res || undefined
             });
             chat.users.forEach(u => {
                 if(u == socket.user._id) return;

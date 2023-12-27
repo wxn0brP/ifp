@@ -26,22 +26,24 @@ function emulateConfettiClick(x=window.innerWidth / 2, y=window.innerHeight / 2)
     }
 
     function startKonami(){
-        fetch('https://cataas.com/cat/says/Cat! Cat! And More Cat!').then(r => r.blob())
-        .then(data => {
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(data);
+        // fetch('').then(r => r.json())
+        // .then(data => {
+        //     const img = document.createElement('img');
+        //     img.src = data[0].url;
 
-            let cats = document.querySelector("#cats");
-            cats.innerHTML = "";
-            cats.appendChild(img);
+        //     let cats = document.querySelector("#cats");
+        //     cats.innerHTML = "";
+        //     cats.appendChild(img);
             
-            cats.fadeIn();
-            setTimeout(() => {
-                cats.fadeOut();
-                setTimeout(() => cats.innerHTML = "", 500);
+        //     cats.fadeIn();
+        //     setTimeout(() => {
+        //         cats.fadeOut();
+        //         setTimeout(() => cats.innerHTML = "", 500);
                 
-            }, 5000);
-        }).catch(()=>{});
+        //     }, 5000);
+        // }).catch((e)=>{
+        //     lo(e)
+        // });
         setTimeout(() => block = false, 4000);
     }
 })();
@@ -127,7 +129,7 @@ document.querySelector("#goMain").on("dblclick", () => {
         constructor(x, y){
             this.x = x;
             this.y = y;
-            this.radius = 3;
+            this.radius = 4;
             this.size = 0;
             this.rotate = 0;
             this.alpha = 0.5;

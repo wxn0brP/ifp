@@ -37,7 +37,7 @@ function sendMess(){
 function loadMoreMess(){
     let tmp = actMess;
     actMess += messCount;
-    if(to != "main") socket.emit("getMessage", toChat, toChatChannel, tmp, actMess, true);
+    if(toChat != "main") socket.emit("getMessage", toChat, toChatChannel, tmp, actMess, true);
 }
 
 function addMess(msg, socroll=true, up=false){
@@ -49,7 +49,6 @@ function addMess(msg, socroll=true, up=false){
 
     let content = msg.msg;
     if(msg.res){
-        lo(msg.res)
         setTimeout(() => responeMess(div, msg.res), 100);
     }
     content = formatText(content);
@@ -72,7 +71,9 @@ function addMess(msg, socroll=true, up=false){
     
     up ? msgDiv.addUp(div) : msgDiv.add(div);
 
-    if(socroll && msgDiv.scrollTop >= msgDiv.scrollHeight - msgDiv.clientHeight - 20){
+    const errMargin = 70; // (px)
+    const isScrollAtBottom = msgDiv.scrollTop + msgDiv.clientHeight + div.clientHeight + errMargin >= msgDiv.scrollHeight;
+    if(socroll && isScrollAtBottom){
         div.scrollIntoView({behavior: "smooth"});
     }
 }
@@ -162,8 +163,9 @@ function focusInp(){
     }, 100);
 }
 
-msgInput.on("scroll", () => {
-    if(msgInput.scrollTop == 0){
+msgDiv.on("scroll", () => {
+    if(msgDiv.scrollTop == 0){
+        msgDiv.scrollTop = 1;
         loadMoreMess();
     }
 });

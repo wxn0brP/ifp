@@ -147,13 +147,13 @@ function socrollToBottom(){
 }
 
 function imgSelector(){
-    return new Promise(r => {
+    return new Promise(res => {
         let imgSelector = document.querySelector("#imgSelector");
         imgSelector.fadeIn();
 
-        let imgs = document.querySelectorAll("#imgSelector svg");
+        let imgs = document.querySelectorAll("#imgSelector div");
         function handelClick(){
-            r(this.getAttribute("_name"));
+            res(this.getAttribute("_name"));
             imgSelector.fadeOut();
             imgs.forEach(img => img.removeEventListener("click", handelClick));
         }
@@ -267,3 +267,42 @@ function updateCountdown(){
     }
 }
 setInterval(() => {updateCountdown()}, 1000);
+
+async function getPrompt(txt){
+    return new Promise(resolve => {
+        const modalOverlay = document.createElement('div');
+        modalOverlay.classList.add('popUp');
+        modalOverlay.classList.add('getPrompt');
+    
+        const modal = document.createElement('div');
+    
+        const promptText = document.createElement('p');
+        promptText.innerHTML = txt.replaceAll("\n","<br />") || "Enter your input:";
+    
+        const promptInput = document.createElement('input');
+        promptInput.type = 'text';
+    
+        const submitBtn = document.createElement('button');
+        submitBtn.innerHTML = 'Submit';
+    
+        const closeModal = () => {
+            document.body.removeChild(modalOverlay);
+            resolve(promptInput.value);
+        };
+    
+        modal.appendChild(promptText);
+        modal.appendChild(document.createElement('br'));
+        modal.appendChild(promptInput);
+        modal.appendChild(document.createElement('br'));
+        modal.appendChild(document.createElement('br'));
+        modal.appendChild(submitBtn);
+
+        modalOverlay.appendChild(modal);
+        document.body.appendChild(modalOverlay);
+        submitBtn.addEventListener('click', closeModal);
+        promptInput.addEventListener('keydown', (event) => {
+            if(event.key === 'Enter') closeModal(); 
+        });
+        promptInput.focus();
+    });
+}

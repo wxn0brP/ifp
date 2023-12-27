@@ -36,19 +36,11 @@
             <span loadPart="menu"></span>
             <span loadPart="popup"></span>
 
-            <div id="loadingScreen">
-                <svg style="width: 300px; height: 300px;"><use xlink:href="/img/wilk.svg#ifp-wilk" /></svg>
+            <div id="loadingScreen" class="delete" time="4000">
+                <div class="ifp-svg"></div>
             </div>
         </div>
 
         <span id="assets" style="display: none;"></span>
-
-        <script class="delete" time="4000">
-            setTimeout(() => {
-                let loadingScreen = document.getElementById("loadingScreen");
-                if(!loadingScreen) return;
-                loadingScreen.remove();
-            }, 3100);
-        </script>
     </body>
 </html>

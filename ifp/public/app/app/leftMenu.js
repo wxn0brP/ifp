@@ -13,23 +13,23 @@ function copyIdServer(){
     navigator.clipboard.writeText(id);
 }
 
-function createChat(){
-    var name = (prompt("Jak ma nazywać się serwer?") || "").trim();
+async function createChat(){
+    var name = (await getPrompt("Jak ma nazywać się serwer?") || "").trim();
     if(!name || name == "") return uiMsg("Podaj nazwę", 2);
     socket.emit("createChat", name);
     setTimeout(() => socket.emit("getChats"), 1000);
     document.querySelector('#alertServerAction').css('display: none;')
 }
 
-function inivteAchat(id=null){
+async function inivteAchat(id=null){
     if(!id){
-        var idP = "000000-000000-000000";
+        var idP = "00000-0-0";
         var txt = "Podaj id zaprosznia:\n"+
         "Przykładowa formaty to:\n"+
         `- ${idP}\n`+
         `- ${location.host}/ic?id=${idP}\n`+
         `- ${location.protocol}//${location.host}/ic?id=${idP}`;
-        id = (prompt(txt) || "").trim();
+        id = (await getPrompt(txt) || "").trim();
     }
     if(!id || id == "") return uiMsg("Podaj id", 2);
 

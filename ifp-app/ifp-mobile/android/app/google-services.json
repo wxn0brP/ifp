@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "939895369929",
+    "project_id": "ifp-mobile",
+    "storage_bucket": "ifp-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939895369929:android:50dbfc0674fe22a4329d18",
+        "android_client_info": {
+          "package_name": "com.ifp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrtVe6LiG_pBKigeqDHdej0-m7vOoDG5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

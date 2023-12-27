@@ -1,0 +1,45 @@
+# Ignoruj node_modules, ponieważ są tam przechowywane zależności
+node_modules/
+
+# Ignoruj pliki budowane i katalogi platformy
+android/app/build
+ios/
+
+# Ignoruj pliki projektu Xcode
+*.xcworkspace
+*.pbxproj
+
+# Ignoruj pliki Android Studio
+*.iml
+.idea/
+
+# Ignoruj pliki yarn i npm
+yarn-error.log
+npm-debug.log
+yarn.lock
+package-lock.json
+
+# Ignoruj pliki z konfiguracją środowiska
+.env
+
+# Ignoruj pliki z logami
+logs/
+*.log
+
+# Ignoruj pliki związane z debugowaniem
+android/app/build/
+ios/build/
+
+# Ignoruj pliki projektu VS Code
+.vscode/
+
+# Ignoruj pliki zasobów dodanych dynamicznie
+ios/Pods/
+android/app/build/
+
+# Ignoruj pliki budowania
+*.apk
+*.aab
+
+# Ignoruj pliki większe niż 10 MB
+*.[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]M

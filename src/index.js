@@ -25,6 +25,7 @@ try{
 }
 
 require("./server/app")(app);
+require("./server/firebase");
 app.get("*", function(req, res){
     res.status(404).send(fs.readFileSync("./ifp/public/404.html", "utf8"));
 });

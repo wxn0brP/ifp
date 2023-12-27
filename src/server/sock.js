@@ -147,6 +147,7 @@ io.of("/").on("connection", (socket) => {
             chat.users.forEach(u => {
                 if(u == socket.user._id) return;
                 sendToSocket(u, "mess", data);
+                sendNewMsgToFireBase(u, data);
             })
         }catch(e){
             lo("error: ", e)
@@ -494,4 +495,36 @@ async function statusOpt(id){
     if(type == "i") return { s: "", t: "i" };
     
     return { s: statusDb.o.s, t:  type };
+}
+
+async function sendNewMsgToFireBase(id, data){
+    const socket = getSocket(id);
+    if(socket.length > 0) return;
+
+    let tokens = await global.db.fireBaseUser.find({ id });
+    if(tokens.length == 0) return;
+    tokens = tokens.map(t => t.o.token);
+
+    
+    let title = "Nowa Wiadomość od ";
+    if(data.to.startsWith("$")){
+        const user = (await usrDB.findOne({ _id: id })).o;
+        title += user.name;
+    }else{
+        const server = (await global.db.chat.meta.findOne({ id })).o;
+        title += "(S) " + server.name;
+    }
+    let body = "";
+    if(data.enc == "plain"){
+        body = data.msg;
+    }
+    
+    try{
+        tokens.forEach(async token => {
+            await global.firebaseAdmin.messaging().send({
+                notification: { title, body },
+                token,
+            });
+        })
+    }catch{}
 }

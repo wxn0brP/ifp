@@ -14,6 +14,7 @@ global.db = {
     userGold: new databaseC(getPath("userGold")),
     cases: new databaseC(getPath("cases")),
     items: new databaseC(getPath("items")),
+    fireBaseUser: new databaseC(getPath("fireBaseUser")),
 }
 
 function getPath(name){

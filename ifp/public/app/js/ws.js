@@ -47,7 +47,7 @@ socket.on("connect_error", (err) => {
 
 socket.on("mess", (data) => {
     if(!data.silent){
-        if(data.to != "@" && document.hidden){
+        if(data.to != "@" /*&& document.hidden*/){
             var kto = data.to.startsWith("$") ? changeIdToName(data.fr) : "(S) "+changeIdToServer(data.to);
             sendNotif({ title: "Nowa wiadomość", body: kto + ": " + data.msg });
         }

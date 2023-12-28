@@ -521,10 +521,12 @@ async function sendNewMsgToFireBase(id, data){
     
     try{
         tokens.forEach(async token => {
-            await global.firebaseAdmin.messaging().send({
-                notification: { title, body },
-                token,
-            });
+            try{
+                await global.firebaseAdmin.messaging().send({
+                    notification: { title, body },
+                    token,
+                });
+            }catch{}
         })
     }catch{}
 }

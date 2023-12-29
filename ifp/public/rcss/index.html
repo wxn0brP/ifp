@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RCSS Popup Example</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        
+        <!-- <div id="rcss-if" style="display: none;"></div> -->
+
+        <div id="popup" class="popup">
+            <div class="popup-content">
+            <h2>Hello, I'm a Popup!</h2>
+            <p>This is a simple example of a popup using RCSS.</p>
+            </div>
+        </div>
+
+        <input type="checkbox" id="ccc">
+
+        <script src="rcssLib.js"></script>
+        <script src="/core.js"></script>
+        <script>
+            let rr = cw.get("/rcss/rcss.css");
+            rcss(rr, 50);
+        </script>
+    </body>
+</html>

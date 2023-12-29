@@ -43,7 +43,8 @@
 }
 
 #messagess{
-    width: calc(100% - 290px);
+    --rightMenu: 240px;
+    width: calc(100% - 290px - var(--rightMenu));
 }
 
 .res-msg{

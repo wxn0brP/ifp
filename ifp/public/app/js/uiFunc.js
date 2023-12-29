@@ -306,3 +306,11 @@ async function getPrompt(txt){
         promptInput.focus();
     });
 }
+
+function changeRightMenu(){
+    const rootStyles = getComputedStyle(document.documentElement);
+    const currentWidth = parseInt(rootStyles.getPropertyValue('--rightMenu'), 10);
+    const newWidth = currentWidth === 0 ? 240 : 0;
+    document.querySelector("#rightMenu").css("display", currentWidth == 0 ? "" : "none");
+    document.documentElement.style.setProperty('--rightMenu', `${newWidth}px`);
+}

@@ -4,7 +4,7 @@ cw.grid();
 
 setTimeout(loadFilesWithUrl, 1000);
 
-movableDiv(document.getElementById("callMedia"), document.getElementById("callMediaMov"));
+movableDiv(document.querySelector("#callMedia"), document.querySelector("#callMediaMov"));
 
 document.querySelector("#responeMsgCloseMenu").on("click", () => {
     resMsgId = null;
@@ -57,7 +57,7 @@ document.querySelector("#app").on("contextmenu", (e) => {
     }
 })();
 
-document.getElementById("title").innerHTML = "IFP | "+localUser.fr;
+document.querySelector("#title").innerHTML = "IFP | "+localUser.fr;
 window.parent.postMessage({
     type: "setTitle",
     msg: "IFP | "+localUser.fr

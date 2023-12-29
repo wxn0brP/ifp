@@ -1,9 +1,0 @@
-#rightMenu{
-    width: 240px;
-    height: 100vh;
-    background-color: var(--panel);
-
-    position: absolute;
-    top: 0;
-    right: 0;
-}

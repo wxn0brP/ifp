@@ -8,7 +8,6 @@ function loadRcss(link){
     "contex",
     "inne",
     "menu",
-    "right",
     "mess",
     "pop",
     "screen",

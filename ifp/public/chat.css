@@ -1,4 +1,4 @@
-@import url("css/anim.css");
+/* @import url("css/anim.css");
 @import url("css/contex.css");
 @import url("css/inne.css");
 @import url("css/menu.css");
@@ -10,7 +10,7 @@
 @import url("css/settings.css");
 @import url("css/userProfile.css");
 @import url("css/userStatus.css");
-@import url("css/star.css");
+@import url("css/star.css"); */
 
 :root{
     --f1: #9b5de5;
@@ -48,11 +48,6 @@ button{
     height: 100%;
     width: 2px;
     background-color: red;
-}
-
-.mar{
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .nonsel{

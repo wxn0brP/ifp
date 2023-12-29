@@ -46,26 +46,27 @@
     border-top: 2px solid var(--txt);
 }
 
+/* - */
 #settingsList{
     width: 130px;
     height: 100%;
     float: left;
     margin-right: 10px;
+    button{
+        width: 98%;
+        border-radius: 1rem;
+        color: var(--txt);
+        background-color: var(--back);
+        height: 2rem;
+        margin-top: 13px;
+        border: none;
+        :hover{
+            background-color: var(--menu);
+        }
+    }
 }
 
-#settingsList button{
-    width: 98%;
-    border-radius: 1rem;
-    color: var(--txt);
-    background-color: var(--back);
-    height: 2rem;
-    margin-top: 13px;
-    border: none;
-}
-
-#settingsList button:hover{
-    background-color: var(--menu);
-}
+/* -- */
 
 #settingsDivC{
     float: left;

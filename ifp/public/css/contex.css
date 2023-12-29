@@ -1,3 +1,4 @@
+/* - */
 .contexMenu{
     width: 20rem;
     position: absolute;
@@ -5,24 +6,23 @@
     padding: 6px 0;
     border-radius: 6px;
     z-index: 100;
-}
-
-.contexMenu button{
-    width: 19rem;
-    background-color: var(--menu);
-    color: var(--txt);
-    padding: 5px 15px;
-    text-align: left;
-    border: none;
-}
-
-.contexMenu button:hover{
-    border-radius: 5px;
-    background-color: var(--buttonHover);
-}
-
-.contexMenu button img{
-    margin-right: 5px;
+    button{
+        width: 19rem;
+        background-color: var(--menu);
+        color: var(--txt);
+        padding: 5px 15px;
+        text-align: left;
+        border: none;
+        
+        :hover{
+            border-radius: 5px;
+            background-color: var(--buttonHover);
+        }
+        
+        img{
+            margin-right: 5px;
+        }
+    }
 }
 
 #emocjiMenu{
@@ -37,9 +37,9 @@
     border-radius: 7px;
     padding: 8px;
     padding-bottom: 15px;
+    a{
+        cursor: pointer;
+        font-size: 1.5rem;
+    }
 }
-
-#emocjiMenu a{
-    cursor: pointer;
-    font-size: 1.5rem;
-}
+/* -- */

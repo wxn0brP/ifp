@@ -16,7 +16,7 @@
     transform-origin: 50% 50%;
     animation: twinkle 1s infinite;
 }
-  
+
 @keyframes twinkleAnim{
     0%, 100%{
         transform: scale(1);

@@ -2,7 +2,7 @@
     overflow: auto;
     height: calc(100vh - 72px);
     padding: 15px;
-    width: calc(100vw - 290px);
+    width: 100%;
 }
 
 .mess{

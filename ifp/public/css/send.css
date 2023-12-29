@@ -1,16 +1,43 @@
+/* - */
 #send{
     height: 60px;
     width: 100%;
-}
+    #send-menu{
+        width: 98%;
+        height: 50px;
+        background-color: var(--inp);
+        border-radius: 1rem;
+        color: var(--txt);
+        position: relative;
+    }
+    #inpSend{
+        left: 1.1rem;
+        width: calc(100% - 9.5rem);
+        padding: 5px;
+        resize: none;
+    }
 
-#send #send-menu{
-    width: 98%;
-    height: 50px;
-    background-color: var(--inp);
-    border-radius: 1rem;
-    color: var(--txt);
-    position: relative;
+    #inpSend:focus{
+        outline: none;
+    }
+
+    #send-menu-data{
+        right: 3.1rem;
+        width: 5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    button{
+        right: 1.1rem;
+        width: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
+/* -- */
 
 #send #inpSend, #send button, #send #send-menu-data{
     position: absolute;
@@ -21,39 +48,13 @@
     background-color: var(--inp);
 }
 
-#send #inpSend{
-    left: 1.1rem;
-    width: calc(100% - 9.5rem);
-    padding: 5px;
-    resize: none;
-}
-
-#send #inpSend:focus{
-    outline: none;
-}
-
-#send #send-menu-data{
-    right: 3.1rem;
-    width: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-#send button{
-    right: 1.1rem;
-    width: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
+/* - */
 #sendBtn-img{
     width: 60%;
     aspect-ratio: 1/1;
     --fil: grey;
+    path{
+        fill: var(--fil);
+    }
 }
-
-#sendBtn-img path{
-    fill: var(--fil);
-}
+/* -- */

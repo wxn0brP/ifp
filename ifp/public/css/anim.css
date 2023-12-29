@@ -8,9 +8,6 @@
 }
 
 @keyframes res-msg-anims{
-    /* 0%, 100%{
-        transform: scale(1);
-    } */
     40%,60%{
         background-color: var(--border);
         padding: 5px;

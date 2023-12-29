@@ -26,24 +26,7 @@ function emulateConfettiClick(x=window.innerWidth / 2, y=window.innerHeight / 2)
     }
 
     function startKonami(){
-        // fetch('').then(r => r.json())
-        // .then(data => {
-        //     const img = document.createElement('img');
-        //     img.src = data[0].url;
-
-        //     let cats = document.querySelector("#cats");
-        //     cats.innerHTML = "";
-        //     cats.appendChild(img);
-            
-        //     cats.fadeIn();
-        //     setTimeout(() => {
-        //         cats.fadeOut();
-        //         setTimeout(() => cats.innerHTML = "", 500);
-                
-        //     }, 5000);
-        // }).catch((e)=>{
-        //     lo(e)
-        // });
+        
         setTimeout(() => block = false, 4000);
     }
 })();

@@ -18,6 +18,7 @@
     z-index: 5;
 }
 
+/* - */
 #alertLink{
     position: absolute;
     top: 50%;
@@ -26,15 +27,14 @@
     border-radius: 2rem;
     background-color: var(--panel);
     border: 1px solid var(--border);
-}
-
-#alertLink button{
-    width: 48%;
-    height: 2.3rem;
-    background-color: var(--back);
-    color: var(--txt);
-    border-radius: 20px;
-    border: 1px solid var(--border);
+    button{
+        width: 48%;
+        height: 2.3rem;
+        background-color: var(--back);
+        color: var(--txt);
+        border-radius: 20px;
+        border: 1px solid var(--border);
+    }
 }
 
 #alertServerAction{
@@ -45,26 +45,35 @@
     border-radius: 2rem;
     background-color: var(--panel);
     border: 1px solid var(--border);
-}
-
-#alertServerAction button{
-    width: 80%;
-    height: 2.3rem;
-    color: var(--txt);
-    background-color: var(--panel);
-    border: none;
-    margin: 2px;
-}
-
-#alertServerAction button:hover{
-    background-color: var(--menu);
-    border-radius: 5px;
+    
+    button{
+        width: 80%;
+        height: 2.3rem;
+        color: var(--txt);
+        background-color: var(--panel);
+        border: none;
+        margin: 2px;
+        :hover{
+            background-color: var(--menu);
+            border-radius: 5px;
+        }
+    }
 }
 
 #addChat{
     font-size: 2rem;
     position: relative;
+    ::before{
+        width: 50%;
+        height: 4px;
+    }
+    
+    ::after{
+        width: 4px;
+        height: 50%;
+    }
 }
+/* -- */
 
 #addChat::before,
 #addChat::after{
@@ -77,15 +86,6 @@
     border-radius: 4px;
 }
 
-#addChat::before{
-    width: 50%;
-    height: 4px;
-}
-
-#addChat::after{
-    width: 4px;
-    height: 50%;
-}
 
 #errMesses div{
     position: absolute;
@@ -135,6 +135,7 @@
     cursor: pointer;
 }
 
+/* - */
 #callMedia{
     position: absolute;
     top: 20px;
@@ -144,16 +145,16 @@
     background-color: var(--menu);
     text-align: left;
     min-width: 400px;
+    button{
+        background-color: var(--back);
+        color: var(--txt);
+        border: var(--border);
+        padding: 10px;
+        border-radius: 10px;
+        margin-top: 5px;
+    }
 }
-
-#callMedia button{
-    background-color: var(--back);
-    color: var(--txt);
-    border: var(--border);
-    padding: 10px;
-    border-radius: 10px;
-    margin-top: 5px;
-}
+/* -- */
 
 #callUsers li{
     margin-left: 1rem;
@@ -167,18 +168,7 @@
     margin-bottom: 1rem;
 }
 
-#cats{
-    position: absolute;
-    top: 1%;
-    left: 50%;
-    transform: translate(-50%);
-}
-
-#cats img{
-    border-radius: 1rem;
-    max-height: 90vh;
-}
-
+/* - */
 #imgSelector{
     top: 1%;
     left: 50%;
@@ -186,19 +176,27 @@
 
     display: flex;
     justify-content: space-between;
-}
-
-#imgSelector svg{
-    width: 150px;
-    padding: 10px;
-    cursor: pointer;
+    svg{
+        width: 150px;
+        padding: 10px;
+        cursor: pointer;
+    }
 }
 
 #statusPopUp{
     top: 40%;
     left: 50%;
     transform: translate(-50%);
+    button{
+        width: 50px;
+    }
+    
+    input{
+        width: 200px;
+        height: 2rem;
+    }
 }
+/* -- */
 
 #statusPopUp :is(button, input){
     padding: 5px;
@@ -207,47 +205,39 @@
     color: var(--txt);
 }
 
-#statusPopUp button{
-    width: 50px;
-}
-
-#statusPopUp input{
-    width: 200px;
-    height: 2rem;
-}
-
+/* - */
 #snakesPopUp{
     top: 5%;
     left: 50%;
     transform: translate(-50%);
+    canvas{
+        width: 98%;
+        height: 98%;
+        background-color: #333;
+    }
+    
+    #snakesPopUpX{
+        border-radius: 50%;
+        padding: 10px;
+        left: -35px;
+        top: -35px;
+        position: absolute;
+        color: var(--txt);
+        background-color: var(--menu);
+    }
+    
+    .snakeMobileBtn{
+        width: 50px;
+        height: 50px;
+        background-color: var(--panel);
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid var(--border);
+        color: var(--txt);
+        margin: 10px;
+    }
 }
-
-#snakesPopUp canvas{
-    width: 98%;
-    height: 98%;
-    background-color: #333;
-}
-
-#snakesPopUp #snakesPopUpX{
-    border-radius: 50%;
-    padding: 10px;
-    left: -35px;
-    top: -35px;
-    position: absolute;
-    color: var(--txt);
-    background-color: var(--menu);
-}
-
-#snakesPopUp .snakeMobileBtn{
-    width: 50px;
-    height: 50px;
-    background-color: var(--panel);
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid var(--border);
-    color: var(--txt);
-    margin: 10px;
-}
+/* -- */
 
 #casesPopUp{
     position: absolute;
@@ -256,6 +246,7 @@
     transform: translate(-50%);
 }
 
+/* -- */
 #itemsPopUp{
     position: absolute;
     top: 5%;
@@ -264,11 +255,10 @@
     height: 440px;
     width: 300px;
     overflow: auto;
-}
-
-#itemsPopUp img{
-    height: 70px;
-    padding: 0 5px;
+    img{
+        height: 70px;
+        padding: 0 5px;
+    }
 }
 
 #casesHubPopUp{
@@ -279,28 +269,31 @@
     height: 440px;
     width: 300px;
     overflow: auto;
+    div{
+        margin-top: 8px;
+    }
+    
+    .spaceDiv{
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .spaceDiv{
+        span{
+            cursor: pointer;
+        }
+    }
+    
+    button{
+        background-color: var(--back);
+        color: var(--txt);
+        padding: 5px;
+        border-radius: 5px;
+        margin-left: 10px;
+    }
 }
 
-#casesHubPopUp div{
-    margin-top: 8px;
-}
-
-#casesHubPopUp .spaceDiv{
-    display: flex;
-    justify-content: space-between;
-}
-
-#casesHubPopUp .spaceDiv span{
-    cursor: pointer;
-}
-
-#casesHubPopUp button{
-    background-color: var(--back);
-    color: var(--txt);
-    padding: 5px;
-    border-radius: 5px;
-    margin-left: 10px;
-}
+/* -- */
 
 #casesHubPopUpCases > :not(:last-child), #casesHubPopUpDaily{
     padding-bottom: 8px;

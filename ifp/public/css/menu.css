@@ -1,35 +1,35 @@
+/* - */
 #menu{
     width: 290px;
-}
 
-#menu .servery{
-    background-color: var(--servery);
-    height: 100vh;
-    width: 50px;
-}
+    .servery{
+        background-color: var(--servery);
+        height: 100vh;
+        width: 50px;
+        button{
+            width: 80%;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--panel);
+            color: var(--txt);
+            margin: 2px 0;
+            :hover{
+                background-color: var(--menu);
+            }
+        }
+    }
 
-#menu .servery button{
-    width: 80%;
-    aspect-ratio: 1/1;
-    border-radius: 50%;
-    border: none;
-    background-color: var(--panel);
-    color: var(--txt);
-    margin: 2px 0;
+    #leftPanel{
+        overflow: auto;
+        height: calc(100vh - 60px);
+        background-color: var(--panel);
+        z-index: 20;
+        padding: 0 4px;
+        width: 240px;
+    }
 }
-
-#menu .servery button:hover{
-    background-color: var(--menu);
-}
-
-#menu #leftPanel{
-    overflow: auto;
-    height: calc(100vh - 60px);
-    background-color: var(--panel);
-    z-index: 20;
-    padding: 0 4px;
-    width: 240px;
-}
+/* -- */
 
 #accountPanel{
     height: 60px;
@@ -59,24 +59,24 @@
     background-color: var(--back);
 }
 
+/* - */
 #leftPanel-server{
     padding-top: 10px;
+    details{
+        margin-top: 10px;
+    }
+    summary{
+        padding: 0 5px;
+        text-align: left;
+        user-select: none;
+        cursor: pointer;
+    }
 }
-
-#leftPanel-server details{
-    margin-top: 10px;
-}
+/* -- */
 
 #serverChannels button{
     text-align: left;
     padding: 0 10px;
-}
-
-#leftPanel-server summary{
-    padding: 0 5px;
-    text-align: left;
-    user-select: none;
-    cursor: pointer;
 }
 
 #serverName{
@@ -112,6 +112,7 @@
     content: "🔊";
 }
 
+/* - */
 .firednsActivityPanel{
     width: 95%;
     height: 60px;
@@ -126,11 +127,12 @@
     padding: 0 10px;
 
     position: relative;
+    img{
+        width: 40px;
+    }
 }
+/* -- */
 
-.firednsActivityPanel img{
-    width: 40px;
-}
 
 .firednsActivityPanel_typ{
     border-radius: 10px;

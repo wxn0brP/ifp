@@ -98,14 +98,14 @@
             if(!id) alert("Err not id");
             var locationNext = "/ic?id="+id;
         </script>
-        <script src="/js/auth.js"></script>
+        <script src="/app/js/auth.js"></script>
         <script>
             var inv = JSON.parse(cw.get("/ic/get?id="+id));
             if(!inv.err){
-                document.querySelector("#ok").style("display: block");
+                document.querySelector("#ok").css("display: block");
                 document.querySelector("#server").innerHTML = inv.msg.name;
             }else{
-                document.querySelector("#not").style("display: block");
+                document.querySelector("#not").css("display: block");
             }
 
             function ok(){
@@ -122,9 +122,9 @@
                 xhr.send(JSON.stringify({ id, name, token }));
 
                 var res = JSON.parse(xhr.responseText);
-                if(res.err) return alert("error");
-                document.querySelector("#ok").style("display: none");
-                document.querySelector("#okk").style("display: block");
+                if(res.err) return alert(res.msg);
+                document.querySelector("#ok").css("display: none");
+                document.querySelector("#okk").css("display: block");
             }
         </script>
     </body>

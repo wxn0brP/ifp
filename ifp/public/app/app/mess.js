@@ -172,11 +172,9 @@ msgDiv.on("scroll", () => {
 
 document.addEventListener('keydown', (e) => {
     if(msgInput == document.activeElement) return;
+    if(document.activeElement.tagName.toLowerCase() === 'input') return;
     if(e.ctrlKey) return;
     if(e.altKey) return;
-
-    var edit = document.querySelector(".editMess");
-    if(edit) return;
 
     msgInput.focus();
     var tLen = msgInput.value.length;

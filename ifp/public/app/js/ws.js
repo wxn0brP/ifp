@@ -375,6 +375,6 @@ socket.on("box_get_drop", (drop) => {
     alert(txt);
 });
 
-socket.on("getServerPerm", data => {
-    getServerPerm(data);
+socket.on("getServerSettings", (data, roles) => {
+    getServerSettings(data, roles);
 })

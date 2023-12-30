@@ -6,26 +6,21 @@ module.exports = (socket) => {
     socket.on("editServer", async (data) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
-        if(!data.server || !data.change) return socket.emit("error", "params");
+        if(!data.server) return socket.emit("error", "params");
 
         try{
             const perm = new permSys(data.server);
-            if(!await perm.userPermison(socket.user._id, data.change)) return socket.emit("error", "permission");
+            if(!await perm.userPermison(socket.user._id, "set")) return socket.emit("error", "permission");
             
-            switch(data.change){
-                case "set":
-                    if(!data.sett) return socket.emit("error", "params");
-                    let actualSet = await serverSet.findOne({ id: data.server });
+            if(!data.set) return socket.emit("error", "params");
+            let actualSet = await serverSet.findOne({ id: data.server });
 
-                    if(!actualSet) return socket.emit("error", "server valid");
-                    let settingsDef = require("../../chatAppLogicData/serverSettings");
-                    
-                    let settings = { ...settingsDef, ...actualSet.o.settings, ...data.sett };
+            if(!actualSet) return socket.emit("error", "server valid");
+            let settingsDef = require("../../chatAppLogicData/serverSettings");
+            
+            let settings = { ...settingsDef, ...actualSet.o.settings, ...data.set };
 
-                    await serverSet.updateOne({ id: data.server }, { settings });
-                break;
-            }
-
+            await serverSet.updateOne({ id: data.server }, { settings });
         }catch(e){
             socket.emit("error", "error");
         }
@@ -130,7 +125,7 @@ module.exports = (socket) => {
         }  
     });
 
-    socket.on("getServerPerm", async (server) => {
+    socket.on("getServerSettings", async (server) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
 
@@ -138,9 +133,17 @@ module.exports = (socket) => {
             const perm = new permSys(server);
             if(!await perm.userPermison(socket.user._id, "get")) return socket.emit("error", "permission");
 
-            socket.emit("getServerPerm")
+            let roles = await global.db.permission.find(server, (r) => r.roleId);
+            roles = roles.map(role => role.o);
+            let datas = (await global.db.serverSettings.findOne({ id: server })).o.settings;
+            let data = {
+                name: datas.name
+            }
+
+            socket.emit("getServerSettings", data, roles);
         }catch(e){
-            socket.emit("error", "error");
+            console.error(e)
+            socket.emit("error", "error2");
         }  
     });
 

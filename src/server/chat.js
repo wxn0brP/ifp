@@ -10,19 +10,25 @@ async function createChat(name, creater){
     await meta.add({ // meta data
         id,
         users: [],
-        own: creater,
-        name
+        own: creater
     });
 
     const settings = {
-        ...require("../chatAppLogicData/serverSettings")
+        ...require("../chatAppLogicData/serverSettings"),
+        name
     };
     await global.db.serverSettings.add({ // server settings
         id, settings
     });
 
+    let adminRole = getId();
     await global.db.permission.add(id, { // add admin role
-        name: "admin", roleId: getId(), perm: "all", parrent: "all"
+        name: "admin", roleId: adminRole, perm: "all", parent: "all"
+    });
+
+    await global.db.permission.add(id, {
+        userId: creater,
+        roles: [adminRole]
     });
 
     await global.db.ic.add({ id: getId(), chat: id, time: -1, count: -5 }); //add base inv

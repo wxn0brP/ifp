@@ -10,9 +10,7 @@ var ifpSettings = {
 }
 
 var settingsRun = {
-    main: () => {
-        
-    },
+    main: () => {},
     konto: () => {
         socket.emit("setProfile", ifpSettings.konto);
     },

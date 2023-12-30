@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">IFP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="IFP - Infinite Fusion Project">
+		<meta name="keywords" content="ifp, IFP, Infinite Fusion Project">
+        <link href="/favicon.ico" rel="shortcut icon">
+        <link href="/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="app">
+            <label for="text-input">Text Input:</label>
+            <input type="text" m-m="text" id="text-input">
+
+            <br /><br /><br /><br />
+
+            <label for="checkbox-input">Checkbox:</label>
+            <input type="checkbox" m-m="chcek" id="checkbox-input">
+
+            <br /><br /><br /><br />
+            
+            <label for="select-input">Select:</label>
+            <select m-m="selectedOption" id="select-input">
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+            </select>
+
+            <br /><br />
+            <button onclick="mo()">se</button>
+        </div>
+        
+        <script src="/core.js"></script>
+        <script src="meui.js"></script>
+        <script>
+            var data = meuiInit(document.querySelector("#app"));
+            
+            setTimeout(() => {
+                setInterval(() => {
+                    data.text = data.chcek ? "Hi there!" : "Hello, World!";
+                }, 10);
+            }, 2000)
+            
+            function mo(){
+                lo(data.get())
+            }
+        </script>
+    </body>
+</html>

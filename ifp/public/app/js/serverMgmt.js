@@ -1,13 +1,24 @@
 function displayServerMgmt(){
-    socket.emit("getServerPerm", toChat);
-    // TODO zrealizować w UI zarządznie serwerem
+    socket.emit("getServerSettings", toChat);
 }
 
-var ifpSettingsServer = {};
+var ifpSettingsServer = {
+    server: {
+        name: ""
+    }
+};
 
-function getServerPerm(data){
+var serverRun = {
+    server: () => {
+        socket.emit("editServer", { server: toChat, set: ifpSettingsServer["server"] })
+    }
+};
+
+function getServerSettings(data, roles){
+    ifpSettingsServer.server = data;
     lo(data);
-    settingsChangeSever("server_main", true);
+    lo(roles);
+    settingsChangeSever("server", true);
 }
 
 function settingsChangeSever(name, fade=false){
@@ -16,5 +27,6 @@ function settingsChangeSever(name, fade=false){
     settingsChange_(name, fade);
     settingsInit(document.getElementById("settingsDivC"), ifpSettingsCreator[name], ifpSettingsServer[name], () => {
         closeSettings();
+        serverRun[name]();
     });
 }

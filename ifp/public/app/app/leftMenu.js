@@ -74,8 +74,8 @@ function addInviteToUi(invite){
     document.querySelector("#invites").appendChild(inviteDiv);
 }
 
-function addFriends(){
-    var inp = prompt("Podaj nazwę swojego przyjaciela: ");
+async function addFriends(){
+    var inp = await getPrompt("Podaj nazwę swojego przyjaciela: ");
     if(!inp) return uiMsg("musisz podać user", 1);
     
     inp = inp.trim();

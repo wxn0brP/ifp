@@ -21,7 +21,3 @@ global.db = {
 function getPath(name){
     return "data/"+name+".db";
 }
-
-(async () => {
-    // lo(await global.db.user.find({ok: "e"}))
-})()

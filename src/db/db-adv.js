@@ -17,6 +17,10 @@ class dbC{
         if(!fs.existsSync(path)) fs.mkdirSync(path);
     }
 
+    getDBs(){
+        return fs.readdirSync(this.path);
+    }
+
     //add
     async add(name, arg){
         this.checkFile(name);

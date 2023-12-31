@@ -105,3 +105,10 @@ var obj = {
 }
 
 module.exports = obj;
+
+(async () => {
+    let servers = global.db.permission.getDBs();
+    servers.forEach(server => {
+        global.db.mess.checkFile(server);
+    })
+})()

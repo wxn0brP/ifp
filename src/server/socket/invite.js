@@ -69,9 +69,10 @@ module.exports = (socket) => {
 
             await global.db.invites.removeOne({_id: inviteId});
             
-            // var p1 = invite.to;
-            // var p2 = invite.from;
-            // var cid = chat.combinateId(p1, p2);
+            var p1 = invite.to;
+            var p2 = invite.from;
+            var cid = chat.combinateId(p1, p2);
+            await global.db.mess.checkFile(cid);
 
             sendToSocket(invite.from, "inviteAccept", invite.to);
         }catch(e){

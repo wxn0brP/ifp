@@ -85,17 +85,22 @@ function initSnake(){
 
     document.addEventListener('keydown', (event) => {
         let direction;
+        lo(event.key)
         switch(event.key){
             case 'ArrowUp':
+            case 'w':
                 if(directionLast != "down") directionLast = direction = 'up';
-            break;
+                break;
+            case 's':
             case 'ArrowDown':
                 if(directionLast != "up") directionLast = direction = 'down';
             break;
             case 'ArrowLeft':
+            case 'a':
                 if(directionLast != "right") directionLast = direction = 'left';
             break;
             case 'ArrowRight':
+            case 'd':
                 if(directionLast != "left") directionLast = direction = 'right';
             break;
         }

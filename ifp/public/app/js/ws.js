@@ -157,7 +157,6 @@ socket.on("invite", function(invite){
 
 socket.on("invites", (invites) => {
     if(!invites) return;
-    alert("masz "+invites.length+" zaproszeń");
     document.querySelector("#invites").html("")
     invites.forEach((invite) => addInviteToUi(invite));
 });

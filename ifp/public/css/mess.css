@@ -10,7 +10,7 @@
     min-height: 1.2rem;
     height: auto;
     text-align: left;
-    border-radius: 2rem;
+    border-radius: .5rem;
     padding-left: 1rem;
     position: relative;
     font-size: 1.05rem;
@@ -48,8 +48,8 @@
 
 .res-msg{
     position: absolute;
-    left: 4rem;
-    bottom: 1rem;
+    left: 1.3rem;
+    top: 1.2rem;
     font-size: 0.8em;
     cursor: pointer;
 }

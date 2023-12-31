@@ -69,13 +69,9 @@ module.exports = (socket) => {
 
             await global.db.invites.removeOne({_id: inviteId});
             
-            var p1 = invite.to;
-            var p2 = invite.from;
-            var cid = chat.combinateId(p1, p2);
-            var isChat = await chat.meta.findOne({ id: cid });
-            if(!isChat){
-                await chat.createPriv(cid, [p1, p2]);
-            }
+            // var p1 = invite.to;
+            // var p2 = invite.from;
+            // var cid = chat.combinateId(p1, p2);
 
             sendToSocket(invite.from, "inviteAccept", invite.to);
         }catch(e){

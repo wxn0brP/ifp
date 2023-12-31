@@ -113,9 +113,7 @@ io.of("/").on("connection", (socket) => {
                 to = messInter.combinateId(p1, p2);
             }
 
-            var chat = await global.db.chat.meta.findOne({ id: to });
-            if(!chat) return socket.emit("error", "chat is not exists - getMess");
-            chat = chat.o;
+            if(!messInter.chatExsists(to)) return socket.emit("error", "chat is not exists - getMess");
 
             var message = msg.trim();
             if(msg.length > 500) return socket.emit("error", "msg jest za długie");
@@ -128,7 +126,7 @@ io.of("/").on("connection", (socket) => {
             }
             if(req.res) data.res = req.res;
 
-            var _id = await global.db.chat.mess.add(to, data);
+            var _id = await global.db.mess.add(to, data);
 
             if(!friendChat) data.to = to;
             else data.to = "$"+socket.user._id;
@@ -144,11 +142,20 @@ io.of("/").on("connection", (socket) => {
                 to: "@",
                 res: data.res || undefined
             });
-            chat.users.forEach(u => {
-                if(u == socket.user._id) return;
-                sendToSocket(u, "mess", data);
-                sendNewMsgToFireBase(u, data);
-            })
+
+            if(!friendChat){
+                let chat = await global.db.permission.find(to, r => r.roleId);
+                chat.forEach(u => {
+                    u = u.o.userId;
+                    if(u == socket.user._id) return;
+                    sendToSocket(u, "mess", data);
+                    sendNewMsgToFireBase(u, data);
+                })
+            }else{
+                let toSend = req.to.replace("$","");
+                sendToSocket(toSend, "mess", data);
+                sendNewMsgToFireBase(toSend, data);
+            }
         }catch(e){
             lo("error: ", e)
         }
@@ -166,16 +173,14 @@ io.of("/").on("connection", (socket) => {
                 to = messInter.combinateId(p1, p2);
             }
 
-            var chat = await global.db.chat.meta.findOne({ id: to });
-            if(!chat) return socket.emit("error", "chat is not exists - getMess");
-            chat = chat.o;
+            if(!messInter.chatExsists(to)) return socket.emit("error", "chat is not exists - getMess");
 
             if(!friendChat){
                 var user = await usrDB.findOne({ _id: socket.user._id });
                 if(!user.o.chats.includes(to)) return socket.emit("error", "you not is this chat");
             }
 
-            const responeAll = await global.db.chat.mess.find(to, { chnl });
+            const responeAll = await global.db.mess.find(to, { chnl });
 
             const selectedMessages = responeAll.reverse().slice(start, finish);
 
@@ -254,12 +259,12 @@ io.of("/").on("connection", (socket) => {
                 to = messInter.combinateId(p1, p2);
             }
 
-            var mess = await global.db.chat.mess.findOne(to, { _id });
+            var mess = await global.db.mess.findOne(to, { _id });
             if(!mess) return socket.emit("error", "msg is not exists");
             if(mess.o.fr != socket.user._id) return socket.emit("error", "not");
 
             const time = genId(0);
-            await global.db.chat.mess.updateOne(to, { _id }, { msg, edit: true, lastEdit: time });
+            await global.db.mess.updateOne(to, { _id }, { msg, edit: true, lastEdit: time });
             sendToChatUsers(to, "editMess", _id, msg, time);
         }catch(e){
             lo("error: ", e)
@@ -277,11 +282,11 @@ io.of("/").on("connection", (socket) => {
                 to = messInter.combinateId(p1, p2);
             }
 
-            var mess = await global.db.chat.mess.findOne(to, { _id });
+            var mess = await global.db.mess.findOne(to, { _id });
             if(!mess) return socket.emit("error", "msg is not exists");
             if(mess.o.fr != socket.user._id) return socket.emit("error", "not");
 
-            await global.db.chat.mess.removeOne(to, { _id });
+            await global.db.mess.removeOne(to, { _id });
             sendToChatUsers(to, "delMess", _id);
         }catch(e){
             lo("error: ", e)
@@ -299,7 +304,7 @@ io.of("/").on("connection", (socket) => {
         if(usrChat.includes(inv.chat)) return socket.emit("error", "user is exsists in chat");
         
         var res = await messInter.addUser(inv.chat, socket.user._id);
-        socket.emit("inviteChat", res);
+        socket.emit("inviteChat", res.msg);
     });
 
     socket.on("createChat", async (name) => {
@@ -307,7 +312,6 @@ io.of("/").on("connection", (socket) => {
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
             var res = await messInter.createChat(name, socket.user._id);
-            await messInter.addUser(res, socket.user._id);
             socket.emit("createChat", res);
         }catch(e){
             lo("error: ", e)
@@ -465,9 +469,9 @@ global.sendToSocket = (id, chanel, ...more) => {
 }
 
 global.sendToChatUsers = async (to, chanel, ...more) => {
-    var chat = await global.db.chat.meta.findOne({ id: to });
-    chat = chat.o.users;
+    var chat = await global.db.permission.find(to, (r) => r.userId);
     chat.forEach(c => {
+        c = c.o.userId;
         sendToSocket(c, chanel, ...more)
     })
 }
@@ -511,7 +515,7 @@ async function sendNewMsgToFireBase(id, data){
         const user = (await usrDB.findOne({ _id: id })).o;
         title += user.name;
     }else{
-        const server = (await global.db.chat.meta.findOne({ id })).o;
+        const server = (await global.db.serverSettings.findOne({ id })).o.settings;
         title += "(S) " + server.name;
     }
     let body = "";

@@ -1,5 +1,3 @@
-var messInter = require("../chat");
-
 module.exports = async (req, res) => {
     var { id } = req.query;
     if(!id) return res.json({ err: true, msg: "id is required" });
@@ -12,14 +10,18 @@ module.exports = async (req, res) => {
         await global.db.ic.removeOne({ id });
         return res.json({ err: true, msg: "invite timeout" });
     }
+    //FIXME invite
     inv.count--;
     if(inv.count != -6 && inv.count <= 0){
         await global.db.ic.removeOne({ id });
         return res.json({ err: true, msg: "invite count" });
     }
 
-    var respone = {}
-    respone.name = (await global.db.chat.meta.findOne({ id: inv.chat }))?.o?.name;
+    var respone = {};
+    let name = await global.db.serverSettings.findOne({ id: inv.chat });
+    if(!name) return res.json({ err: true, msg: "server not found" });
+    name = name?.o?.settings?.o;
+    respone.name = name;
     respone.id = inv.chat;
 
     res.json({ err: false, msg: respone });

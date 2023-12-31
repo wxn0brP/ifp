@@ -1,17 +1,12 @@
-var mess = new (require("../db/db-adv"))("data/mess-db");
-var meta = new (require("../db/database"))("data/mess-meta.db");
+var mess = global.db.mess;
 const getId = require("../db/gen");
 const crc = require('crc');
+const fs = require('fs');
+const { removeArrayItem } = require("../db/data-tools");
 
 async function createChat(name, creater){
     const id = getId();
     mess.checkFile(id);
-
-    await meta.add({ // meta data
-        id,
-        users: [],
-        own: creater
-    });
 
     const settings = {
         ...require("../chatAppLogicData/serverSettings"),
@@ -31,53 +26,53 @@ async function createChat(name, creater){
         roles: [adminRole]
     });
 
+    await global.db.user.updateOne({ _id: creater }, (usr) => {
+        usr.chats.push(id);
+        return usr;
+    });
+
     await global.db.ic.add({ id: getId(), chat: id, time: -1, count: -5 }); //add base inv
 
     return id;
 }
 
-async function createPriv(id, users){
-    await meta.add({
-        id,
-        users
-    });
-}
-
 async function addUser(id, user){
-    var chat = await meta.findOne({ id });
-    if(!chat) return { err: true, msg: "chat is not found" };
+    if(!chatExsists(id)) return { err: true, msg: "chat is not found" };
     var userI = await global.db.user.findOne({ _id: user });
     if(!userI) return { err: true, msg: "user is not found" };
 
-    chat = chat.o;
+    let userInChat = await global.db.permission.findOne(id, { userId: user });
+    if(userInChat) return { err: true, msg: "users is existsts" };
     
-    var users = chat.users || [];
-    if(users.includes(user)) return { err: true, msg: "users is existsts" };
-    
-    users.push(user);
-    await meta.updateOne({ id }, { users });
-    userI = userI.o.chats || [];
-    userI.push(id);
-    await global.db.user.updateOne({ _id: user }, { chats: userI });
+    await global.db.permission.add(id, {
+        userId: user,
+        roles: []
+    });
+
+    await global.db.user.updateOne({ _id: user }, (usr) => {
+        usr.chats.push(id);
+        return usr;
+    });
     
     return { err: false, msg: "ok" };
 }
 
 async function exitChat(id, user){
-    var chat = await meta.findOne({ id });
-    if(!chat) return { err: true, msg: "chat is not found" };
+    if(!chatExsists(id)) return { err: true, msg: "chat is not found" };
     var userI = await global.db.user.findOne({ _id: user });
     if(!userI) return { err: true, msg: "user is not found" };
 
-    chat = chat.o.users;
-    userI = userI.o.chats;
-    if(!userI.includes(id)) return { err: true, msg: "user not is chat" };
+    let userInChat = await global.db.permission.findOne(id, { userId: user });
+    if(!userInChat) return { err: true, msg: "users is not existsts" };
 
-    chat = removeArrayItem(user, chat);
-    userI = removeArrayItem(id, userI);
+    await global.db.permission.removeOne(id, { userId: user });
 
-    await meta.updateOne({ id }, { users: chat });
-    await global.db.user.updateOne({ _id: user }, { chats: userI });
+    await global.db.user.updateOne({ _id: user }, (usr) => {
+        usr.chats = removeArrayItem(id, usr.chats);
+        return usr;
+    });
+
+    return { err: false, msg: "ok" };
 }
 
 function combinateId(id1, id2){
@@ -97,29 +92,16 @@ function combinateId(id1, id2){
     return [p1, p2, p3].join("-");
 }
 
-function removeArrayItem(item, array){
-    var index = array.indexOf(item);
-    if(index !== -1) array.splice(index, 1);
-    return array;
+function chatExsists(id){
+    return fs.existsSync("data/mess-db/"+id);
 }
 
 var obj = {
     createChat,
-    createPriv,
     addUser,
     exitChat,
     combinateId,
-    mess,
-    meta
+    chatExsists,
 }
 
 module.exports = obj;
-global.db.chat = obj;
-
-// check files
-async function start(){
-    (await meta.find({})).forEach(chat => {
-        mess.checkFile(chat.o.id);
-    });
-}
-start();

@@ -1,4 +1,3 @@
-
 function copyMess(){
     let id = document.getElementById('messMenu').getAttribute('w_id');
     const messageDiv = document.getElementById(id + "_mess");
@@ -87,4 +86,14 @@ function exitChat(){
     socket.emit("exitChat", id);
     changeTo("main");
     setTimeout(() => socket.emit("getChats"), 1000);
+}
+
+function deleteFriends(){
+    var id = document.querySelector("#friendMenu").atrib("w_id");
+    if(!confirm("Ta operacja spowoduje usunięcie **"+changeIdToName(id)+"** z listy przyjaciół!!!")) return;
+    if(!confirm("Napewno?")) return;
+    if(!confirm("Napewno? (double click)")) return;
+    socket.emit("deleteFriends", id);
+    changeTo("main");
+    setTimeout(() => socket.emit("friends"), 1000);
 }

@@ -52,7 +52,14 @@ class dbActionC{
 
     async _update(path, res, arg){
         var index = res.l;
-        var new_obj = more.updateObject(res.o, arg);
+
+        var new_obj = res.o;
+        if(typeof arg == "function"){
+            new_obj = arg(new_obj);
+        }else if(typeof arg == "object" && !Array.isArray(arg)){
+            new_obj = more.updateObject(new_obj, arg);
+        }
+
         var json = await format.stringify(new_obj);
         await more.update(path, index, json);
     }

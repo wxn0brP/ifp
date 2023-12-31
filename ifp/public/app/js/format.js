@@ -135,7 +135,7 @@ function responeMess(msg, res_id){
         }, 600);
     })
     msg.appendChild(ele);
-    msg.classList.add("res-msg-mess");
+    msg.querySelector(".mess_msg").classList.add("res-msg-mess");
 }
 
 function changeMedia(link){

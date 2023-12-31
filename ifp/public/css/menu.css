@@ -27,6 +27,14 @@
         z-index: 20;
         padding: 0 4px;
         width: 240px;
+        #invites{
+            div{
+                padding: 5px 0;
+                border-top: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+                margin-bottom: 5px;
+            }
+        }
     }
 }
 /* -- */

@@ -55,21 +55,36 @@ function addMess(msg, socroll=true, up=false){
     if(msg.e) content += edit_txt.replace("$$", formatDateFormUnux(parseInt(msg.e, 36)));
 
     let userName = document.createElement("div");
+    userName.className = "mess_meta";
+
     let b = document.createElement("b");
     b.innerHTML = from;
     b.addEventListener("click", () => userProfile(msg.fr));
     b.style.cursor = "pointer";
+
+    let time = parseInt(msg._id.split("-")[0], 36);
+    const timeNormalize = formatDateFormUnux(time);
+    let timeSpan = document.createElement("span");
+    timeSpan.setAttribute("time", time);
+    timeSpan.style.paddingLeft = "10px";
+    timeSpan.style.fontSize = "0.9em";
+    timeSpan.innerHTML = timeNormalize;
+
     userName.appendChild(b);
+    userName.appendChild(timeSpan);
 
     let divMsg = document.createElement("div");
     divMsg.id = msg._id + "_mess";
+    divMsg.className = "mess_msg";
     divMsg.setAttribute("_plain", msg.msg);
     divMsg.innerHTML = content;
 
     div.appendChild(userName);
     div.appendChild(divMsg);
+    div.title = timeNormalize;
     
     up ? msgDiv.addUp(div) : msgDiv.add(div);
+    hideBeforeMsgAuthor();
 
     const errMargin = 70; // (px)
     const isScrollAtBottom = msgDiv.scrollTop + msgDiv.clientHeight + div.clientHeight + errMargin >= msgDiv.scrollHeight;
@@ -194,3 +209,26 @@ msgInput.addEventListener("paste", function(e){
         lo(file)
     }
 });
+
+function hideBeforeMsgAuthor(){
+    const msgs = document.querySelectorAll("#msg .mess");
+    if(msgs.length <= 1) return;
+    for(let i=0; i<msgs.length; i++){
+        if(i-1 < 0) continue;
+        const beforeAuthor = msgs[i-1].querySelector("b").innerHTML;
+        const msgAuthor = msgs[i].querySelector("b").innerHTML;
+        let isEqlaus = beforeAuthor == msgAuthor;
+
+        const timeB = msgs[i-1].querySelector("[time]").getAttribute("time");
+        const time = msgs[i].querySelector("[time]").getAttribute("time");
+        const timeDifference = time - timeB;
+        const minute = 70; // +/-
+
+        if(timeDifference >= minute * 5) isEqlaus = false;
+
+        msgs[i].querySelector(".mess_meta").css("display", isEqlaus ? "none" : "");
+        msgs[i-1].css("margin-bottom", isEqlaus ? "0" : "12px");
+    }
+}
+
+setInterval(hideBeforeMsgAuthor, 2_000);

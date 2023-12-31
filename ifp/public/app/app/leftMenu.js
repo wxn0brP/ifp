@@ -97,15 +97,6 @@ function addFriends(){
     socket.emit("invite", id);
 }
 
-function deleteFriends(){
-    if(!confirm("Ta operacja spowoduje usunięcie **"+changeIdToName(to)+"** z listy przyjaciół!!!")) return;
-    if(!confirm("Napewno?")) return;
-    if(!confirm("Napewno? (double click)")) return;
-    socket.emit("deleteFriends", to);
-    changeTo("main");
-    setTimeout(() => socket.emit("getStatus"), 1000);
-}
-
 function logout(){
     if(!confirm("Napewno?")) return;
     socket.emit("logout");

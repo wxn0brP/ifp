@@ -5,6 +5,7 @@ global.db = {
     user: new databaseC(getPath("user"), require("./shemas/shema_user")),
     invites: new databaseC(getPath("invites")),
     token: new databaseC(getPath("token")),
+    mess: new advDatabaseC("data/mess-db"),
     ic: new databaseC(getPath("ic")),
     bot: new databaseC(getPath("bot")),
     feed: new databaseC(getPath("feed")),

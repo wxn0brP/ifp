@@ -1,9 +1,11 @@
 var admin = require("firebase-admin");
 
-var serviceAccount = require("../../data/firebase.json");
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-});
+try{
+    var serviceAccount = require("../../data/firebase.json");
+    
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount)
+    });
+}catch{}
 
 global.firebaseAdmin = admin;

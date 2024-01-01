@@ -40,7 +40,6 @@
                 const name = match[1];
                 const data = match[2].split('\n').map(item => item.trim()).filter(Boolean);
                 mixins.push({ name, data });
-                lo(data)
             }
         
             return mixins;

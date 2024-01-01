@@ -26,60 +26,41 @@
     align-items: center;
 }
 
-/* #settingsDivC>div{
-    margin: 1rem 0;
-} */
-
-.settings-btn{
-    padding: 5px;
+#mixin buttonDef{
     border-radius: 5px;
-    background-color: var(--menu);
+    padding: 5px;
     color: var(--txt);
-    margin: 5px;
-}
-
-.setting_ele{
-    margin-top: 12px;
-    padding-top: 12px;
-    display: flex;
-    justify-content: space-between;
-    border-top: 2px solid var(--txt);
+    background-color: var(--menu);
+    border: 1px solid var(--border);
 }
 
 /* - */
-#settingsList{
-    width: 130px;
-    height: 100%;
-    float: left;
-    margin-right: 10px;
+#settingsDivC{
+    div.sett{
+        border: 1px solid var(--border);
+        --pr: 15px;
+        /* @incm pr; */
+        margin-bottom: 5px;
+    }
+    input{
+        /* @incm buttonDef; */
+        margin-left: 5px;
+    }
     button{
-        width: 98%;
-        border-radius: 1rem;
-        color: var(--txt);
-        background-color: var(--back);
-        height: 2rem;
-        margin-top: 13px;
-        border: none;
-        :hover{
-            background-color: var(--menu);
+        /* @incm buttonDef; */
+        margin-left: 0px;
+    }
+    
+
+}
+
+#rolesMgmt{
+    li{
+        margin-left: 1.1rem;
+        button{
+            margin-left: 9px;
         }
     }
 }
 
 /* -- */
-
-#settingsDivC{
-    float: left;
-    width: calc(100% - 150px); 
-}
-
-@media screen and (max-width: 850px){
-    #settingsList{
-        float: none;
-    }
-
-    #settingsDivC{
-        float: none;
-        width: 100%;
-    }
-}

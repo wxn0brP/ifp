@@ -33,7 +33,7 @@ const sounds = {
     leave: new Audio("/leave.mp3"),
 
     init(){
-        this.notifVaw.volume = ifpSettings.main["głośność powiadomień"] / 100;
+        this.notifVaw.volume = 1;
     }
 }
 sounds.init();

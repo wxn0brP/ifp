@@ -1,73 +1,43 @@
 var ifpSettings = {
-    main: {
-        "głośność powiadomień": 70,
-        "typ powiadomienia": "Dźwięk",
-        "radio": false
-    },
-    konto: {
+    konto: {}
+};
 
+(function(){
+    var appSettings = localStorage.getItem("settings");
+    if(!appSettings) return;
+
+    appSettings = JSON5.parse(appSettings);
+    updateObject(ifpSettings, appSettings);
+})();
+
+var settings_action = {
+    accountSave(meuiData){
+        let meuiDataG = meuiData.get();
+        let data = {
+            opis: meuiDataG.opis
+        }
+        lo(data)
     }
 }
 
-var settingsRun = {
-    main: () => {},
-    konto: () => {
-        socket.emit("setProfile", ifpSettings.konto);
-    },
-}
+function settingsApp(){
+    let html = cw.get("settings/app.html");
+    document.querySelector("#settingsDiv").fadeIn();
+    var e = document.querySelector("#settingsDivC");
+    e.innerHTML = html;
 
-if(localStorage.getItem("settings")){
-    var set = localStorage.getItem("settings");
-    updateObject(ifpSettings, JSON5.parse(set));
-}
+    let meuiData = meuiInit(e, ifpSettings);
 
-var ifpSettingsCreator = {}
-
-function settingsChange(name, fade=false){
-    document.querySelector("#settingsList_user").style.display = "block";
-    document.querySelector("#settingsList_server").style.display = "none";
-    settingsChange_(name, fade);
-    settingsInit(document.getElementById("settingsDivC"), ifpSettingsCreator[name], ifpSettings[name], () => {
-        closeSettings();
-        localStorage.setItem("settings", JSON5.stringify(ifpSettings));
-        settingsRun[name]();
-    });
-}
-
-function settingsChange_(name, fade=false){
-    if(!ifpSettingsCreator[name]){
-        var md = cw.get("settings/"+name+".md");
-        ifpSettingsCreator[name] = settingsChangeTranslate(md);
-    }
-    var e = document.querySelector("#settingsDiv");
-    e.css("");
-    if(fade) e.fadeIn();
+    e.querySelectorAll("[cclick]").forEach(ele => {
+        let action = ele.getAttribute("cclick");
+        if(!settings_action[action]) return;
+        ele.addEventListener("click", () => {
+            settings_action[action](meuiData);
+        });
+    })
 }
 
 function closeSettings(){
     var e = document.querySelector("#settingsDiv");
     e.fadeOut();
-}
-
-function settingsChangeTranslate(md){
-    var list = [];
-    var lines = md.split("\n");
-
-    var category = {};
-    for(let i=0; i<lines.length; i++){
-        var line = lines[i].trim();
-        if(line.startsWith("/- ")){
-            category.name = line.replace("/- ","");
-            category.cat = [];
-        }else if(line.startsWith("/+ ")){
-            let tmp = "{"+line.replace("/+ ","")+"}";
-            category.cat.push(JSON5.parse(tmp));
-        }else if(line.startsWith("<") && line.endsWith(">")){
-            category.cat.push(line);
-        }else if(line == "//-"){
-            list.push(category);
-            category = {};
-        }
-    }
-    return list;
 }

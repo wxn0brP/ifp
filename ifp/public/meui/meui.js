@@ -28,6 +28,7 @@ function meuiInit(app, def={}){
                     case "text":
                     case "password":
                     case "number":
+                    case "range":
                         value = input.value;
                     break;
                     case "checkbox":
@@ -47,6 +48,7 @@ function meuiInit(app, def={}){
                         case "text":
                         case "password":
                         case "number":
+                        case "range":
                             return input.value;
                         case "checkbox":
                             return input.checked;
@@ -61,6 +63,7 @@ function meuiInit(app, def={}){
                         case "text":
                         case "password":
                         case "number":
+                        case "range":
                             input.value = newValue;
                         break;
                         case "checkbox":

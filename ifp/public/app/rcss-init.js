@@ -1,7 +1,17 @@
 function loadRcss(link){
     let rcss = cw.get(link);
-    rcssC(rcss);
+    rcssC(rcss, globalMixins);
 }
+
+var globalMixins = [
+    {
+        name: "pr",
+        data: [
+            "border-radius: var(--pr);",
+            "padding: var(--pr);",
+        ]
+    }
+];
 
 [
     "anim",
@@ -18,4 +28,4 @@ function loadRcss(link){
     "star",
 ].forEach(css => {
     loadRcss("/css/"+css+".css");
-})
+});

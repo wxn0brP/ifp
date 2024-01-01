@@ -22,7 +22,7 @@ function loadPart(){
 
 async function loadJs(){
     const srcs = [
-        "js/settingsLib.js",
+        "/meui/meui.js",
         "js/settings.js",
         "js/vars.js",
         "js/params.js",
@@ -44,6 +44,7 @@ async function loadJs(){
         "js/snakes.js",
         "js/theme.js",
         "js/cases.js",
+        "js/rolesMgmt.js",
     ];
     let assets = document.querySelector("#assets");
     async function load(p){

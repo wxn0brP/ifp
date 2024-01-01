@@ -145,12 +145,12 @@ io.of("/").on("connection", (socket) => {
                     u = u.o.userId;
                     if(u == socket.user._id) return;
                     sendToSocket(u, "mess", data);
-                    sendNewMsgToFireBase(u, data);
+                    sendNewMsgToFireBase(socket.user._id, u, data);
                 })
             }else{
                 let toSend = req.to.replace("$","");
                 sendToSocket(toSend, "mess", data);
-                sendNewMsgToFireBase(toSend, data);
+                sendNewMsgToFireBase(socket.user._id, toSend, data);
             }
         }catch(e){
             lo("error: ", e)
@@ -497,7 +497,7 @@ async function statusOpt(id){
     return { s: statusDb.o.s, t:  type };
 }
 
-async function sendNewMsgToFireBase(id, data){
+async function sendNewMsgToFireBase(from, id, data){
     const socket = getSocket(id);
     if(socket.length > 0) return;
 
@@ -508,7 +508,7 @@ async function sendNewMsgToFireBase(id, data){
     
     let title = "Nowa Wiadomość od ";
     if(data.to.startsWith("$")){
-        const user = (await usrDB.findOne({ _id: id })).o;
+        const user = (await usrDB.findOne({ _id: from })).o;
         title += user.name;
     }else{
         const server = (await global.db.serverSettings.findOne({ id })).o.settings;

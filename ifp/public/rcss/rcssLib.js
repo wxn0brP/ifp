@@ -9,7 +9,7 @@
     }
 
     // Function to convert RCCSS code to CSS
-    function convertRcssToCss(input){
+    function convertRcssToCss(input, mixinsGlobal=[]){
         // Helper function to remove the last word from a string
         function removeLastWord(inputString){
             const words = inputString.split(' ');
@@ -30,6 +30,52 @@
             else
                 obj[path] = [key];
         }
+
+        function parseMixins(input){
+            const regex = /#mixin\s+(\w+)\s*{([^}]*)}/g;
+            const mixins = [];
+        
+            let match;
+            while((match = regex.exec(input)) !== null){
+                const name = match[1];
+                const data = match[2].split('\n').map(item => item.trim()).filter(Boolean);
+                mixins.push({ name, data });
+                lo(data)
+            }
+        
+            return mixins;
+        }
+        
+        function removeMixins(input){
+            const regex = /#mixin\s+\w+\s*{[^}]*}/g;
+            return input.replace(regex, '');
+        }
+        
+        function processMixins(input, mixins){
+            const regex = /\/\*\s*@incm\s+([^;]+)\s*;\s*\*\//;
+            let newLines = "";
+            let lines = input.split("\n")
+            for(let line of lines){
+                line = line.trim();
+                if(line == "") continue;
+                const match = line.match(regex);
+        
+                if(match){
+                    const name = match[1];
+                    let mixin = mixins.find(i => i.name == name);
+                    newLines += mixin.data.join("\n") + "\n";
+                }else{
+                    newLines += line + "\n";
+                }
+            };
+        
+            return newLines;
+        }
+
+        let mixins = parseMixins(input);
+        mixins = mixins.concat(mixinsGlobal);
+        input = removeMixins(input);
+        input = processMixins(input, mixins);
 
         let output = "";
         const obj = {};
@@ -73,9 +119,9 @@
     }
 
     // Main convert function
-    const convert = (txt) => {
+    const convert = (txt, mixinsGlobal=[]) => {
         if(txt == "" || txt == null || txt == undefined) return;
-        const css = convertRcssToCss(txt);
+        const css = convertRcssToCss(txt, mixinsGlobal);
         const style = document.createElement("style");
         style.innerHTML = css;
         rcssIf.appendChild(style);

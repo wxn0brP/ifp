@@ -118,7 +118,7 @@ function getSesion(){
     }
     if(games.length == 0) return gen();
     for(let i=0; i<games.length; i++)
-        if(Object.keys(games[i].players).length < 10) return games[i];
+        if(Object.keys(games[i].players).length < 5) return games[i];
     
     return gen();
 }

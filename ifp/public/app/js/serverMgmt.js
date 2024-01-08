@@ -1,10 +1,13 @@
-function displayServerMgmt(){
+function displayServerMgmt(fade=true){
     socket.emit("getServerSettings", toChat);
+    serverFadeIn = fade;
 }
+
+var serverFadeIn = true;
 
 var ifpSettingsServer = {
     server: {
-        name: ""
+        name: "",
     },
     roles: {
         roles: []
@@ -12,8 +15,9 @@ var ifpSettingsServer = {
 };
 
 var settings_actionS = {
-    server(){
-        socket.emit("editServer", { server: toChat, set: ifpSettingsServer["server"] })
+    server(meuiData){
+        let data = meuiData.get();
+        socket.emit("editServer", toChat, data);
     },
 };
 
@@ -25,11 +29,11 @@ function getServerSettings(data, roles){
 
 function settingsServer(){
     let html = cw.get("settings/server.html");
-    document.querySelector("#settingsDiv").fadeIn();
+    if(serverFadeIn) document.querySelector("#settingsDiv").fadeIn();
     var e = document.querySelector("#settingsDivC");
     e.innerHTML = html;
 
-    let meuiData = meuiInit(e, ifpSettings);
+    let meuiData = meuiInit(e, ifpSettingsServer.server);
 
     e.querySelectorAll("[cclick]").forEach(ele => {
         let action = ele.getAttribute("cclick");

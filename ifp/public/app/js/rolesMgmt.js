@@ -82,15 +82,79 @@ function rolesMgmt(roles, roleHierarchyContainer){
         render();
     }
 
-
     function render(){
         roles = sortRolesByHierarchy(roles)
         renderRoleHierarchy(roles);
+        let save = document.createElement("button");
+        save.innerHTML = "Save"
+        save.onclick = () => {
+            let tmp = roles.map((role) => {
+                return {
+                    roleId: role.roleId,
+                    parent: role.parent,
+                };
+            });
+            socket.emit("server_roleHier", toChat, tmp);
+        }
+        roleHierarchyContainer.appendChild(document.createElement("br"));
+        roleHierarchyContainer.appendChild(save);
     }
     render();
 }
 
 function roleMgmt(role){
     let roleContainer = document.querySelector("#roleMgmt");
-    roleContainer.innerHTML = "Role: "+role.name
+    if(role.perm == "all"){
+        roleContainer.innerHTML = "role jest adminem, nie można edytować";
+        return;
+    }
+
+    function br(){
+        roleContainer.appendChild(document.createElement("br"));
+    }
+
+    function buildCheckBox(name, checked){
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = checked;
+        checkbox.setAttribute("m-m", name);
+        let span = document.createElement("span");
+        span.innerHTML = name + " ";
+        roleContainer.appendChild(span);
+        roleContainer.appendChild(checkbox);
+        br();
+    }
+
+    const perms = {
+        name: role.name,
+        msgDel: false
+    }
+    
+    for(let perm of role.perm){
+        perms[perm] = true;
+    }
+    roleContainer.innerHTML = "Role: "+role.name;
+    br();
+    roleContainer.innerHTML += `Name: <input m-m="name" />`
+    br();
+
+    for(let perm in perms)
+        if(typeof perms[perm] == "boolean") buildCheckBox(perm, perms[perm]);
+    
+
+    br();br();
+    let meuiData = meuiInit(roleContainer, perms);
+    let btnSave = document.createElement("button");
+    btnSave.innerHTML = "Save";
+    btnSave.onclick = () => {
+        let data = meuiData.get();
+        let name = data.name;
+        let perms = [];
+        for(let perm in data)
+            if(typeof data[perm] == "boolean" && data[perm]) perms.push(perm);
+
+        socket.emit("server_chRole", toChat, role.roleId, name, perms);
+        setTimeout(() => displayServerMgmt(false), 10);
+    }
+    roleContainer.appendChild(btnSave);
 }

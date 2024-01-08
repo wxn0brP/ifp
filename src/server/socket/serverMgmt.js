@@ -3,24 +3,23 @@ const serverSet = global.db.serverSettings;
 const genId = require("../../db/gen");
 
 module.exports = (socket) => {
-    socket.on("editServer", async (data) => {
+    socket.on("editServer", async (server, data) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
-        if(!data.server) return socket.emit("error", "params");
 
         try{
-            const perm = new permSys(data.server);
+            const perm = new permSys(server);
             if(!await perm.userPermison(socket.user._id, "set")) return socket.emit("error", "permission");
             
-            if(!data.set) return socket.emit("error", "params");
-            let actualSet = await serverSet.findOne({ id: data.server });
+            if(!data) return socket.emit("error", "params");
+            let actualSet = await serverSet.findOne({ id: server });
 
             if(!actualSet) return socket.emit("error", "server valid");
             let settingsDef = require("../../chatAppLogicData/serverSettings");
             
-            let settings = { ...settingsDef, ...actualSet.o.settings, ...data.set };
+            let settings = { ...settingsDef, ...actualSet.o.settings, ...data };
 
-            await serverSet.updateOne({ id: data.server }, { settings });
+            await serverSet.updateOne({ id: server }, { settings });
         }catch(e){
             socket.emit("error", "error");
         }
@@ -131,10 +130,9 @@ module.exports = (socket) => {
 
         try{
             const perm = new permSys(server);
-            if(!await perm.userPermison(socket.user._id, "get")) return socket.emit("error", "permission");
+            if(!await perm.userPermison(socket.user._id, "set")) return socket.emit("error", "permission");
 
-            let roles = await global.db.permission.find(server, (r) => r.roleId);
-            roles = roles.map(role => role.o);
+            let roles = await perm.getRoles();
             let datas = (await global.db.serverSettings.findOne({ id: server })).o.settings;
             let data = {
                 name: datas.name
@@ -147,5 +145,89 @@ module.exports = (socket) => {
         }  
     });
 
+    socket.on("server_addRole", async (server) => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        try{
+            const perm = new permSys(server);
+            if(!await perm.userPermison(socket.user._id, "roleMgmt")) return socket.emit("error", "permission");
+
+            const roles = await perm.getRoles();
+            const lastRole = roles[roles.length-1].roleId;
+            let roleId = genId();
+            await global.db.permission.add(server, {
+                roleId,
+                perm: [],
+                name: "Nowa rola",
+                parent: lastRole,
+            })
+        }catch(e){
+            console.error(e)
+            socket.emit("error", "error2");
+        } 
+    });
+
+    socket.on("server_rmRole", async (server, roleId) => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        try{
+            const perm = new permSys(server);
+            if(!await perm.userPermison(socket.user._id, "roleMgmt")) return socket.emit("error", "permission");
+
+            const roles = await perm.getRoles();
+            let roleI = roles.findIndex(r => r.roleId == roleId);
+            
+            lo(roles.length, roleI)
+            if(roleI == -1){
+                return socket.emit("error", "noe exe");
+            }
+            if(roleI != roles.length-1){
+                await global.db.permission.updateOne(server, { roleId: roles[roleI+1].roleId }, { parent: roles[roleI].parent });
+            }
+            await global.db.permission.removeOne(server, { roleId });            
+        }catch(e){
+            console.error(e)
+            socket.emit("error", "error2");
+        } 
+    });
+
+    socket.on("server_chRole", async (server, roleId, name, perms) => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        try{
+            const perm = new permSys(server);
+            if(!await perm.userPermison(socket.user._id, "roleMgmt")) return socket.emit("error", "permission");
+
+            if(!Array.isArray(perms)) return;
+
+            await global.db.permission.updateOne(server, { roleId }, {
+                name,
+                perm: perms
+            });            
+        }catch(e){
+            console.error(e)
+            socket.emit("error", "error2");
+        } 
+    });
+
+    socket.on("server_roleHier", async (server, roles) => {
+        if(!socket.user) return socket.emit("error", "not auth");
+        if(!socket.isUser) return socket.emit("error", "bot");
+
+        try{
+            const perm = new permSys(server);
+            if(!await perm.userPermison(socket.user._id, "roleMgmt")) return socket.emit("error", "permission");
+
+            for(let role of roles){
+                await global.db.permission.updateOne(server, { roleId: role.roleId }, { parent: role.parent });
+            }       
+        }catch(e){
+            console.error(e)
+            socket.emit("error", "error2");
+        } 
+    });
 
 }

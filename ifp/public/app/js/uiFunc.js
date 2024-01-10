@@ -268,7 +268,7 @@ function updateCountdown(){
 }
 setInterval(() => {updateCountdown()}, 1000);
 
-async function getPrompt(txt){
+async function getPrompt(txt, deflaut=""){
     return new Promise(resolve => {
         const modalOverlay = document.createElement('div');
         modalOverlay.classList.add('popUp');
@@ -281,6 +281,7 @@ async function getPrompt(txt){
     
         const promptInput = document.createElement('input');
         promptInput.type = 'text';
+        promptInput.value = deflaut;
     
         const submitBtn = document.createElement('button');
         submitBtn.innerHTML = 'Submit';

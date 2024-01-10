@@ -113,13 +113,13 @@ function roleMgmt(role){
         roleContainer.appendChild(document.createElement("br"));
     }
 
-    function buildCheckBox(name, checked){
+    function buildCheckBox(name, text, checked){
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = checked;
         checkbox.setAttribute("m-m", name);
         let span = document.createElement("span");
-        span.innerHTML = name + " ";
+        span.innerHTML = (text || name) + " ";
         roleContainer.appendChild(span);
         roleContainer.appendChild(checkbox);
         br();
@@ -127,7 +127,17 @@ function roleMgmt(role){
 
     const perms = {
         name: role.name,
-        msgDel: false
+        msgDel: false,
+        chnlMgmt: false,
+        set: false,
+        roleMgmt: false,
+    }
+
+    const permName = {
+        msgDel: "administracja wiadomościami",
+        chnlMgmt: "zarządzanie kanałami",
+        set: "zarządzanie ustawieniami serwera",
+        roleMgmt: "zarządzanie rolami (wszystkimi)",
     }
     
     for(let perm of role.perm){
@@ -136,10 +146,10 @@ function roleMgmt(role){
     roleContainer.innerHTML = "Role: "+role.name;
     br();
     roleContainer.innerHTML += `Name: <input m-m="name" />`
-    br();
+    br();br();
 
     for(let perm in perms)
-        if(typeof perms[perm] == "boolean") buildCheckBox(perm, perms[perm]);
+        if(typeof perms[perm] == "boolean") buildCheckBox(perm, permName[perm], perms[perm]);
     
 
     br();br();
@@ -154,7 +164,17 @@ function roleMgmt(role){
             if(typeof data[perm] == "boolean" && data[perm]) perms.push(perm);
 
         socket.emit("server_chRole", toChat, role.roleId, name, perms);
-        setTimeout(() => displayServerMgmt(false), 10);
+        setTimeout(() => displayServerMgmt(false), 100);
     }
     roleContainer.appendChild(btnSave);
+
+    br();br();
+    let btnDel = document.createElement("button");
+    btnDel.innerHTML = "Usuń role";
+    btnDel.onclick = () => {
+        if(!confirm("Czy na pewno chcesz usunąć tą rolę?")) return;
+        socket.emit("server_rmRole", toChat, role.roleId);
+        setTimeout(() => displayServerMgmt(false), 100);
+    }
+    roleContainer.appendChild(btnDel);
 }

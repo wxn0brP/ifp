@@ -13,7 +13,11 @@ async function createChat(name, creater){
         name
     };
     await global.db.serverSettings.add({ // server settings
-        id, settings
+        id, settings, cat: [
+            { name: "main",  id: getId(),
+                channels: [ { name: "main", id: getId(), type: "text" }, { name: "main", id: getId(), type: "voice" }]
+            }
+        ]
     });
 
     let adminRole = getId();

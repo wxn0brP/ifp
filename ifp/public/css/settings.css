@@ -50,8 +50,16 @@
         /* @incm buttonDef; */
         margin-left: 0px;
     }
-    
-
+    .category{
+        margin-bottom: 10px;
+        padding: 1rem;
+        background-color: #333;
+        border-radius: 1rem;
+        button{
+            margin-left: 5px;
+            padding: 5px 13px;
+        }
+    }
 }
 
 #rolesMgmt{
@@ -61,6 +69,13 @@
             margin-left: 9px;
         }
     }
+}
+
+.channel{
+    margin: 5px;
+    padding: 1rem;
+    background-color: #444;
+    border-radius: 1rem;
 }
 
 /* -- */

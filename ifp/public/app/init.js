@@ -23,7 +23,8 @@ function loadPart(){
 async function loadJs(){
     const srcs = [
         "/meui/meui.js",
-        "js/settings.js",
+        "/js/generateResCss.js",
+        "js/genId.js",
         "js/vars.js",
         "js/params.js",
         "js/ws.js",
@@ -34,8 +35,9 @@ async function loadJs(){
         "js/uiFunc.js",
         "js/audioFunc.js",
         "js/callsApi.js",
+        "js/settings.js",
         "js/serverMgmt.js",
-        "/js/generateResCss.js",
+        "js/channelMgmt.js",
         "js/anty.js",
         "js/warning.js",
         "js/egg.js",

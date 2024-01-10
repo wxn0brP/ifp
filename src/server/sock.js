@@ -193,18 +193,12 @@ io.of("/").on("connection", (socket) => {
     socket.on("setUpServer", async id => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
+            let categories;
 
-            // --- temp ---
-            categories = [
-                {
-                    name: "main",
-                    id: "t",
-                    channels: [
-                        { name: "main", id: "main", type: "text" },
-                        { name: "main", id: "mainV", type: "voice" },
-                    ]
-                }
-            ]
+            let data = await global.db.serverSettings.findOne({ id });
+            if(!data) return;
+
+            categories = data.o.cat;
 
             socket.emit("setUpServer", categories);
         }catch(e){

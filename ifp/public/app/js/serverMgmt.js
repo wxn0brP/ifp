@@ -8,10 +8,11 @@ var serverFadeIn = true;
 var ifpSettingsServer = {
     server: {
         name: "",
+        channels: []
     },
     roles: {
         roles: []
-    }
+    },
 };
 
 var settings_actionS = {
@@ -19,6 +20,14 @@ var settings_actionS = {
         let data = meuiData.get();
         socket.emit("editServer", toChat, data);
     },
+    channel(){
+        let data = channelMgmt.categories;
+        socket.emit("server_chnl", toChat, data);
+    },
+    addRole(){
+        socket.emit('server_addRole', toChat);
+        setTimeout(() => displayServerMgmt(false), 100);
+    }
 };
 
 function getServerSettings(data, roles){
@@ -45,4 +54,6 @@ function settingsServer(){
 
 
     rolesMgmt(ifpSettingsServer.roles.roles, document.querySelector("#rolesMgmt"));
+    channelMgmt.categories = ifpSettingsServer.server.channels;
+    channelMgmt.renderCategories();
 }

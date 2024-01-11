@@ -377,8 +377,6 @@ io.of("/").on("connection", (socket) => {
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
 
-            lo(":"+id+":")
-
             let user = await usrDB.findOne({ _id: id });
             if(!user) return socket.emit("error", "user is not exsists");
             user = user.o;

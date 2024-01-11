@@ -27,8 +27,10 @@ function clsPopUp(){
     if(popUpCloceFn) popUpCloceFn();
 }
 
-function userProfile(){
-    let profile = document.querySelector('#friendMenu').getAttribute('w_id');
+function userProfile(profile=""){
+    if(!profile) profile = document.querySelector('#friendMenu').getAttribute('w_id');
+    if(!profile) return;
+    
     socket.emit("getProfile", profile);
     const profileDiv = document.querySelector("#userProfile");
     popUpSetUp(profileDiv);

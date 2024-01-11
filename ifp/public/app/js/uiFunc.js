@@ -5,6 +5,8 @@ function changeTo(f){
     [...document.querySelectorAll(".a-active")].forEach(e => {
         e.classList.remove("a-active")
     });
+    serverData.roles = [];
+    serverData.users = [];
     if(f == "main"){
         socket.emit("getFirendsActivity");
         sendDiv.css({ display: "none" });
@@ -13,10 +15,16 @@ function changeTo(f){
         msgDiv.html("");
         sendDiv.css({ display: "block" });
         toChatChannel = "main"; //tmp
-        getMessages();
+        if(!toChat.startsWith("$")){
+            document.querySelector("#serverChannels").innerHTML = "";
+            socket.emit("setUpServer", toChat);
+        }
         setTimeout(() => {
-            msgDiv.scrollTop = msgDiv.scrollHeight;
-        }, 300);
+            getMessages();
+            setTimeout(() => {
+                msgDiv.scrollTop = msgDiv.scrollHeight;
+            }, 300);
+        }, 100);
         actMess = messCount;
         focusInp();
         if(inputChat[toChat]){
@@ -24,16 +32,6 @@ function changeTo(f){
             inpSendDiv.g().dispatchEvent(new Event("input"));
         }
         document.querySelector("#goMain").clR("a-active");
-        
-        /* in socket */
-        if(!toChat.startsWith("$")){
-            document.querySelector("#serverChannels").innerHTML = "";
-            socket.emit("setUpServer", toChat);
-        }
-        /* in socket */
-
-
-
     }
     handleWifElements();
 }

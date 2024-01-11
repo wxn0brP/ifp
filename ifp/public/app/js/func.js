@@ -52,18 +52,11 @@ function loadFilesWithUrl(){
     })
 }
 
-
-
-
-
-
-function testMgmt(d){
-    socket.emit("editServer", {
-        server: "test",
-        ...d
-    })
+function getRoleColor(from){
+    if(!serverData.roles || serverData.roles.length == 0) return "";
+    let rolesA = sortRolesByHierarchy(serverData.roles);
+    let user = serverData.users.find(user => user.id == from);
+    let uppestRole = rolesA.find(r => user.roles.includes(r.id));
+    let color = uppestRole.color;
+    return color || "";
 }
-
-
-
-

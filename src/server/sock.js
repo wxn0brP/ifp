@@ -195,12 +195,32 @@ io.of("/").on("connection", (socket) => {
             if(!socket.user) return socket.emit("error", "not auth");
             let categories;
 
-            let data = await global.db.serverSettings.findOne({ id });
-            if(!data) return;
+            let serverSettings = await global.db.serverSettings.findOne({ id });
+            if(!serverSettings) return;
 
-            categories = data.o.cat;
+            categories = serverSettings.o.cat;
 
-            socket.emit("setUpServer", categories);
+            let perms = await global.db.permission.find(id, {});
+            perms = perms.map(r => r.o);
+
+            let roles = perms.filter((obj) => !!obj.roleId);
+            roles = roles.map(r => {
+                return {
+                    id: r.roleId,
+                    color: r.c || "",
+                    parent: r.parent
+                }
+            })
+
+            let users = perms.filter((obj) => !!obj.userId);
+            users = users.map(u => {
+                return {
+                    id: u.userId,
+                    roles: u.roles
+                }
+            });
+
+            socket.emit("setUpServer", categories, roles, users);
         }catch(e){
             lo(e);
         }
@@ -356,6 +376,8 @@ io.of("/").on("connection", (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+
+            lo(":"+id+":")
 
             let user = await usrDB.findOne({ _id: id });
             if(!user) return socket.emit("error", "user is not exsists");

@@ -255,7 +255,9 @@ socket.io.on("reconnect", () => {
     socket.emit("joinVC-reconn", peerVars.id);
 });
 
-socket.on("setUpServer", (categories) => {
+socket.on("setUpServer", (categories, roles, users) => {
+    serverData.roles = roles;
+    serverData.users = users;
     setUpServer(categories);
 });
 

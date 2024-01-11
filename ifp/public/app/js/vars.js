@@ -18,6 +18,7 @@ var notSound = false;
 const serversId = {};
 const friendsId = {};
 const inputChat = {};
+const serverData = {};
 
 var socrollBlock = false;
 

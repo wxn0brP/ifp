@@ -61,6 +61,7 @@ function addMess(msg, socroll=true, up=false){
     b.innerHTML = from;
     b.addEventListener("click", () => userProfile(msg.fr));
     b.style.cursor = "pointer";
+    b.style.color = getRoleColor(msg.fr);
 
     let time = parseInt(msg._id.split("-")[0], 36);
     const timeNormalize = formatDateFormUnux(time);

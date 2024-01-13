@@ -1,5 +1,6 @@
 var channelMgmt = {
     categories: [],
+    addChannelBlock: false,
 
     arrayMove(arr, fromIndex, toIndex){
         if(toIndex >= 0 && toIndex < arr.length){
@@ -19,8 +20,8 @@ var channelMgmt = {
                 <button onclick="channelMgmt.moveCategory(${index}, -1)">↑</button>
                 <button onclick="channelMgmt.moveCategory(${index}, 1)">↓</button>
                 <button onclick="channelMgmt.removeCategory(${index})">Usuń Kategorię</button>
-                <button onclick="channelMgmt.addChannel(${index}), 'text'">Dodaj Kanał Tekstowy</button>
-                <button onclick="channelMgmt.addChannel(${index}, 'voice')">Dodaj Kanał Głosowy</button>
+                <button onclick="channelMgmt.addChannel(${index}, 'text', this)">Dodaj Kanał Tekstowy</button>
+                <button onclick="channelMgmt.addChannel(${index}, 'voice', this)">Dodaj Kanał Głosowy</button>
                 <button onclick="channelMgmt.changeName(${index}, -1)">Zmień nazwę</button>
                 <div class="channel-container">
                     ${
@@ -78,6 +79,9 @@ var channelMgmt = {
     },
     
     addChannel(categoryIndex, type="text"){
+        if(this.addChannelBlock) return;
+        this.addChannelBlock = true;
+        setTimeout(() => channelMgmt.addChannelBlock = false, 2000);
         this.categories[categoryIndex].channels.push({
             name: "nowy kanał",
             id: genId(),
@@ -86,7 +90,8 @@ var channelMgmt = {
         this.renderCategories();
     },
     
-    addCategory(){
+    addCategory(btn){
+        disableBtn(btn, 2000);
         this.categories.push({
             name: "nowa kategoria",
             id: genId(),

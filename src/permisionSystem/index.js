@@ -29,14 +29,15 @@ class permisionSystem{
         let roles = await this.db.find(this.id, (r) => r.roleId);
         if(roles.length == 0) throw new Error("db obj is not exsists");
         roles = roles.map(role => role.o);
-        roles = await sortRolesByHierarchy(roles);
+        roles = sortRolesByHierarchy(roles);
+        if(!roles) return [];
         return roles;
     }
 
     async getUserRoles(user){
-        let roles = await this._getFromDb({ userId: user });
-        roles = await sortRolesByHierarchy(roles.roles);
-        return roles;
+        // let roles = await this._getFromDb({ userId: user });
+        // roles = sortRolesByHierarchy(roles.roles);
+        // return roles;
     }
 
     /* permission */
@@ -92,7 +93,8 @@ class permisionSystem{
         return role1 < role2; //true if role1 is important
     }
 
-    async userHasEditRole(user, role){
+    async userHasEditRole(user, role){ // TODO userHasEditRole
+        return false;
         const bigger = (await this.getUserRoles(user))[0];
         return await this.roleIsBigger(bigger, this._getFromDb({ roleId: role }));
     }

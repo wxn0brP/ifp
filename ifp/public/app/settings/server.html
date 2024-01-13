@@ -1,32 +1,42 @@
-<div>
-    <h2>Server</h2>
-    Name: <input type="text" m-m="name">
-    <br />
-    <button cclick="server">Save</button>
-</div>
+<details id="details_server">
+    <summary>
+        Server
+    </summary>
+    <div>
+        Name: <input type="text" m-m="name">
+        <br />
+        <button cclick="server">Save</button>
+    </div>
+</details>
 
 <br /><hr><br /><br />
 
-<div>
-    <h2>Role</h2>
-    <br />
-    <button cclick="addRole">Dodaj rolę</button>
-    <br /><br />
-    <div id="rolesMgmt"></div>
-    <br /><hr><br />
-    <div id="roleMgmt"></div>
-</div>
+<details id="details_role">
+    <summary>
+        Role
+    </summary>
+    <div>
+        <button cclick="addRole">Dodaj rolę</button>
+        <br /><br />
+        <div id="rolesMgmt"></div>
+        <br /><hr><br />
+        <div id="roleMgmt"></div>
+    </div>
+</details>
 
 <br /><hr><br /><br />
 
-<div>
-    <h2>Channel</h2>
-    <br />
-    <button onclick="channelMgmt.addCategory()">Dodaj kategorię</button>
-    <br /><br />
-    <div id="category-container"></div>
-    <br /><br />
-    <button cclick="channel">Save</button>
-</div>
+<details id="details_channel">
+    <summary>
+        Channel
+    </summary>
+    <div>
+        <button onclick="channelMgmt.addCategory(this)">Dodaj kategorię</button>
+        <br /><br />
+        <div id="category-container"></div>
+        <br /><br />
+        <button cclick="channel">Save</button>
+    </div>
+</details>
 
 <br /><hr><br /><br />

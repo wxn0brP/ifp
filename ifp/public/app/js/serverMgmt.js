@@ -13,6 +13,7 @@ var ifpSettingsServer = {
     roles: {
         roles: []
     },
+    addRoleBlock: false
 };
 
 var settings_actionS = {
@@ -25,8 +26,14 @@ var settings_actionS = {
         socket.emit("server_chnl", toChat, data);
     },
     addRole(){
+        if(ifpSettingsServer.addRoleBlock) return;
+        ifpSettingsServer.addRoleBlock = true;
         socket.emit('server_addRole', toChat);
         setTimeout(() => displayServerMgmt(false), 100);
+        setTimeout(() => {
+            document.querySelector("#details_role").open = true;
+        }, 250);
+        setTimeout(() => ifpSettingsServer.addRoleBlock = false, 4000);
     }
 };
 
@@ -48,7 +55,7 @@ function settingsServer(){
         let action = ele.getAttribute("cclick");
         if(!settings_actionS[action]) return;
         ele.addEventListener("click", () => {
-            settings_actionS[action](meuiData);
+            settings_actionS[action](meuiData, ele);
         });
     });
 

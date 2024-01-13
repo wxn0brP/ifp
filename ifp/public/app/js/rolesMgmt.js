@@ -1,20 +1,27 @@
-function sortRolesByHierarchy(roles){
-    const len = roles.length;
+function sortRolesByHierarchy(rolesArray){
+    const sortedRoles = [];
+    const seenRoleIds = {};
+    const seenParents = {};
 
-    const rootRole = roles.find((role) => role.parent === "all");
-    const indexToRemove = roles.indexOf(rootRole);
-    if(indexToRemove !== -1) roles.splice(indexToRemove, 1);    
-    roles.unshift(rootRole);
-
-    for(let i=1; i<len; i++){
-        let role = roles[i];
-        let parrentIndex = roles.findIndex(r => r.roleId == role.parent);
-        if(i == parrentIndex + 1) continue;
-        roles.splice(i, 1);
-        roles.splice(parrentIndex + 1, 0, role);
-        i = 1;
+    for(const role of rolesArray){
+        if(seenRoleIds[role.roleId] || seenParents[role.parent]) return false;
+        seenRoleIds[role.roleId] = true;
+        seenParents[role.parent] = true;
     }
-    return roles;
+
+    const topLevelRole = rolesArray.find(role => role.parent === "all");
+
+    function traverseAndSort(role){
+        sortedRoles.push(role);
+        const childRole = rolesArray.find(child => child.parent === role.roleId);
+
+        if(childRole) traverseAndSort(childRole);
+    }
+
+    if(topLevelRole) traverseAndSort(topLevelRole);
+    else return false;
+
+    return sortedRoles;
 }
 
 function rolesMgmt(roles, roleHierarchyContainer){
@@ -165,6 +172,9 @@ function roleMgmt(role){
 
         socket.emit("server_chRole", toChat, role.roleId, name, perms);
         setTimeout(() => displayServerMgmt(false), 100);
+        setTimeout(() => {
+            document.querySelector("#details_role").open = true;
+        }, 250);
     }
     roleContainer.appendChild(btnSave);
 
@@ -175,6 +185,9 @@ function roleMgmt(role){
         if(!confirm("Czy na pewno chcesz usunąć tą rolę?")) return;
         socket.emit("server_rmRole", toChat, role.roleId);
         setTimeout(() => displayServerMgmt(false), 100);
+        setTimeout(() => {
+            document.querySelector("#details_role").open = true;
+        }, 250);
     }
     roleContainer.appendChild(btnDel);
 }

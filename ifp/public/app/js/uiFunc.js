@@ -198,7 +198,16 @@ function setUpServer(categories){
 
     categories.forEach(category => {
         buildCategory(category.name, category.channels, div)
-    })
+    });
+
+    for(let cat of categories){
+        for(chnl of cat.channels){
+            if(chnl.type == "text"){
+                toChatChannel = chnl.id;
+                break;
+            }
+        }
+    }
 }
 
 function getMessages(opt=false){
@@ -304,4 +313,11 @@ async function getPrompt(txt, deflaut=""){
         });
         promptInput.focus();
     });
+}
+
+function disableBtn(btn, time=1000){
+    btn.disabled = true;
+    setTimeout(() => {
+        btn.disabled = false;
+    }, time)
 }

@@ -206,7 +206,7 @@ io.of("/").on("connection", (socket) => {
             let roles = perms.filter((obj) => !!obj.roleId);
             roles = roles.map(r => {
                 return {
-                    id: r.roleId,
+                    roleId: r.roleId,
                     color: r.c || "",
                     parent: r.parent
                 }
@@ -367,9 +367,9 @@ io.of("/").on("connection", (socket) => {
                 to = messInter.combinateId(p1, p2);
             }
             socket.emit("getChatIdFriends", to);
-            }catch(e){
-                lo("error: ", e)
-            }
+        }catch(e){
+            lo("error: ", e)
+        }
     });
 
     socket.on("getProfile", async id => {
@@ -392,9 +392,9 @@ io.of("/").on("connection", (socket) => {
             };
 
             socket.emit("getProfile", data);
-            }catch(e){
-                lo("error: ", e)
-            }
+        }catch(e){
+            lo("error: ", e)
+        }
     });
 
     socket.on("setProfile", async data => {

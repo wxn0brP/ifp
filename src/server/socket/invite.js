@@ -1,4 +1,5 @@
 const { user: usrDB, mess: messDB } = global.db;
+const valid = require("../../validData");
 const chat = require("../chat");
 
 module.exports = (socket) => {
@@ -23,6 +24,8 @@ module.exports = (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.str(to, 0, 30)) return socket.emit("error", "valid data");
+
             if(to == socket.user._id) return socket.emit("error", "nie możesz wysłać zapro do siebie");
 
             var toId = await usrDB.findOne({ _id: to });
@@ -53,6 +56,7 @@ module.exports = (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.str(inviteId, 0, 30)) return socket.emit("error", "valid data");
             
             var invite = await global.db.invites.findOne({_id: inviteId});
             if(!invite) return socket.emit("error", "Invite not found");
@@ -84,6 +88,7 @@ module.exports = (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.str(friendId, 0, 30)) return socket.emit("error", "valid data");
         
             var invite = await global.db.invites.findOne({ _id: friendId });
             if(!invite) return socket.emit("error", "invite not found");
@@ -100,6 +105,7 @@ module.exports = (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.str(friendId, 0, 30)) return socket.emit("error", "valid data");
         
             const user = await usrDB.findOne({ _id: socket.user._id });
             const friends = user.o.friends;

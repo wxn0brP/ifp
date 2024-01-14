@@ -1,3 +1,5 @@
+const valid = require("../../validData");
+
 function losujItem(tablica){
     const sumaSzans = tablica.reduce((suma, { per }) => suma + per, 0);
     if(sumaSzans !== 100){
@@ -21,6 +23,7 @@ module.exports = (socket) => {
     socket.on("box_open", async (id) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
+        if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
 
         let user = await global.db.userGold.findOne({ id: socket.user._id });
         if(!user) return socket.emit("error", "not $");
@@ -93,6 +96,7 @@ module.exports = (socket) => {
     socket.on("box_get_drop", async (id) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
+        if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
 
         var box = await global.db.cases.findOne({ _id: id });
         if(!box) return socket.emit("error", "case not found");

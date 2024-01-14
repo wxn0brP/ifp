@@ -9,7 +9,7 @@ require("./otherSock");
 require("./radio");
 require("./socket/bot");
 
-const valid = require("../validData");
+const valid = require("../../validData");
 const genId = require("../db/gen");
 
 const botTest = require("./socket/bot");
@@ -101,6 +101,11 @@ io.of("/").on("connection", (socket) => {
             var { to, msg, chnl } = req;
             if(!to || !msg || !chnl) return socket.emit("error", "to & msg & chnl is required");
             var enc = req.enc || "plain";
+
+            if(!valid.str(to, 0, 30)) return socket.emit("error", "valid data");
+            if(!valid.str(chnl, 0, 30)) return socket.emit("error", "valid data");
+            if(!valid.str(enc, 0, 30)) return socket.emit("error", "valid data");
+            if(!valid.str(msg, 0, 500)) return socket.emit("error", "valid data");
             
             var friendChat = to.startsWith("$");
             if(friendChat){
@@ -162,6 +167,11 @@ io.of("/").on("connection", (socket) => {
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
 
+            if(!valid.str(to, 0, 30)) return socket.emit("error", "valid data");
+            if(!valid.str(chnl, 0, 30)) return socket.emit("error", "valid data");
+            if(!valid.num(start)) return socket.emit("error", "valid data");
+            if(!valid.num(finish)) return socket.emit("error", "valid data");
+
             var friendChat = to.startsWith("$")
             if(friendChat){
                 var p1 = socket.user._id;
@@ -193,6 +203,8 @@ io.of("/").on("connection", (socket) => {
     socket.on("setUpServer", async id => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
+            if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
+            
             let categories;
 
             let serverSettings = await global.db.serverSettings.findOne({ id });
@@ -261,6 +273,9 @@ io.of("/").on("connection", (socket) => {
     socket.on("editMess", async (to, _id, msg) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
+            if(!valid.str(to, 0, 30)) return socket.emit("error", "valid data");
+            if(!valid.str(_id, 0, 30)) return socket.emit("error", "valid data");
+            if(!valid.str(msg, 0, 500)) return socket.emit("error", "valid data");
 
             var friendChat = to.startsWith("$")
             if(friendChat){
@@ -284,6 +299,8 @@ io.of("/").on("connection", (socket) => {
     socket.on("delMess", async (to, _id) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
+            if(!valid.str(to, 0, 30)) return socket.emit("error", "valid data");
+            if(!valid.str(_id, 0, 30)) return socket.emit("error", "valid data");
 
             var friendChat = to.startsWith("$")
             if(friendChat){
@@ -305,6 +322,8 @@ io.of("/").on("connection", (socket) => {
 
     socket.on("inviteChat", async (id) => {
         if(!socket.user) return socket.emit("error", "not auth");
+        if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
+
         var inv = await global.db.ic.findOne({ id });
         if(!inv) return socket.emit("error", "invite not exsists");
         inv = inv.o;
@@ -321,6 +340,8 @@ io.of("/").on("connection", (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.str(name, 0, 30)) return socket.emit("error", "valid data");
+
             var res = await messInter.createChat(name, socket.user._id);
             socket.emit("createChat", res);
         }catch(e){
@@ -331,6 +352,8 @@ io.of("/").on("connection", (socket) => {
     socket.on("exitChat", async (id) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
+            if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
+
             var res = await messInter.exitChat(id, socket.user._id);
             socket.emit("exitChat", res);
         }catch(e){
@@ -342,6 +365,8 @@ io.of("/").on("connection", (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
+
             var ic = await global.db.ic.findOne({ chat: id });
             socket.emit("getInivteFromId", ic.o.id);
         }catch(e){
@@ -361,6 +386,7 @@ io.of("/").on("connection", (socket) => {
     socket.on("getChatIdFriends", (to) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
+            if(!valid.str(to, 0, 30)) return socket.emit("error", "valid data");
             if(to.startsWith("$")){
                 var p1 = socket.user._id;
                 var p2 = to.replace("$", "");
@@ -376,6 +402,7 @@ io.of("/").on("connection", (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
 
             let user = await usrDB.findOne({ _id: id });
             if(!user) return socket.emit("error", "user is not exsists");
@@ -401,6 +428,7 @@ io.of("/").on("connection", (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(valid.str(data.opis, 0, 100)) return socket.emit("error", "valid data");
 
             let obj = {};
             if(data.opis) obj.opis = data.opis;
@@ -415,9 +443,8 @@ io.of("/").on("connection", (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
-
-            if(typeof data !== "string") return socket.emit("error", "not text!");
-            if(typeof type !== "string") return socket.emit("error", "not text!");
+            if(!valid.str(data, 0, 30)) return socket.emit("error", "valid data");
+            if(!valid.str(type, 0, 3)) return socket.emit("error", "valid data");
 
             if(data.length > 100) data = data.slice(0, 100);
             if(type.length > 20) type = type.slice(0, 20);

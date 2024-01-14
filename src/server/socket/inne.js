@@ -1,4 +1,5 @@
 const { user: usrDB, mess: messDB } = global.db;
+const valid = require("../../validData");
 var messInter = require("../chat");
 
 module.exports = (socket) => {
@@ -6,6 +7,8 @@ module.exports = (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.str(to, 0, 30)) return socket.emit("error", "valid data");
+
             var friendChat = to.startsWith("$")
             if(friendChat){
                 var p1 = socket.user._id;

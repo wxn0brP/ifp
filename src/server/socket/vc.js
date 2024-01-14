@@ -1,3 +1,4 @@
+const valid = require("../../validData");
 const rooms = {};
 
 module.exports = (socket) => {
@@ -11,6 +12,8 @@ module.exports = (socket) => {
 
     socket.on("joinVC", id => {
         if(!socket.user) return socket.emit("error", "not auth");
+        if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
+        
         if(!rooms[id]) rooms[id] = [];
 
         let room = rooms[id];
@@ -34,6 +37,8 @@ module.exports = (socket) => {
 
     socket.on("leaveVC", id => {
         if(!socket.user) return socket.emit("error", "not auth");
+        if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
+
         if(!rooms[id]) return;// socket.emit("error", "room not exsists");
         rooms[id] = rooms[id].filter(s => s.id != socket.id);
         sendUserCount(id, "leave");
@@ -42,11 +47,16 @@ module.exports = (socket) => {
 
     socket.on("callTo", (to, room) => {
         if(!socket.user) return socket.emit("error", "not auth");
+        if(!valid.str(to, 0, 30)) return socket.emit("error", "valid data");
+        if(!valid.str(room, 0, 30)) return socket.emit("error", "valid data");
+
         sendToSocket(to, "callTo", socket.user._id, room);
     });
 
     socket.on("joinVC-reconn", (id) => {
         if(!socket.user) return socket.emit("error", "not auth");
+        if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
+
         if(!rooms[id]) rooms[id] = [];
         let s = rooms[id].filter(s => s.id == socket.id);
         if(s.length > 0) return;

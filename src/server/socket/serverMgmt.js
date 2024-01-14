@@ -1,11 +1,14 @@
 const permSys = require("../../permisionSystem");
 const serverSet = global.db.serverSettings;
 const genId = require("../../db/gen");
+const valid = require("../../validData");
 
 module.exports = (socket) => {
     socket.on("editServer", async (server, data) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
+        if(!valid.str(server, 0, 30)) return socket.emit("error", "valid data");
+        if(!valid.obj(data)) return socket.emit("error", "valid data");
 
         try{
             const perm = new permSys(server);
@@ -28,6 +31,9 @@ module.exports = (socket) => {
     socket.on("server_chnl", async (server, category) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
+        
+        if(!valid.str(server, 0, 30)) return socket.emit("error", "valid data");
+        if(!valid.arrayContainsOnlyType("object")) return socket.emit("error", "valid data");
 
         try{
             const perm = new permSys(server);
@@ -57,6 +63,7 @@ module.exports = (socket) => {
     socket.on("getServerSettings", async (server) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
+        if(!valid.str(server, 0, 30)) return socket.emit("error", "valid data");
 
         try{
             const perm = new permSys(server);
@@ -79,6 +86,7 @@ module.exports = (socket) => {
     socket.on("server_addRole", async (server) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
+        if(!valid.str(server, 0, 30)) return socket.emit("error", "valid data");
 
         try{
             const perm = new permSys(server);
@@ -102,6 +110,8 @@ module.exports = (socket) => {
     socket.on("server_rmRole", async (server, roleId) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
+        if(!valid.str(server, 0, 30)) return socket.emit("error", "valid data");
+        if(!valid.str(roleId, 0, 30)) return socket.emit("error", "valid data");
 
         try{
             const perm = new permSys(server);
@@ -128,12 +138,14 @@ module.exports = (socket) => {
     socket.on("server_chRole", async (server, roleId, name, perms) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
+        if(!valid.str(server, 0, 30)) return socket.emit("error", "valid data");
+        if(!valid.str(roleId, 0, 30)) return socket.emit("error", "valid data");
+        if(!valid.str(name, 0, 30)) return socket.emit("error", "valid data");
+        if(!valid.arrayString(perms, 0, 30)) return socket.emit("error", "valid data");
 
         try{
             const perm = new permSys(server);
             if(!await perm.userPermison(socket.user._id, "roleMgmt")) return socket.emit("error", "permission");
-
-            if(!Array.isArray(perms)) return;
 
             await global.db.permission.updateOne(server, { roleId }, {
                 name,
@@ -148,6 +160,8 @@ module.exports = (socket) => {
     socket.on("server_roleHier", async (server, roles) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
+        if(!valid.str(server, 0, 30)) return socket.emit("error", "valid data");
+        if(!valid.arrayString(roles, 0, 30)) return socket.emit("error", "valid data");
 
         try{
             const perm = new permSys(server);

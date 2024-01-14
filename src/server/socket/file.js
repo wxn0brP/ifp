@@ -3,6 +3,7 @@ const MAX_TOTAL_FILES = 100;
 const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8 MB
 const fs = require("fs");
 const path = require("path");
+const valid = require("../../validData");
 const gen = require("../../db/gen");
 
 var totalFileCount = 0;
@@ -24,6 +25,8 @@ module.exports = (socket) => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.obj(data)) return socket.emit("error", "valid data");
+
             if(!userFileCounts[socket.user._id]){
                 userFileCounts[socket.user._id] = 0;
             }

@@ -1,3 +1,5 @@
+const valid = require("../../validData");
+
 const gameConf = {
     x: 40,
     y: 40
@@ -154,6 +156,8 @@ io.of("/snake").on("connection", socket => {
     }
     socket.emit('inits', gameConf);
     socket.on('direction', (direction) => {
+        if(!valid.str(direction, 0, 30)) return socket.emit("error", "valid data");
+
         let game = games.find(obj => obj.name == socket.snakeRoom);
         game.players[playerId].direction = direction;
     });

@@ -9,7 +9,7 @@ require("./otherSock");
 require("./radio");
 require("./socket/bot");
 
-const valid = require("../../validData");
+const valid = require("../validData");
 const genId = require("../db/gen");
 
 const botTest = require("./socket/bot");

@@ -10,74 +10,231 @@
         <link href="/favicon.ico" rel="shortcut icon">
         <link href="/style.css" rel="stylesheet">
         <link href="/css/wwli-nav.min.css" rel="stylesheet">
+        <link href="/aos.css" rel="stylesheet">
 
         <style>
             #app{
                 font-size: 1.4rem;
-                min-height: 99vh;
             }
-            #slider{
-                text-wrap: balance;
+
+            h2{
+                margin-bottom: 15px;
             }
-            .fade{
-                opacity: 1;
-                transition: opacity 0.5s ease;
-            }
-            .fade-out{
-                opacity: 0;
-            }
+
             .fontNorse{
                 font-family: Norse;
+            }
+
+            .section{
+                height: 115vh;
+                width: 100vw;
+                padding: 13rem;
+            }
+
+            .section:nth-of-type(2n + 1){
+                background-color: #1e1e1e;
+            }
+
+            .section-description{
+                margin-bottom: 20px;
+            }
+
+            #firstSection{
+                margin-top: -12rem;
+                margin-bottom: 12rem;
+            }
+
+            h1{
+                text-shadow: 
+                    0 0 5px #ff073a,
+                    0 0 10px #ff073a,
+                    0 0 20px #ff073a,
+                    0 0 40px #ff073a,
+                    0 0 60px #ff073a,
+                    0 0 80px #ff073a;
+            }
+
+            .features-grid{
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                margin-top: 20px;
+            }
+
+            .feature-item{
+                background-color: #252525;
+                border-radius: 10px;
+                padding: 20px;
+                transition: transform 0.3s ease;
+
+                animation: gradientShift 10s ease infinite;
+                animation-delay: -1s;
+                background: linear-gradient(-45deg, #ee7752, #e73c7e, #1a7799, #16866c);
+                background-size: 400% 400%;
+            }
+
+            .feature-title{
+                font-size: 1.2em;
+                margin-bottom: 10px;
+            }
+
+            @keyframes gradientShift{
+                0%{
+                    background-position: 0% 50%;
+                }
+                50%{
+                    background-position: 100% 50%;
+                }
+                100%{
+                    background-position: 0% 50%;
+                }
+            }
+
+            .feature-item:hover{
+                transform: rotateZ(3deg) scale(1.03);
+            }
+
+            .faq-container{
+                max-width: 800px;
+                margin: auto;
+                padding: 20px;
+            }
+
+            .faq-item{
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            .faq-item summary{
+                padding: 10px;
+                cursor: pointer;
+                text-align: left;
+            }
+
+            .faq-item p{
+                padding: 10px;
+                border-top: 1px solid #ddd;
+            }
+
+            @media screen and (max-width: 800px){
+                #app{
+                    max-width: calc(100vw - 15px);
+                    padding-inline: auto;
+                }
+                .section{
+                    padding-inline: 1rem;
+                    height: 170vh;
+                }
+                #firstSection{
+                    margin-top: -20rem;
+                }
             }
         </style>
     </head>
     <body>
         <script src="/core.js"></script>
-        <script src="/js/menuBuilder.js"></script>
         <div id="assets"></div>
         <script src="js/generateResCss.js"></script>
         <div id="app">
             <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
             <div id="navs"></div>
-            <script>menuBuilder.menuBuildUrl();</script>
-            <h1 class="fontNorse">IFP</h1>
-            <h2 class="fontNorse">Infinite Fusion Project</h2>
-            <br />
-            <p id="slider" class="fade"></p>
+
+            <div id="firstSection" class="section fc">
+                <h1 class="fontNorse">Infinite Fusion Project</h1>
+            </div>
+
+            <div class="section fc">
+                <div data-aos="flip-up" data-aos-delay="200">
+                    <h2 class="fontNorse">O Projekcie</h2>
+                    <p class="section-description">IFP to nowoczesna aplikacja czatowa, stworzona z pasji do łączenia ludzi w cyfrowym świecie. Naszym celem jest dostarczenie intuicyjnej, szybkiej i bezpiecznej platformy komunikacyjnej, która umożliwia użytkownikom łatwe i efektywne dzielenie się myślami, pomysłami oraz plikami.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div data-aos="zoom-in-up" data-aos-delay="200">
+                    <h2 class="fontNorse">Dlaczego IFP?</h2>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <h4 class="feature-title">Prostota i Intuicyjność</h4>
+                            <p>IFP jets zaprojektowane z myślą o łatwości użytkowania.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4 class="feature-title">Wszechstronność</h4>
+                            <p>IFP to uniwersalna aplikacja czatowa, doskonała zarówno do pracy zespołowej, jak i rozmów z przyjaciółmi.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4 class="feature-title">Elastyczność i Dostosowanie</h4>
+                            <p>IFP umożliwia personalizację ustawień dla maksymalnej efektywności i komfortu użytkowania.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4 class="feature-title">Otwarte Źródło</h4>
+                            <p>IFP jest dostępne na GitHub pod najpopularniejszą licencją MIT.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="section">
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h2 class="fontNorse">Najczęściej Zadawane Pytania</h2>
+                    <div class="faq-container">
+                        <details class="faq-item">
+                            <summary>Jakie są główne funkcje IFP?</summary>
+                            <p>IFP oferuje szybką i efektywną komunikację w czasie rzeczywistym, wymianę plików, personalizację ustawień i zaawansowane opcje zarządzania rozmowami.</p>
+                        </details>
+                        <br />
+                        <details class="faq-item">
+                            <summary>Czy IFP jest dostępny na różne platformy?</summary>
+                            <p>Tak, IFP jest dostępny na różne platformy. Możesz pobrać wersje aplikacji dla systemów mobilnych, desktopowych oraz wersję CLI na naszej stronie pod adresem /get.</p>
+                        </details>
+                        <br />
+                        <details class="faq-item">
+                            <summary>Czy IFP jest darmowy?</summary>
+                            <p>Tak, IFP jest darmowy. Planujemy wprowadzić dodatkowe funkcje premium w przyszłości, ale podstawowa wersja pozostanie bezpłatna.</p>
+                        </details>
+                        <br />
+                        <details class="faq-item">
+                            <summary>Jak mogę zgłosić błąd lub przesłać sugestię?</summary>
+                            <p>Błędy i sugestie można zgłaszać poprzez nasze repozytorium GitHub lub za pomocą formularza kontaktowego na naszej stronie.</p>
+                        </details>
+                        <br />
+                        <details class="faq-item">
+                            <summary>Czy mogę dostosować interfejs użytkownika IFP?</summary>
+                            <p>Tak, IFP oferuje różne opcje personalizacji, abyś mógł dostosować interfejs do swoich preferencji.</p>
+                        </details>
+                        <br />
+                        <details class="faq-item">
+                            <summary>Czy IFP wspiera pracę zespołową?</summary>
+                            <p>Absolutnie. IFP posiada funkcje umożliwiające efektywną współpracę zespołową, takie jak grupowe czaty, udostępnianie plików i współdzielenie ekranu.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section fc">
+                <div data-aos="flip-up" data-aos-delay="200">
+                    <h2 class="fontNorse">Dołącz do nas!</h2>
+                    <p>Od sprawdzenia repozytorium na GitHub po współtworzenie aplikacji - zapraszamy do współpracy w rozwoju IFP. Twoje opinie i sugestie są dla nas bardzo ważne. Pomagają nam ulepszać IFP i dostosowywać go do potrzeb użytkowników.</p>
+                </div>
+            </div>
+            
+            <div class="section fc">
+                <div data-aos="fade-down" data-aos-delay="200">
+                    <h2 class="fontNorse">O Nas</h2>
+                    <div class="about-me-content">
+                        <p>Jako twórcy IFP, naszym celem jest stworzenie intuicyjnej i efektywnej platformy komunikacyjnej, która wspiera zarówno pracę zespołową, jak i osobistą wymianę myśli i pomysłów. Nasze zainteresowanie programowaniem i technologiami cyfrowymi prowadzi nas do ciągłego doskonalenia i rozwijania IFP, aby spełniało ono oczekiwania współczesnych użytkowników.</p>
+                    </div>
+                </div>
+            </div>
+            
             <span id="confetti"></span>
         </div>
-        <script>
-            var napisy = [
-"Przekraczaj granice komunikacji – ifp, aplikacja webowa, która łączy w sobie siłę czatu i nieskończoną możliwość połączeń!",
-"Odkryj nowe wymiary interakcji – ifp, innowacyjny chat, który rozszerza horyzonty twojej komunikacji!",
-"Łącz się, rozmawiaj, odkrywaj – ifp, aplikacja chatowa, która daje ci nieskończoną swobodę komunikacji!",
-"Niezwykłe połączenia na wyciągnięcie ręki – ifp, chatowy fenomen, który inspiruje i angażuje!",
-"Nawiązuj kontakty na nowym poziomie – ifp, app web, która podnosi komunikację na wyższy poziom!",
-"Chat, który przekracza granice – ifp, twoje niekończące się źródło interakcji!",
-"Wprowadź innowację do swojego czatu – ifp, aplikacja webowa, która rewolucjonizuje sposób, w jaki się komunikujesz!",
-"Moc komunikacji w Twoich rękach – ifp, twój chatowy towarzysz, gotowy, by odkrywać nowe możliwości!",
-            ];
-            
-            var slider = document.querySelector("#slider");
-            var i = cw.rand(0, napisy.length-1);
-            main();
-            function loop(){
-                slider.clA("fade-out");
-                setTimeout(() => {
-                    slider.clR("fade-out");
-                    main();
-                }, 600);
-            }
-            function main(){
-                slider.html(napisy[i]);
-                let time = napisy[i].length * 70 + 500;
-                i++;
-                if(i >= napisy.length) i = 0;
-                setTimeout(loop, time);
-            }
-        </script>
+        <script src="/js/aos.js"></script>
         <script src="/js/confetti.min.js"></script>
+        <script src="/js/menuBuilder.js"></script>
         <script>
+            menuBuilder.menuBuildUrl();
+            cw.grid();
             var confettiOn = false;
             var confetti = new Confetti("confetti");
             confetti.setCount(250);
@@ -98,16 +255,22 @@
                 confettiOn = false;
                 sessionStorage.setItem("confetti", true);
             }, 500);
-            document.querySelector("#app").on("click", (e) => {
+
+            function handleConfetti(e){
                 if(confettiOn) return;
+                if(e.target !== e.currentTarget) return;
                 confettiOn = true;
-                if(e.target.tagName == "A") return;
                 
                 emulateClick(e.clientX, e.clientY);
                 setTimeout(() => {
                     confettiOn = false;
                 }, window.innerHeight < 700 ? 3000 : 1500)
-            });
+            }
+
+            document.querySelector("#app").on("click", handleConfetti);
+            document.querySelectorAll(".section").forEach(ele => ele.on("click", handleConfetti));
+
+            AOS.init();
         </script>
     </body>
 </html>

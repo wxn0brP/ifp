@@ -123,7 +123,7 @@
                 }
                 .section{
                     padding-inline: 1rem;
-                    height: 170vh;
+                    height: 130vh;
                 }
                 #firstSection{
                     margin-top: -20rem;
@@ -144,14 +144,14 @@
             </div>
 
             <div class="section fc">
-                <div data-aos="flip-up" data-aos-delay="200">
+                <div data-aos="flip-up">
                     <h2 class="fontNorse">O Projekcie</h2>
                     <p class="section-description">IFP to nowoczesna aplikacja czatowa, stworzona z pasji do łączenia ludzi w cyfrowym świecie. Naszym celem jest dostarczenie intuicyjnej, szybkiej i bezpiecznej platformy komunikacyjnej, która umożliwia użytkownikom łatwe i efektywne dzielenie się myślami, pomysłami oraz plikami.</p>
                 </div>
             </div>
 
             <div class="section">
-                <div data-aos="zoom-in-up" data-aos-delay="200">
+                <div data-aos="zoom-in-up">
                     <h2 class="fontNorse">Dlaczego IFP?</h2>
                     <div class="features-grid">
                         <div class="feature-item">
@@ -175,7 +175,7 @@
             </div>
                 
             <div class="section">
-                <div data-aos="fade-up" data-aos-delay="200">
+                <div data-aos="fade-up">
                     <h2 class="fontNorse">Najczęściej Zadawane Pytania</h2>
                     <div class="faq-container">
                         <details class="faq-item">
@@ -212,14 +212,14 @@
             </div>
             
             <div class="section fc">
-                <div data-aos="flip-up" data-aos-delay="200">
+                <div data-aos="flip-up">
                     <h2 class="fontNorse">Dołącz do nas!</h2>
                     <p>Od sprawdzenia repozytorium na GitHub po współtworzenie aplikacji - zapraszamy do współpracy w rozwoju IFP. Twoje opinie i sugestie są dla nas bardzo ważne. Pomagają nam ulepszać IFP i dostosowywać go do potrzeb użytkowników.</p>
                 </div>
             </div>
             
             <div class="section fc">
-                <div data-aos="fade-down" data-aos-delay="200">
+                <div data-aos="fade-down">
                     <h2 class="fontNorse">O Nas</h2>
                     <div class="about-me-content">
                         <p>Jako twórcy IFP, naszym celem jest stworzenie intuicyjnej i efektywnej platformy komunikacyjnej, która wspiera zarówno pracę zespołową, jak i osobistą wymianę myśli i pomysłów. Nasze zainteresowanie programowaniem i technologiami cyfrowymi prowadzi nas do ciągłego doskonalenia i rozwijania IFP, aby spełniało ono oczekiwania współczesnych użytkowników.</p>
@@ -269,6 +269,16 @@
 
             document.querySelector("#app").on("click", handleConfetti);
             document.querySelectorAll(".section").forEach(ele => ele.on("click", handleConfetti));
+
+            function aosM(){
+                let time = window.innerWidth < 700 ? 0 : 120; //ms
+
+                document.querySelectorAll("[data-aos]").forEach(ele => {
+                    ele.setAttribute("data-aos-delay", time);
+                });
+            }
+            aosM();
+            document.addEventListener("resize", aosM);
 
             AOS.init();
         </script>

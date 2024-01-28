@@ -10,11 +10,18 @@
         <link href="/favicon.ico" rel="shortcut icon">
         <link href="/style.css" rel="stylesheet">
         <link href="/css/wwli-nav.min.css" rel="stylesheet">
-        <link href="/aos.css" rel="stylesheet">
 
         <style>
             #app{
                 font-size: 1.4rem;
+                height: 100vh;
+                scroll-snap-type: y mandatory;
+                overflow: auto;
+            }
+
+            #navs{
+                position: absolute;
+                width: 100vw;
             }
 
             h2{
@@ -26,9 +33,14 @@
             }
 
             .section{
-                height: 115vh;
+                height: 100vh;
                 width: 100vw;
-                padding: 13rem;
+                padding-inline: 5rem;
+                scroll-snap-align: start;
+            }
+            
+            .section:not(.fc){
+                padding-top: 11rem;
             }
 
             .section:nth-of-type(2n + 1){
@@ -37,11 +49,6 @@
 
             .section-description{
                 margin-bottom: 20px;
-            }
-
-            #firstSection{
-                margin-top: -12rem;
-                margin-bottom: 12rem;
             }
 
             h1{
@@ -98,11 +105,13 @@
                 max-width: 800px;
                 margin: auto;
                 padding: 20px;
+                overflow: auto;
             }
 
             .faq-item{
                 border: 1px solid #ddd;
                 border-radius: 5px;
+                transition: 1s;
             }
 
             .faq-item summary{
@@ -117,16 +126,8 @@
             }
 
             @media screen and (max-width: 800px){
-                #app{
-                    max-width: calc(100vw - 15px);
-                    padding-inline: auto;
-                }
-                .section{
-                    padding-inline: 1rem;
-                    height: 130vh;
-                }
-                #firstSection{
-                    margin-top: -20rem;
+                #navs.responsive{
+                    background-color: #222;
                 }
             }
         </style>
@@ -139,19 +140,19 @@
             <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
             <div id="navs"></div>
 
-            <div id="firstSection" class="section fc">
+            <div class="section fc">
                 <h1 class="fontNorse">Infinite Fusion Project</h1>
             </div>
 
             <div class="section fc">
-                <div data-aos="flip-up">
+                <div>
                     <h2 class="fontNorse">O Projekcie</h2>
                     <p class="section-description">IFP to nowoczesna aplikacja czatowa, stworzona z pasji do łączenia ludzi w cyfrowym świecie. Naszym celem jest dostarczenie intuicyjnej, szybkiej i bezpiecznej platformy komunikacyjnej, która umożliwia użytkownikom łatwe i efektywne dzielenie się myślami, pomysłami oraz plikami.</p>
                 </div>
             </div>
 
             <div class="section">
-                <div data-aos="zoom-in-up">
+                <div>
                     <h2 class="fontNorse">Dlaczego IFP?</h2>
                     <div class="features-grid">
                         <div class="feature-item">
@@ -175,7 +176,7 @@
             </div>
                 
             <div class="section">
-                <div data-aos="fade-up">
+                <div>
                     <h2 class="fontNorse">Najczęściej Zadawane Pytania</h2>
                     <div class="faq-container">
                         <details class="faq-item">
@@ -205,28 +206,27 @@
                         <br />
                         <details class="faq-item">
                             <summary>Czy IFP wspiera pracę zespołową?</summary>
-                            <p>Absolutnie. IFP posiada funkcje umożliwiające efektywną współpracę zespołową, takie jak grupowe czaty, udostępnianie plików i współdzielenie ekranu.</p>
+                            <p>Oczywiście. IFP posiada funkcje umożliwiające efektywną współpracę zespołową, takie jak grupowe czaty, udostępnianie plików i współdzielenie ekranu.</p>
                         </details>
                     </div>
                 </div>
             </div>
             
             <div class="section fc">
-                <div data-aos="flip-up">
+                <div>
                     <h2 class="fontNorse">Dołącz do nas!</h2>
                     <p>Od sprawdzenia repozytorium na GitHub po współtworzenie aplikacji - zapraszamy do współpracy w rozwoju IFP. Twoje opinie i sugestie są dla nas bardzo ważne. Pomagają nam ulepszać IFP i dostosowywać go do potrzeb użytkowników.</p>
                 </div>
             </div>
             
             <div class="section fc">
-                <div data-aos="fade-down">
+                <div>
                     <h2 class="fontNorse">O Nas</h2>
                     <div class="about-me-content">
                         <p>Jako twórcy IFP, naszym celem jest stworzenie intuicyjnej i efektywnej platformy komunikacyjnej, która wspiera zarówno pracę zespołową, jak i osobistą wymianę myśli i pomysłów. Nasze zainteresowanie programowaniem i technologiami cyfrowymi prowadzi nas do ciągłego doskonalenia i rozwijania IFP, aby spełniało ono oczekiwania współczesnych użytkowników.</p>
                     </div>
                 </div>
             </div>
-            
             <span id="confetti"></span>
         </div>
         <script src="/js/aos.js"></script>
@@ -270,17 +270,38 @@
             document.querySelector("#app").on("click", handleConfetti);
             document.querySelectorAll(".section").forEach(ele => ele.on("click", handleConfetti));
 
-            function aosM(){
-                let time = window.innerWidth < 700 ? 0 : 120; //ms
+            function isElementInViewport(element){
+                var rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
 
-                document.querySelectorAll("[data-aos]").forEach(ele => {
-                    ele.setAttribute("data-aos-delay", time);
+            function handleScroll() {
+                var sections = document.querySelectorAll('.section');
+                sections.forEach(function(section) {
+                    if(isElementInViewport(section)){
+                        section.classList.add('ann');
+                    }else{
+                        section.classList.remove('ann');
+                    }
                 });
             }
-            aosM();
-            document.addEventListener("resize", aosM);
 
-            AOS.init();
+            document.querySelector("#app").on('scroll', handleScroll);
+            
+            const faqItems = document.querySelectorAll('.faq-container details');
+            faqItems.forEach(function(item){
+                item.addEventListener('click', function(){
+                    faqItems.forEach(function(otherItem){
+                        if(otherItem !== item) otherItem.removeAttribute('open');
+                    });
+                });
+            });
+
         </script>
     </body>
 </html>

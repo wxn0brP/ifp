@@ -33,7 +33,7 @@
             }
 
             .section{
-                height: 100vh;
+                min-height: 100vh;
                 width: 100vw;
                 padding-inline: 5rem;
                 scroll-snap-align: start;
@@ -126,6 +126,9 @@
             }
 
             @media screen and (max-width: 800px){
+                .section{
+                    padding-inline: 1rem;
+                }
                 #navs.responsive{
                     background-color: #222;
                 }

@@ -259,7 +259,7 @@ function setUserStatus(div, type, color="#333"){
     }
 }
 
-function updateCountdown(){
+function updateFreeCaseCountdown(){
     let currentTime = Math.floor(new Date().getTime() / 1000);
     let timeDifference = timeToDailyCase - currentTime;
 
@@ -273,7 +273,7 @@ function updateCountdown(){
         dailyBtn.innerHTML = "Open";
     }
 }
-setInterval(() => {updateCountdown()}, 1000);
+setInterval(() => {updateFreeCaseCountdown()}, 1000);
 
 async function getPrompt(txt, deflaut=""){
     return new Promise(resolve => {

@@ -1,73 +1,81 @@
-function loadPart(){
-    const parser = new DOMParser();
-    const paths = [];
-    document.body.querySelectorAll("[loadPart]").forEach(ele => {
-        paths.push(ele.getAttribute("loadPart"));
-        const text = cw.get("app/"+ele.getAttribute("loadPart")+".html");
-        const html = parser.parseFromString(text, "text/html");
+(() => {
+    const htmlParser = new DOMParser();
+
+    function loadComponent(path, parentEle){
+        const text = cw.get(path);
+        const html = htmlParser.parseFromString(text, "text/html");
         const elements = Array.from(html.body.children);
-        elements.forEach(e => {
-            ele.insertAdjacentElement("afterend", e);
+        for(let e of elements){
+            parentEle.insertAdjacentElement("afterend", e);
+            loadComponents(e);
+        }
+    }
+
+    function loadComponents(ele){
+        ele.querySelectorAll("[loadPart]").forEach(loadPart => {
+            loadComponent("app/"+loadPart.getAttribute("loadPart")+".html", loadPart);
+            loadPart.remove();
         });
-        ele.remove();
-    });
-    let assets = document.querySelector("#assets");
-    paths.forEach(path => {
-        const src = document.createElement("script");
-        src.src = "app/"+path+".js";
-        assets.appendChild(src);
-    });
+    }
+
+    async function loadJs(){
+        const srcs = [
+            "app/leftMenu.js",
+            "app/menu.js",
+            "app/mess.js",
+            "app/popup.js",
+
+            "/meui/meui.js",
+            "/js/generateResCss.js",
+            "genId",
+            "vars",
+            "params",
+            "ws",
+            "format",
+            "apis",
+            "cont-menu",
+            "func",
+            "uiFunc",
+            "audioFunc",
+            "callsApi",
+            "settings",
+            "serverMgmt",
+            "channelMgmt",
+            "anty",
+            "warning",
+            "egg",
+            "encrypt",
+            "run",
+            "snakes",
+            "theme",
+            "cases",
+            "rolesMgmt",
+        ];
+        let assets = document.querySelector("#assets");
+        async function loadScript(p){
+            return await new Promise((resolve) => {
+                const script = document.createElement("script");
+                if(!p.startsWith("js/") && !p.endsWith(".js"))
+                    p = "js/" + p + ".js";
+                
+                script.src = p;
+                const loadEvt = () => {
+                    resolve();
+                    script.removeEventListener("load", loadEvt);
+                }
+                script.addEventListener("load", loadEvt);
+                assets.appendChild(script);
+            })
+        }
+        for(let i=0; i<srcs.length; i++){
+            await loadScript(srcs[i]);
+        }
+    }
+
+    loadComponents(document.querySelector("#app"));
     loadJs();
-}
-
-async function loadJs(){
-    const srcs = [
-        "/meui/meui.js",
-        "/js/generateResCss.js",
-        "js/genId.js",
-        "js/vars.js",
-        "js/params.js",
-        "js/ws.js",
-        "js/format.js",
-        "js/apis.js",
-        "js/cont-menu.js",
-        "js/func.js",
-        "js/uiFunc.js",
-        "js/audioFunc.js",
-        "js/callsApi.js",
-        "js/settings.js",
-        "js/serverMgmt.js",
-        "js/channelMgmt.js",
-        "js/anty.js",
-        "js/warning.js",
-        "js/egg.js",
-        "js/encrypt.js",
-        "js/run.js",
-        "js/snakes.js",
-        "js/theme.js",
-        "js/cases.js",
-        "js/rolesMgmt.js",
-    ];
-    let assets = document.querySelector("#assets");
-    async function load(p){
-        return await new Promise((resolve) => {
-            const script = document.createElement("script");
-            script.src = p;
-            const loadEvt = () => {
-                resolve();
-                script.removeEventListener("load", loadEvt);
-            }
-            script.addEventListener("load", loadEvt);
-            assets.appendChild(script);
-        })
-    }
-    for(let i=0; i<srcs.length; i++){
-        await load(srcs[i]);
-    }
-}
-
-loadPart();
-document.querySelectorAll(".delete").forEach(e => {
-    let time = parseInt(e.getAttribute("time"));
-    setTimeout(()=>e.remove(), time);
-});
+    document.querySelectorAll(".delete").forEach(e => {
+        let time = parseInt(e.getAttribute("time"));
+        setTimeout(()=>e.remove(), time);
+    });
+})();

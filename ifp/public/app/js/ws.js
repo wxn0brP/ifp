@@ -366,7 +366,7 @@ socket.on("box_hub", (boxs, gold, daily) => {
     });
 
     timeToDailyCase = parseInt(daily, 36) + 86400;
-    updateCountdown();
+    updateFreeCaseCountdown();
 });
 
 socket.on("box_get_drop", (drop) => {

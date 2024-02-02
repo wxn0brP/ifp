@@ -10,5 +10,4 @@ function file(path, value="", prefix="config/"){
 dir("data");
 dir("config");
 file("banedIP.json", "[]");
-file("song.json", "[]");
 file("mailConfig.json", "{}");

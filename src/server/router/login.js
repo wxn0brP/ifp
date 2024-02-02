@@ -3,8 +3,8 @@ const crypto = require('crypto');
 module.exports = async (req, res) => {
     var login = req.body.login;
     var pass = req.body.pass;
-    var usr = await global.db.user.findOne({ name: login });
-    if(!usr) usr = await global.db.user.findOne({ email: login });
+    var usr = await global.db.data.findOne("user", { name: login });
+    if(!usr) usr = await global.db.data.findOne("user", { email: login });
     if(!usr) return res.json({err: true, msg: "Nie prawidłowy login lub hasło"});
 
     var hashPass = usr.o.password;

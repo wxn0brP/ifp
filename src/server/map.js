@@ -1,5 +1,5 @@
-var sitemap = require('express-sitemap')({
-    url: "ifp.projektares.tk",
+const sitemap = require('express-sitemap')({
+    url: "ifp.ct8.pl",
     http: "https"
 });
 

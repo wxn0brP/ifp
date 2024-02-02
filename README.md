@@ -19,7 +19,7 @@ To get started, follow these steps:
 ## Configuration
 
 After running the server for the first time, visit the `config/` directory to make additional configurations:
-- Edit the `mail`, `banedIP`, and radio song list (`song`).
+- Edit the `mail`, `banedIP`.
 - Check out `config.js` for additional settings.
 After editing, rerun the server with the new settings.
 

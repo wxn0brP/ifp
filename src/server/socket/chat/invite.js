@@ -1,13 +1,12 @@
-const { user: usrDB, mess: messDB } = global.db;
-const valid = require("../../validData");
-const chat = require("../chat");
+const valid = require("../../../validData");
+const chat = require("../../chat");
 
 module.exports = (socket) => {
     socket.on("invites", async () => {
         try{
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
-            const invites = await global.db.invites.find({ to: socket.user._id });
+            const invites = await global.db.data.find("invites", { to: socket.user._id });
 
             if(invites.length > 0){
                 const filteredResults = invites.map((result) => result.o);
@@ -28,23 +27,23 @@ module.exports = (socket) => {
 
             if(to == socket.user._id) return socket.emit("error", "nie możesz wysłać zapro do siebie");
 
-            var toId = await usrDB.findOne({ _id: to });
+            var toId = await global.db.data.findOne("user", { _id: to });
             if(!toId) return socket.emit("error", "user is not exists - invite");
 
-            var user = await usrDB.findOne({ _id: socket.user._id });
+            var user = await global.db.data.findOne("user", { _id: socket.user._id });
             if(user.o.friends.includes(to)){
                 return socket.emit("error", "przyjaciel");
             }
-            var inviteTest = await global.db.invites.findOne({ from: socket.user._id, to: to });
+            var inviteTest = await global.db.data.findOne("invites", { from: socket.user._id, to: to });
             if(inviteTest) return socket.emit("error", "zapro już jest");
-            inviteTest = await global.db.invites.findOne({ from: to, to: socket.user._id });
+            inviteTest = await global.db.data.findOne("invites", { from: to, to: socket.user._id });
             if(inviteTest) return socket.emit("error", "zapro już jest");
 
             var newInvite = {
                 from: socket.user._id,
                 to: toId.o._id,
             }
-            var inv = await global.db.invites.add(newInvite);
+            var inv = await global.db.data.add("invites", newInvite);
 
             sendToSocket(to, "invite", inv);
         }catch(e){
@@ -58,20 +57,20 @@ module.exports = (socket) => {
             if(!socket.isUser) return socket.emit("error", "bot");
             if(!valid.str(inviteId, 0, 30)) return socket.emit("error", "valid data");
             
-            var invite = await global.db.invites.findOne({_id: inviteId});
+            var invite = await global.db.data.findOne("invites", {_id: inviteId});
             if(!invite) return socket.emit("error", "Invite not found");
             invite = invite.o;
             
-            var fromId = (await usrDB.findOne({_id: invite.from})).o.friends;
-            var toId = (await usrDB.findOne({_id: invite.to})).o.friends;
+            var fromId = (await global.db.data.findOne("user", {_id: invite.from})).o.friends;
+            var toId = (await global.db.data.findOne("user", {_id: invite.to})).o.friends;
 
             fromId.push(invite.to);
             toId.push(invite.from);
             
-            await usrDB.updateOne({ _id: socket.user._id }, { friends: toId });
-            await usrDB.updateOne({ _id: invite.from }, { friends: fromId });
+            await global.db.data.updateOne("user", { _id: socket.user._id }, { friends: toId });
+            await global.db.data.updateOne("user", { _id: invite.from }, { friends: fromId });
 
-            await global.db.invites.removeOne({_id: inviteId});
+            await global.db.data.removeOne("invites", {_id: inviteId});
             
             var p1 = invite.to;
             var p2 = invite.from;
@@ -90,10 +89,10 @@ module.exports = (socket) => {
             if(!socket.isUser) return socket.emit("error", "bot");
             if(!valid.str(friendId, 0, 30)) return socket.emit("error", "valid data");
         
-            var invite = await global.db.invites.findOne({ _id: friendId });
+            var invite = await global.db.data.findOne("invites", { _id: friendId });
             if(!invite) return socket.emit("error", "invite not found");
             invite = invite.o;
-            await global.db.invites.removeOne({ _id: friendId });
+            await global.db.data.removeOne("invites", { _id: friendId });
 
             sendToSocket(invite.from, "inviteDelice", invite.to);
         }catch(e){
@@ -107,23 +106,23 @@ module.exports = (socket) => {
             if(!socket.isUser) return socket.emit("error", "bot");
             if(!valid.str(friendId, 0, 30)) return socket.emit("error", "valid data");
         
-            const user = await usrDB.findOne({ _id: socket.user._id });
+            const user = await global.db.data.findOne("user", { _id: socket.user._id });
             const friends = user.o.friends;
             const friendIndex = friends.indexOf(friendId);
 
             if(friendIndex !== -1){
                 friends.splice(friendIndex, 1);
-                await usrDB.updateOne({ _id: socket.user._id }, { friends });
+                await global.db.data.updateOne("user", { _id: socket.user._id }, { friends });
             }else{
                 return socket.emit("error", "Friend not found");
             }
         
-            const friend = await usrDB.findOne({ _id: friendId });
+            const friend = await global.db.data.findOne("user", { _id: friendId });
             const friendFriends = friend.o.friends;
             const userIndex = friendFriends.indexOf(socket.user._id);
             if(userIndex !== -1){
                 friendFriends.splice(userIndex, 1);
-                await usrDB.updateOne({ _id: friendId }, { friends: friendFriends });
+                await global.db.data.updateOne("user", { _id: friendId }, { friends: friendFriends });
             }
 
             sendToSocket(socket.user._id, "deleteFriends");
@@ -132,4 +131,18 @@ module.exports = (socket) => {
             lo("error: ", e)
         }
     });
+
+    socket.on("getInivteFromId", async (id) => {
+        try{
+            if(!socket.user) return socket.emit("error", "not auth");
+            if(!socket.isUser) return socket.emit("error", "bot");
+            if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
+
+            var ic = await global.db.data.findOne("id", { chat: id });
+            socket.emit("getInivteFromId", ic.o.id);
+        }catch(e){
+            lo("error: ", e)
+        }
+    });
+
 }

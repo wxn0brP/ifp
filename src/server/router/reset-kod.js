@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     ) return res.json({err: true, msg: "Hasło nie spełnia waymagań!"});
 
     var hashPass = generateHash(password);
-    var t = await global.db.user.updateOne({ email: tmp.email }, { password: hashPass });
+    var t = await global.db.data.updateOne("user", { email: tmp.email }, { password: hashPass });
     if(!t) return res.json({ err: true,  msg: "Błąd serwera." })
     res.json({
         err: false,

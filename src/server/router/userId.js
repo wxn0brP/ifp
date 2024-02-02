@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
         err: true, msg: "user is required"
     });
 
-    var toId = await global.db.user.findOne({ _id: user });
+    var toId = await global.db.data.findOne("user", { _id: user });
     if(!toId) return res.json({
         err: true, msg: "user is not found"
     });

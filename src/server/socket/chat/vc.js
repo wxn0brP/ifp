@@ -1,4 +1,4 @@
-const valid = require("../../validData");
+const valid = require("../../../validData");
 const rooms = {};
 
 module.exports = (socket) => {

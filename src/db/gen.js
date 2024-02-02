@@ -27,8 +27,7 @@ function getUniqueRandom(time, partsA, s=0){
 }
 
 function getRandom(unix){
-    let unixPod = Math.pow(36, unix);
-    return (Math.floor(Math.random() * unixPod)).toString(36);
+    return (Math.floor(Math.random() * Math.pow(36, unix))).toString(36);
 }
 
 function getTime(){
@@ -41,8 +40,8 @@ function addOneToPods(array){
     const len = array.length;
 
     const result = [];
-    let quotient = Math.floor(num / len);
-    let remainder = num % len;
+    const quotient = Math.floor(num / len);
+    const remainder = num % len;
   
     for(let i=0; i<len; i++){
         if(i < remainder) result.push(quotient + 1);

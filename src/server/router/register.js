@@ -4,10 +4,10 @@ module.exports = async (req, res) => {
     const { name, password, email } = req.body;
     if(!name || !password || !email) return res.json({err: true, msg: "name & pass & emial required"});
 
-    var usr = await global.db.user.findOne({ name });
+    var usr = await global.db.data.findOne("user", { name });
     if(usr) return res.json({err: true, msg: "Istnieje już użytkownik o takim name!"});
 
-    var usr = await global.db.user.findOne({ email });
+    var usr = await global.db.data.findOne("user", { email });
     if(usr) return res.json({err: true, msg: "Istnieje już użytkownik o takim e-mail!"});
 
     if(!/^[a-zA-Z0-9]+$/.test(name) || name.length < 3 || name.length > 10){

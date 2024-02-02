@@ -8,11 +8,11 @@ module.exports = async (req, res) => {
     if(!hashBase) return res.json({err: true, msg: "token"});
     if(hashBase.user.name != name) return res.json({err: true, msg: "token."});
     
-    var inv = await global.db.ic.findOne({ id });
+    var inv = await global.db.data.findOne("ic", { id });
     if(!inv) return res.json({ err: true, msg: "invite not exsists" });
     inv = inv.o;
 
-    var usr = await global.db.user.findOne({ name });
+    var usr = await global.db.data.findOne("user", { name });
     var usrChat = usr.o.chats;
     if(usrChat.includes(inv.chat)) return res.json({ err: true, msg: "user is exsists in chat" });
 

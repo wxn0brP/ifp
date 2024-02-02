@@ -12,7 +12,7 @@ function connect(headers){
 }
 
 async function tokenVery(token){
-    var tokenD = await global.db.bot.findOne({ token });
+    var tokenD = await global.db.data.findOne("bot", { token });
     if(!tokenD) return false;
     return tokenD;
 }

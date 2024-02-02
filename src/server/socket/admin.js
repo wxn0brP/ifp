@@ -25,41 +25,41 @@ io.of("/admin").on("connection", socket => {
         }
         if(!finder) finder = {};
 
-        let db = global.db[name];
+        let db = global.db.data;
         if(!db) return;
         let data;
         switch(type){
             case "add":
-                data = await db.add(arg);
+                data = await db.add(name, arg);
             break;
 
             case "find":
-                data = await db.find(finder);
+                data = await db.find(name, finder);
                 data = data.map(a => a.o);
             break;
 
             case "findOne":
-                data = await db.findOne(finder);
+                data = await db.findOne(name, finder);
                 if(data) data = data.o;
                 else data = false;
             break;
 
             case "update":
-                data = await db.update(finder, arg);
+                data = await db.update(name, finder, arg);
             break;
 
             case "updateOne":
-                data = await db.updateOne(finder, arg);
+                data = await db.updateOne(name, finder, arg);
             break;
 
             case "remove":
             case "delete":
-                data = await db.remove(finder);
+                data = await db.remove(name, finder);
             break;
 
             case "removeOne":
             case "deleteOne":
-                data = await db.removeOne(finder);
+                data = await db.removeOne(name, finder);
             break;
         }
         if(data) socket.emit("get", data);

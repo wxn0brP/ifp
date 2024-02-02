@@ -27,7 +27,7 @@ var mod = {
 
 var token = {
     async rem(token){
-        await global.db.token.removeOne({ token });
+        await global.db.data.removeOne("token", { token });
     },
     active: [],
 
@@ -35,7 +35,7 @@ var token = {
         var hashSrc = mod.getInUser(usr) + "%%" + mod.getRandom() + ":" + mod.getTime(0);
         var hashBase = mod.Whirlpool(hashSrc);
 
-        global.db.token.add({
+        global.db.data.add("token", {
             token: hashBase,
             data: {
                 t: mod.getTime(time),
@@ -50,7 +50,7 @@ var token = {
     },
 
     async veryR(token){
-        var hashBase = await global.db.token.findOne({ token });
+        var hashBase = await global.db.data.findOne("token", { token });
         if(!hashBase) return false;
 
         var time = Math.floor(new Date().getTime() / 1000);
@@ -63,7 +63,7 @@ var token = {
 
 
     async getTempToken(usr, hash){
-        var hashBase = await global.db.token.findOne({ token: hash });
+        var hashBase = await global.db.data.findOne("token", { token: hash });
         if(!hashBase) return false;
         hashBase = hashBase.o.data;
 
@@ -99,7 +99,7 @@ var token = {
     },
 
     async start(){
-        var all = await global.db.token.find({});
+        var all = await global.db.data.find("token", {});
         var time = Math.floor(new Date().getTime() / 1000);
         all.forEach(async ele => {
             if(ele.o.data.t < time){

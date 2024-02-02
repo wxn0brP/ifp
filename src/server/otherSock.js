@@ -20,7 +20,7 @@ io.of("/qr_code").on("connection", (socket) => {
 });
 
 const gen = require("./../db/gen");
-const vcFree = require("./socket/vc");
+const vcFree = require("./socket/chat/vc");
 io.of("/vcFree").on("connection", socket => {
     let id = gen();
     socket.user = {

@@ -13,8 +13,8 @@ module.exports = async (req, res) => {
         });
         return;
     }
-    var usr = await global.db.user.add({
-        name: tmp.name, email: tmp.email, password: tmp.password, friends: []
+    var usr = await global.db.data.add("user", {
+        name: tmp.name, email: tmp.email, password: tmp.password, friends: [], chats: []
     });
 
     req.session.user = usr;

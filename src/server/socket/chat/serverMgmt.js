@@ -1,7 +1,6 @@
-const permSys = require("../../permisionSystem");
-const serverSet = global.db.serverSettings;
-const genId = require("../../db/gen");
-const valid = require("../../validData");
+const permSys = require("../../../permisionSystem");
+const genId = require("../../../db/gen");
+const valid = require("../../../validData");
 
 module.exports = (socket) => {
     socket.on("editServer", async (server, data) => {
@@ -15,14 +14,14 @@ module.exports = (socket) => {
             if(!await perm.userPermison(socket.user._id, "set")) return socket.emit("error", "permission");
             
             if(!data) return socket.emit("error", "params");
-            let actualSet = await serverSet.findOne({ id: server });
+            let actualSet = await global.db.data.findOne("serverSettings", { id: server });
 
             if(!actualSet) return socket.emit("error", "server valid");
-            let settingsDef = require("../../chatAppLogicData/serverSettings");
+            let settingsDef = require("../../../chatAppLogicData/serverSettings");
             
             let settings = { ...settingsDef, ...actualSet.o.settings, ...data };
 
-            await serverSet.updateOne({ id: server }, { settings });
+            await global.db.data.updateOne("serverSettings", { id: server }, { settings });
         }catch(e){
             socket.emit("error", "error");
         }
@@ -38,8 +37,8 @@ module.exports = (socket) => {
         try{
             const perm = new permSys(server);
             if(!await perm.userPermison(socket.user._id, "chnlMgmt")) return socket.emit("error", "permission");
-            let oldsCategory = (await serverSet.findOne({ id: server })).o.cat;
-            await serverSet.updateOne({ id: server }, { cat: category });
+            let oldsCategory = (await global.db.data.findOne("serverSettings", { id: server })).o.cat;
+            await global.db.data.updateOne("serverSettings", { id: server }, { cat: category });
 
             function getChannels(categories){
                 let chnls = [];
@@ -70,7 +69,7 @@ module.exports = (socket) => {
             if(!await perm.userPermison(socket.user._id, "set")) return socket.emit("error", "permission");
 
             let roles = await perm.getRoles();
-            let datas = (await global.db.serverSettings.findOne({ id: server })).o;
+            let datas = (await global.db.data.findOne("serverSettings", { id: server })).o;
             let data = {
                 name: datas.settings.name,
                 channels: datas.cat

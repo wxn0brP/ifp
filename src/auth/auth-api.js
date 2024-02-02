@@ -9,7 +9,7 @@ module.exports = (app) => {
 
         if(!login || !pass) return res.json({ err: true, msg: "login & password is required" });
 
-        var user = await global.db.user.findOne({ name: login });
+        var user = await global.db.data.findOne("user", { name: login });
         if(!user) return res.json({ err: true, msg: "user not found" });
 
         if(!comparePassword(pass, user.o.password)){
@@ -37,7 +37,7 @@ module.exports = (app) => {
     app.post(ifp+"validToken", async (req, res) => {
         const { rToken } = req.body;
         if(!rToken) return res.send(false);
-        var token = await global.db.token.findOne({ token: rToken });
+        var token = await global.db.data.findOne("token", { token: rToken });
         return res.send(!!token);
     });
 
@@ -48,7 +48,7 @@ module.exports = (app) => {
             msg: "from & user_id & rToken is required"
         });
 
-        var rTokenId = await global.db.token.findOne({ token: rToken });
+        var rTokenId = await global.db.data.findOne("token", { token: rToken });
         if(!rTokenId) return res.json({
             err: true,
             msg: "rToken is die"

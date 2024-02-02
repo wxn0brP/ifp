@@ -7,7 +7,6 @@ const userNameA = require("./router/userName");
 const validTokenA = require("./router/validToken");
 const getTempTokenA = require("./router/getTempToken");
 const getQrCodeA = require("./router/getQrCode");
-const chatBotA = require("./router/chatBot");
 const resetA = require("./router/reset");
 const resetKodA = require("./router/reset-kod");
 const inviteChatA = require("./router/inviteChat");
@@ -29,7 +28,6 @@ module.exports = (app) => {
         app.post("/validToken", validTokenA);
         app.post("/getTempToken", getTempTokenA);
         app.get("/getQrCode", getQrCodeA);
-        app.get("/chatBot", chatBotA);
         app.post("/reset", resetA);
         app.post("/reset-kod", resetKodA);
         app.post("/ic", inviteChatA);
@@ -37,10 +35,5 @@ module.exports = (app) => {
         app.post("/feed", feedA);
         app.get("/genId", genIdA);
         app.post("/notif-reg", notifRegA);
-        // app.post("/github-webhook", (req, res) => {
-        //     const eventType = req.headers['x-github-event'];
-        //     lo(eventType, req.body);
-        //     res.sendStatus(200);
-        // })
     }
 }

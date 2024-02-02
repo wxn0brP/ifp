@@ -3,8 +3,8 @@ const MAX_TOTAL_FILES = 100;
 const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8 MB
 const fs = require("fs");
 const path = require("path");
-const valid = require("../../validData");
-const gen = require("../../db/gen");
+const valid = require("../../../validData");
+const gen = require("../../../db/gen");
 
 var totalFileCount = 0;
 const userFileCounts ={};

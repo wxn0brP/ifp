@@ -1,4 +1,4 @@
-const valid = require("../../validData");
+const valid = require("../../../validData");
 
 function losujItem(tablica){
     const sumaSzans = tablica.reduce((suma, { per }) => suma + per, 0);
@@ -25,11 +25,11 @@ module.exports = (socket) => {
         if(!socket.isUser) return socket.emit("error", "bot");
         if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
 
-        let user = await global.db.userGold.findOne({ id: socket.user._id });
+        let user = await global.db.data.findOne("userGold", { id: socket.user._id });
         if(!user) return socket.emit("error", "not $");
         user = user.o;
 
-        var box = await global.db.cases.findOne({ _id: id });
+        var box = await global.db.data.findOne("cases", { _id: id });
         if(!box) return socket.emit("error", "case not found");
         box = box.o;
         var price = box.p;
@@ -52,7 +52,7 @@ module.exports = (socket) => {
 
 
         let item = losujItem(box.drop);
-        await global.db.userGold.updateOne({ id: socket.user._id }, obj => {
+        await global.db.data.updateOne("userGold", { id: socket.user._id }, obj => {
             obj.items.push(/*{ name: */item /*}*/);
             if(id == "daily") obj.daily = Math.floor(new Date().getTime() / 1000).toString(36);
             else obj.gold -= price;
@@ -65,7 +65,7 @@ module.exports = (socket) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
 
-        let user = await global.db.userGold.findOne({ id: socket.user._id });
+        let user = await global.db.data.findOne("userGold", { id: socket.user._id });
         if(!user) return socket.emit("error", "not $");
         user = user.o;
 
@@ -76,11 +76,11 @@ module.exports = (socket) => {
         if(!socket.user) return socket.emit("error", "not auth");
         if(!socket.isUser) return socket.emit("error", "bot");
 
-        let user = await global.db.userGold.findOne({ id: socket.user._id });
+        let user = await global.db.data.findOne("userGold", { id: socket.user._id });
         if(!user) return socket.emit("error", "not $");
         user = user.o;
 
-        let boxs = await global.db.cases.find({});
+        let boxs = await global.db.data.find("cases", {});
         boxs = boxs.map(box => {
             let b = box.o;
             return {
@@ -98,7 +98,7 @@ module.exports = (socket) => {
         if(!socket.isUser) return socket.emit("error", "bot");
         if(!valid.str(id, 0, 30)) return socket.emit("error", "valid data");
 
-        var box = await global.db.cases.findOne({ _id: id });
+        var box = await global.db.data.findOne("cases", { _id: id });
         if(!box) return socket.emit("error", "case not found");
 
         socket.emit("box_get_drop", box.o.drop);

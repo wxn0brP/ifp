@@ -71,11 +71,11 @@ function endGame(player, playerId){
     length = Math.floor(length);
     global.getSocket(playerId, "snake").forEach(s => s.emit("end", length));
     (async () => {
-        let ok = await global.db.userGold.updateOne({ id: playerId }, obj => {
+        let ok = await global.db.data.updateOne("userGold", { id: playerId }, obj => {
             obj.gold += length;
             return obj;
         });
-        if(!ok) await global.db.userGold.add({ id: playerId, gold: length, items: [], daily: "0"});
+        if(!ok) await global.db.data.add("userGold", { id: playerId, gold: length, items: [], daily: "0"});
     })();
 }
 

@@ -1,3 +1,9 @@
+/**
+ * Evaluates HTTP headers based on specific criteria and returns the percentage of compliance.
+ *
+ * @param {Object} headers - An object containing HTTP headers.
+ * @returns {number} The percentage of header compliance.
+ */
 function connect(headers){
     var tests = [];
     tests.push(headers['user-agent'] != 'node-XMLHttpRequest');
@@ -11,6 +17,12 @@ function connect(headers){
     return percentage;
 }
 
+/**
+ * Verifies the existence of a token in the "bot" database collection.
+ *
+ * @param {string} token - The token to verify.
+ * @returns {Promise<Object|boolean>} If the token exists, returns an object with token data; otherwise, returns false.
+ */
 async function tokenVery(token){
     var tokenD = await global.db.data.findOne("bot", { token });
     if(!tokenD) return false;

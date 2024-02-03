@@ -1,3 +1,9 @@
+/**
+ * Sorts an array of roles based on their parent-child relationships.
+ *
+ * @param {Array} rolesArray - An array of role objects with 'roleId' and 'parent' properties.
+ * @returns {Array|boolean} - An array of sorted roles or false if invalid relationships are detected.
+ */
 function sortRoles(rolesArray){
     const sortedRoles = [];
     const seenRoleIds = {};

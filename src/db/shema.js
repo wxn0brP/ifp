@@ -1,8 +1,24 @@
+/**
+ * A class for validating objects based on a schema.
+ * @class
+ */
 class ShemaC{
+	/**
+	 * Create a new SchemaC instance.
+	 * @constructor
+	 * @param {Object} schema - The schema definition for validation.
+	 */
 	constructor(schema){
 		this.schema = schema;
 	}
 
+	/**
+	 * Validates an object against the defined schema.
+	 *
+	 * @param {Object} obj - The object to validate.
+	 * @param {boolean} [log=false] - Indicates whether validation errors should be logged (default: false).
+	 * @returns {Object|boolean} The validated object if it passes validation, or `false` if validation fails.
+	 */
 	valid(obj, log=false){
         if(!obj){
             if(log) console.log(`Obiekt jest wymagany.`);

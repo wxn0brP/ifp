@@ -1,3 +1,9 @@
+/**
+ * Custom logging function for debugging and logging information.
+ *
+ * @function
+ * @param {...*} data - The data or messages to be logged.
+ */
 global.lo = function(...data){
     let line = new Error().stack.split('\n')[2].trim();
     let path = line.slice(line.indexOf("(")).replace(process.env.basePath ,"");

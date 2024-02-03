@@ -1,3 +1,8 @@
+/**
+ * permisionSystem
+ * @module permisionSystem
+ */
+
 const genId = require("../db/gen");
 const sortRolesByHierarchy = require("./sortRolesByHierarchy")
 

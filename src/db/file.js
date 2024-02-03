@@ -1,3 +1,8 @@
+/**
+ * Db file operations
+ * @module db/file
+ */
+
 const fs = require('fs');
 const readline = require('readline');
 const format = require("./format");
@@ -192,10 +197,6 @@ async function remove(folder, name, arg, one){
     return true;
 }
 
-/**
- * Exposes various file manipulation functions.
- * @module fileUtils
- */
 module.exports = {
     /**
      * Asynchronously finds entries in a file based on search criteria.

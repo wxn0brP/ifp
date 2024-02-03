@@ -1,6 +1,6 @@
 /**
  * Module for performing operations on objects.
- * @module objectUtils
+ * @module db/objectUtils
  */
 
 module.exports = {

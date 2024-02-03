@@ -1,4 +1,9 @@
 /**
+ * Sort roles by hierarchy
+ * @module sortRolesByHierarchy
+ */
+
+/**
  * Sorts an array of roles based on their parent-child relationships.
  *
  * @param {Array} rolesArray - An array of role objects with 'roleId' and 'parent' properties.

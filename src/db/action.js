@@ -1,3 +1,8 @@
+/**
+ * Db data operations
+ * @module db/actions
+ */
+
 const fs = require("fs");
 const gen = require("./gen");
 const format = require("./format");

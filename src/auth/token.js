@@ -6,7 +6,7 @@
 const Whirlpool = require('whirlpool-hash');
 const crc = require('crc');
 
-var mod = {
+const mod = {
     /**
      * Generate a random alphanumeric string of a specified length.
      *
@@ -14,8 +14,8 @@ var mod = {
      * @returns {string} A random alphanumeric string.
      */
     getRandom(){
-        var char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        var random = "";
+        const char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        let random = "";
         for(let i=0; i<64; i++){
             random += char[Math.floor(Math.random() * char.length)];
         }
@@ -57,7 +57,7 @@ var mod = {
     }
 };
 
-var token = {
+const token = {
     /**
      * Remove a token from the database.
      *

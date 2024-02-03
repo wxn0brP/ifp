@@ -1,4 +1,9 @@
 /**
+ * Veryfication bot
+ * @module socket/bot
+ */
+
+/**
  * Evaluates HTTP headers based on specific criteria and returns the percentage of compliance.
  *
  * @param {Object} headers - An object containing HTTP headers.

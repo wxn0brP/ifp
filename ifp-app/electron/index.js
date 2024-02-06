@@ -8,7 +8,11 @@ const {
     Tray,
     Menu,
 } = require('electron');
-const config = require("./config");
+
+const config = {
+    GH_TOKEN: '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'
+};
+
 const { autoUpdater } = require('electron-updater');
 const activeWin = require('active-win');
 const lo = console.log;
@@ -65,7 +69,7 @@ async function createWindow(){
 }
 
 app.on('ready', () => {
-    if(!dev){
+    function update(){
         autoUpdater.setFeedURL({
             provider: 'github',
             owner: 'wxn0brP',
@@ -78,9 +82,10 @@ app.on('ready', () => {
         });
         autoUpdater.on('update-not-available', createWindow)
         autoUpdater.checkForUpdatesAndNotify();
-    }else{
-        createWindow();
     }
+
+    if(process.platform == "win32") update();
+    else if(process.platform == "linux") createWindow();
 });
 
 app.on('window-all-closed', () => {

@@ -1,6 +1,6 @@
 {
     "name": "ifp",
-    "version": "0.0.33",
+    "version": "0.0.34",
     "description": "IFP",
     "main": "index.js",
     "scripts": {
@@ -31,11 +31,12 @@
             "icon": "icon.ico"
         },
         "linux": {
-            "target": ["deb"],
+            "target": ["deb", "tar.gz"],
             "icon": "icon.png"
         },
         "files": [
             "index.js",
+            "preload.js",
             "favicon.png",
             "icon.png",
             "icon.ico"

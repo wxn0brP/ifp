@@ -80,11 +80,6 @@
                 background-size: 400% 400%;
             }
 
-            .feature-title{
-                font-size: 1.2em;
-                margin-bottom: 10px;
-            }
-
             @keyframes gradientShift{
                 0%{
                     background-position: 0% 50%;
@@ -99,6 +94,11 @@
 
             .feature-item:hover{
                 transform: rotateZ(3deg) scale(1.03);
+            }
+
+            .feature-title{
+                font-size: 1.2em;
+                margin-bottom: 10px;
             }
 
             .faq-container{
@@ -128,9 +128,90 @@
             @media screen and (max-width: 800px){
                 .section{
                     padding-inline: 1rem;
+                    padding-bottom: 100px;
                 }
                 #navs.responsive{
                     background-color: #222;
+                }
+            }
+
+            .ann{
+                scale: 1;
+                margin: 0;
+            }
+
+            .zoom-in:not(.ann){
+                transition: scale .2s;
+                scale: 0;
+            }
+
+            .zoom-in.ann{
+                animation: zoom-in 1s;
+            }
+
+            @keyframes zoom-in{
+                0%{
+                    scale: 0;
+                }
+                100%{
+                    scale: 1;
+                }
+            }
+
+            .fade-left:not(.ann){
+                transition: margin .2s;
+                margin-left: -120%;
+                margin-right: 120%;
+            }
+
+            .fade-left.ann{
+                animation: fade-left 1s;
+            }
+
+            @keyframes fade-left{
+                0%{
+                    margin-left: -120%;
+                    margin-right: 120%;
+                }
+                100%{
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+
+            .flip-left:not(.ann){
+                transition: transform .2s;
+                transform: rotateY(0deg);
+            }
+
+            .flip-left.ann{
+                animation: flip-left 1s forwards;
+            }
+
+            @keyframes flip-left{
+                0%{
+                    transform: rotateY(0deg);
+                }
+                100%{
+                    transform: rotateY(-360deg);
+                }
+            }
+
+            .flip-up:not(.ann){
+                transition: transform .2s;
+                transform: rotateX(0deg);
+            }
+
+            .flip-up.ann{
+                animation: flip-up 1s forwards;
+            }
+
+            @keyframes flip-up{
+                0%{
+                    transform: rotateX(-360deg);
+                }
+                100%{
+                    transform: rotateX(0deg);
                 }
             }
         </style>
@@ -144,18 +225,20 @@
             <div id="navs"></div>
 
             <div class="section fc">
-                <h1 class="fontNorse">Infinite Fusion Project</h1>
+                <div class="flip-up">
+                    <h1 class="fontNorse">Infinite Fusion Project</h1>
+                </div>
             </div>
 
             <div class="section fc">
-                <div>
+                <div class="zoom-in">
                     <h2 class="fontNorse">O Projekcie</h2>
                     <p class="section-description">IFP to nowoczesna aplikacja czatowa, stworzona z pasji do łączenia ludzi w cyfrowym świecie. Naszym celem jest dostarczenie intuicyjnej, szybkiej i bezpiecznej platformy komunikacyjnej, która umożliwia użytkownikom łatwe i efektywne dzielenie się myślami, pomysłami oraz plikami.</p>
                 </div>
             </div>
 
             <div class="section">
-                <div>
+                <div class="fade-left">
                     <h2 class="fontNorse">Dlaczego IFP?</h2>
                     <div class="features-grid">
                         <div class="feature-item">
@@ -179,7 +262,7 @@
             </div>
                 
             <div class="section">
-                <div>
+                <div class="flip-left">
                     <h2 class="fontNorse">Najczęściej Zadawane Pytania</h2>
                     <div class="faq-container">
                         <details class="faq-item">
@@ -216,20 +299,21 @@
             </div>
             
             <div class="section fc">
-                <div>
+                <div class="zoom-in">
                     <h2 class="fontNorse">Dołącz do nas!</h2>
                     <p>Od sprawdzenia repozytorium na GitHub po współtworzenie aplikacji - zapraszamy do współpracy w rozwoju IFP. Twoje opinie i sugestie są dla nas bardzo ważne. Pomagają nam ulepszać IFP i dostosowywać go do potrzeb użytkowników.</p>
                 </div>
             </div>
             
             <div class="section fc">
-                <div>
+                <div class="flip-up">
                     <h2 class="fontNorse">O Nas</h2>
                     <div class="about-me-content">
                         <p>Jako twórcy IFP, naszym celem jest stworzenie intuicyjnej i efektywnej platformy komunikacyjnej, która wspiera zarówno pracę zespołową, jak i osobistą wymianę myśli i pomysłów. Nasze zainteresowanie programowaniem i technologiami cyfrowymi prowadzi nas do ciągłego doskonalenia i rozwijania IFP, aby spełniało ono oczekiwania współczesnych użytkowników.</p>
                     </div>
                 </div>
             </div>
+
             <span id="confetti"></span>
         </div>
         <script src="/js/aos.js"></script>
@@ -245,6 +329,13 @@
             confetti.setPower(20);
             confetti.setFade(true);
             confetti.destroyTarget(false);
+
+            let rectMargin;
+            function setRectMargin(){
+                rectMargin = (window.innerWidth < 800 ? 110 : 0) + 70;
+            }
+            setRectMargin();
+            document.addEventListener("resize", setRectMargin);
 
             function emulateClick(x=window.innerWidth / 2, y=window.innerHeight / 2){
                 var clickEvent = new MouseEvent("click", {
@@ -274,24 +365,37 @@
             document.querySelectorAll(".section").forEach(ele => ele.on("click", handleConfetti));
 
             function isElementInViewport(element){
-                var rect = element.getBoundingClientRect();
-                return (
-                    rect.top >= 0 &&
-                    rect.left >= 0 &&
-                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-                );
+                const top = element.getBoundingClientRect().top;
+                return top >= -rectMargin && top <= rectMargin;
             }
 
-            function handleScroll() {
-                var sections = document.querySelectorAll('.section');
-                sections.forEach(function(section) {
-                    if(isElementInViewport(section)){
-                        section.classList.add('ann');
-                    }else{
-                        section.classList.remove('ann');
-                    }
-                });
+            const sectionsD = (function(){
+                const sections = document.querySelectorAll(".section");
+                const sectionsDivs = document.querySelectorAll(".section>div");
+                return [...sections].map((element, index) => ({
+                    section: element,
+                    sectionDiv: sectionsDivs[index]
+                }));
+            })();
+
+            let lastMoveTime = new Date().getTime();
+
+            function handleScroll(){
+                let time = new Date().getTime();
+                lastMoveTime = time;
+
+                setTimeout(() => {
+                    if(lastMoveTime != time) return;
+
+                    sectionsD.forEach(function({ section, sectionDiv }){
+                        const cl = sectionDiv.classList;
+                        if(isElementInViewport(section)){
+                            cl.add('ann');
+                        }else{
+                            cl.remove('ann');
+                        }
+                    });
+                }, 30)
             }
 
             document.querySelector("#app").on('scroll', handleScroll);

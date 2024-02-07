@@ -67,6 +67,7 @@ socket.on("error", (data) => {
 });
 
 socket.on("getMessage", (data) => {
+    lo(data)
     try{
         data.forEach((mess) => {
             try{

@@ -1,46 +1,57 @@
-<div class="left" id="menu">
-    <div class="left servery" id="servery">
-        <button onclick="changeTo('main');" id="goMain">
-            <img src="/favicon.ico" alt="MAIN" style="width: 80%; margin-top: 5px;">
-        </button>
-        <hr style="margin: 3px 5px;">
-        <span id="serverList"></span>
-        <button onclick="document.querySelector('#alertServerAction').css('display: block;')" id="addChat"></button>
-    </div>
-    <div class="left" id="leftPanel">
-        <div id="leftPanel-main" w_if="toChat.startsWith('$') || toChat == 'main'">
-            <pc w_if="toChat == 'main'"><button onclick="zezwolNaNotif()">Powiadomienia 🔔</button><br /></pc>
-            <button onclick="addFriends()" w_if="toChat == 'main'">Dodaj Znajomego 🤝</button>
-            <button onclick="callToFunc()" w_if="toChat != 'main'" id="callToBtn">Zadzwoń do... ☎️</button>
-            <button onclick="exportMess()" w_if="toChat != 'main'">Wyeksportuj ⬆️</button>
-            <button onclick="importMess()" w_if="toChat == 'main'">Importuj ⬇️</button>
+div.left#menu
+    div.left.servery#servery
+        button#goMain onclick="changeTo('main');"
+            img src="/favicon.ico" alt="MAIN" style="width: 80%; margin-top: 5px;"
+        hr style="margin: 3px 5px;"
+        span#serverList
+        button#addChat onclick="document.querySelector('#alertServerAction').css('display: block;')"
 
-            <hr style="margin-top: 11px; margin-bottom: 7px;">
-            <span id="friendsList"></span>
-            <br /><br />
-            <span id="err" style="color: var(--txt);"></span>
-            <br /><br />
-            <span id="invites"></span>
-            <br /><br />
-            <button onclick="initSnake()">Snake</button>
-            <button onclick="socket.emit('box_hub', 's55uqg-u-u')" id="case_open_btn">Case</button>
-            <button onclick="socket.emit('items_get')">Items</button>
+    div.left#leftPanel
+        div#leftPanel-main w_if="toChat.startsWith('$') || toChat == 'main'"
+            pc w_if="toChat == 'main'"
+                button onclick="zezwolNaNotif()"
+                 | Powiadomienia 🔔
+                br
+            button onclick="addFriends()" w_if="toChat == 'main'"
+             | Dodaj Znajomego 🤝
+            button#callToBtn onclick="callToFunc()" w_if="toChat != 'main'"
+             | Zadzwoń do... ☎️
+            button onclick="exportMess()" w_if="toChat != 'main'"
+             | Wyeksportuj ⬆️
+            button onclick="importMess()" w_if="toChat == 'main'"
+             | Importuj ⬇️
 
-        </div>
-        <div id="leftPanel-server" w_if="!toChat.startsWith('$') && toChat != 'main'">
-            <h2 id="serverName"></h2>
-            <button onclick="displayServerMgmt()" style="width: 10px;">&#9776;</button>
-            <div style="margin-top: 10px;"></div><hr><br />
-            <div id="serverChannels"></div>
-        </div>
-    </div>
-    <div class="left" id="accountPanel">
-        <div style="position: relative;">
-            <img src="/favicon.ico" alt="">
-            <div id="accountPanel_name" onclick="userProfile(localUser.id)"></div>
-            <div id="accountPanel_status" onclick="showStatusPopUp()"></div>
-            <div id="accountPanel_status_type"></div>
-            <div id="accountPanel_settings" onclick="settingsApp()">⚙️</div>
-        </div>
-    </div>
-</div>
+            hr style="margin-top: 11px; margin-bottom: 7px;"
+            span#friendsList
+            br
+            br
+            span#err style="color: var(--txt);"
+            br
+            br
+            span#invites
+            br
+            br
+            button onclick="initSnake()"
+             | Snake
+            button#case_open_btn onclick="socket.emit('box_hub', 's55uqg-u-u')"
+             | Case
+            button onclick="socket.emit('items_get')"
+             | Items
+
+        div#leftPanel-server w_if="!toChat.startsWith('$') && toChat != 'main'"
+            h2#serverName
+            button onclick="displayServerMgmt()" style="width: 10px;"
+             | &#9776;
+            div style="margin-top: 10px;"
+            hr
+            br
+            div#serverChannels
+
+    div.left#accountPanel
+        div style="position: relative;"
+            img src="/favicon.ico" alt=""
+            div#accountPanel_name onclick="userProfile(localUser.id)"
+            div#accountPanel_status onclick="showStatusPopUp()"
+            div#accountPanel_status_type
+            div#accountPanel_settings onclick="settingsApp()"
+             | ⚙️

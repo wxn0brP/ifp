@@ -5,13 +5,14 @@ window.HtmlCraft = (function(){
         let out = { ch: [] };
     
         lines.forEach(line => {
-            if(!line) return;
+            if(!line.trim()) return;
 
             let countTab = countTabsInLine(line);
             let obj = getDeepReference(out, countTab);
             obj.ch.push({
                 q: line.trim(),
-                ch: []
+                ch: [],
+                ct: countTab
             });
 
             previousIndentLevel = countTab;
@@ -26,25 +27,26 @@ window.HtmlCraft = (function(){
 
         for(let obj of objArray){
             let line = replaceVariables(obj.q, variables);
+            let ods = "\n"+"    ".repeat(obj.ct)
 
             if(line.startsWith("| ")){
                 html += line.slice(2);
                 continue;
             }
 
-            let { tag, attrs, content } = decomposeString(line);
+            let { tag, attrs } = decomposeString(line);
             attrs = attrs ? " " + attrs.trim() : "";
 
             if(selfClosingTags.includes(tag)){
-                html += `<${tag}${attrs} />`;
+                html += ods+`<${tag}${attrs} />`;
             }else{
-                html += `<${tag}${attrs}> ${content}`;
+                html += ods+`<${tag}${attrs}>`;
 
                 if(obj.ch && obj.ch.length > 0){
                     html += parseObjToHTML(obj.ch, variables);
                 }
 
-                html += `</${tag}>`;
+                html += ods+`</${tag}>`;
             }
         }
 
@@ -55,32 +57,48 @@ window.HtmlCraft = (function(){
         let result = {
             tag: '',
             attrs: '',
-            content: ''
-        };
+        }
+    
+        const splitIndex = s.search(/\s|$/);
 
-        s = s.replace(/#([\w-]+)/, (_, id) => {
-            result.attrs += `id="${id}" `;
-            return '';
-        });
+        if(splitIndex < s.length){
+            const rest = s.slice(splitIndex).trim();
+            result.attrs = rest;
+        }
 
-        let classes = processClass(s);
-        s = classes.s;
-        result.attrs += classes.c;
-
-        s = s.replace(/(\(.+?\))/g, (_, attrs) => {
-            const attrsWithoutParentheses = attrs.slice(1, -1);
-            result.attrs += attrsWithoutParentheses.split(',').map(attr => attr.trim().replace(/'/g, '"')).join(' ') + ' ';
-            return '';
-        });
-
-        s.replace(/([\w-]+)\s*(.*)/, (_, tag, rest) => {
-            result.tag = tag;
-            result.content = rest.trim();
-        });
-
-        result.attrs = result.attrs.trim().replace(/\s+/g, ' ');
-
+        let { id, classes, tagName } = processIdAndClass(s.slice(0, splitIndex));
+        if(id) result.attrs += ` id="${id}"`;
+        if(classes.length > 0) result.attrs += ` class="${classes.join(' ')}"`;
+        result.tag = tagName;
+    
         return result;
+    }
+    
+    function processIdAndClass(tag) {
+        const pattern = /([.#])([\w-]+)/g; // Użyj globalnego flagi, aby przesuwać indeks wyszukiwania
+        let match;
+        let id = "";
+        let classes = [];
+        
+        // Zmienne pomocnicze do przechowywania części tagu
+        let tagWithoutIdAndClass = tag;
+        
+        while ((match = pattern.exec(tag))) {
+            if (match[1] === '#') {
+                id = match[2];
+                // Usuń ID ze zmiennej tagWithoutIdAndClass
+                tagWithoutIdAndClass = tagWithoutIdAndClass.replace(match[0], '');
+            } else if (match[1] === '.') {
+                classes.push(match[2]);
+                // Usuń klasę ze zmiennej tagWithoutIdAndClass
+                tagWithoutIdAndClass = tagWithoutIdAndClass.replace(match[0], '');
+            }
+        }
+    
+        // Tag name jest tym, co zostaje po usunięciu ID i klas
+        let tagName = tagWithoutIdAndClass.trim();
+        
+        return { tagName, id, classes };
     }
 
     function countTabsInLine(line, tabWidth = 4){
@@ -94,37 +112,6 @@ window.HtmlCraft = (function(){
 
         const lastChildIndex = obj.ch.length - 1;
         return getDeepReference(obj.ch[lastChildIndex], jumps - 1);
-    }
-
-    function processClass(s){
-        let endIndex = s.indexOf('(');
-        if(endIndex == -1){
-            endIndex = s.indexOf(' ');
-            if(endIndex == -1){
-                endIndex = s.length;
-            }
-        }
-        const sc = s.substring(0, endIndex);
-        if(!sc){
-            return { s, c: "" };
-        }
-
-        const regex = /\.([\w-]+)/g;
-        let match;
-        let classNames = [];
-
-        while((match = regex.exec(sc)) !== null) {
-            classNames.push(match[1]);
-        }
-
-        let attrs = '';
-        if(classNames.length > 0){
-            const classList = classNames.filter(Boolean).join(' ');
-            attrs = `class="${classList}" `;
-            s = s.replace(regex, '');
-        }
-
-        return { s, c: attrs };
     }
 
     function replaceVariables(line, variables){

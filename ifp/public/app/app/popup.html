@@ -1,132 +1,137 @@
-<div id="alertLink" style="display: none;" class="s m_7 l_5 popUp">
-    <br />
-    <h1>
-        Czy na pewno chcesz pójść pod ten link: <br />
-        <span id="alertLinkSpan"></span>
-    </h1>
-    <br />
-    <button id="alertLink_ok">TAK</button>
-    <button onclick="hideLink()">Anuluj</button>
-    <br /><br />
-</div>
+div#alertLink.s.m_7.l_5.popUp style="display: none;"
+    br
+    h1
+        | Czy na pewno chcesz pójść pod ten link: 
+        br
+        span#alertLinkSpan
+    br
+    button#alertLink_ok
+     | TAK
+    button onclick="hideLink()"
+     | Anuluj
+    br
+    br
 
-<div id="alertServerAction" style="display: none;" class="s m_7 l_5 popUp">
-    <br />
-    <button onclick="createChat()">Chce stworzyć czat +</button>
-    <button onclick="inivteAchat()">Chce dołączyć do czatu -></button>
-    <button onclick="document.querySelector('#alertServerAction').css('display: none;')">Anuluj</button>
-    <br /><br />
-</div>
+div#alertServerAction.s.m_7.l_5.popUp style="display: none;"
+    br
+    button onclick="createChat()"
+     | Chce stworzyć czat +
+    button onclick="inivteAchat()"
+     | Chce dołączyć do czatu ->
+    button onclick="document.querySelector('#alertServerAction').css('display: none;')"
+     | Anuluj
+    br
+    br
 
-<div id="errMesses" style="z-index: 999;"></div>
+div#errMesses style="z-index: 999;"
 
-<div id="callMedia" style="display: none;" class="popUp">
-    <div class="s" id="callMediaMov" style="text-align: center;">➕</div>
-    <div style="display: flex; justify-content: space-between;">
-        <div class="s_5">
-            <button onclick="callEnd()" style="background-color: red;">End</button>
-            <br />
-            <button id="togleMic" onclick="togleMic()">Mic = wył</button>
-            <button id="toggleCamera" onclick="toggleCam()">Cam = wył</button>
-            <button onclick="changeMicAndCam()">Zmień urządzenia</button>
-            <br />
-            <meter id="callMeter" min="0" max="0.3" low="0.01" high="0.1" optimum="0.2"></meter>
-        </div>
-        <div class="s_5">
-            <ul id="callUsers"></ul>
-        </div>
-    </div>
-    <br /><br />
-    <div id="callContener" style="display: block;"></div>
-    <div id="callContenerM"></div>
-</div>
+div#callMedia.popUp style="display: none;"
+    div.s#callMediaMov style="text-align: center;"
+     | ➕
+    div style="display: flex; justify-content: space-between;"
+        div.s_5
+            button onclick="callEnd()" style="background-color: red;"
+             | End
+            br
+            button#togleMic onclick="togleMic()" Mic = wył
+            button#toggleCamera onclick="toggleCam()" Cam = wył
+            button onclick="changeMicAndCam()"
+             | Zmień urządzenia
+            br
+            meter#callMeter min="0" max="0.3" low="0.01" high="0.1" optimum="0.2"
+        div.s_5
+            ul#callUsers
+    br
+    br
+    div#callContener style="display: block;"
+    div#callContenerM
 
-<div id="deivceSelect" style="display: none;" class="popUp">
-    <select id="deivceSelect_audio"></select><br />
-    <select id="deivceSelect_video"></select><br />
-    <button id="deivceSelect_ok">ok</button>
-</div>
+div#deivceSelect.popUp style="display: none;"
+    select#deivceSelect_audio
+    br
+    select#deivceSelect_video
+    br
+    button#deivceSelect_ok
+     | ok
 
-<div id="settingsDiv" style="display: none;" class="popUp">
-    <div class="s m_11 l_8 u_7 mar">
-        <button id="settingsCloseBtn" onclick="closeSettings()">X</button>
-        <div id="settingsDivC"></div>
-        <div style="clear: both;"></div>
-    </div>
-</div>
+div#settingsDiv.popUp style="display: none;"
+    div.s.m_11.l_8.u_7.mar
+        button#settingsCloseBtn onclick="closeSettings()"
+         | X
+        div#settingsDivC
+        div style="clear: both;"
 
-<div id="imgSelector" class="s m_5 popUp" style="display: none;">
-    <div _name="eagle"></div>
-    <div _name="krasnolud"></div>
-    <div _name="lis"></div>
-    <div _name="logo"></div>
-    <div _name="sowa"></div>
-    <div _name="wilk"></div>
-</div>
+div#imgSelector.s.m_5.popUp style="display: none;"
+    div _name="eagle"
+    div _name="krasnolud"
+    div _name="lis"
+    div _name="logo"
+    div _name="sowa"
+    div _name="wilk"
 
-<div id="userProfile" style="display: none;" class="popUp">
-    <div class="userProfile" id="userProfile_baner"></div>
-    <div class="userProfile" id="userProfile_name">
-        <img src="/favicon.ico" alt="">
-        <div id="userProfile_status_type"></div>
-        <div id="userProfile_name_content" title="wxn0brP">wxn0brP</div>
-    </div>
-    <div class="userProfile" id="userProfile_data">
-        <b>STATUS</b>
-        <div id="userProfile_status"></div>
-        <b>O MNIE</b>
-        <div id="userProfile_opis"></div>
-        <b>CZŁONE IFP OD</b>
-        <div id="userProfile_ifp_date"></div>
-        <!-- <b>NOTATKA</b>
-        <div id="userProfile_note">Jakś nota o 2 user</div> -->
-        <b>ID</b>
-        <div id="userProfile_ifp_id"></div>
-    </div>
-</div>
+div#userProfile.popUp style="display: none;"
+    div.userProfile#userProfile_baner
+    div.userProfile#userProfile_name
+        img src="/favicon.ico" alt=""
+        div#userProfile_status_type
+        div#userProfile_name_content title=""
+    div.userProfile#userProfile_data
+        b
+         | STATUS
+        div#userProfile_status
+        b
+         | O MNIE
+        div#userProfile_opis
+        b
+         | CZŁONE IFP OD
+        div#userProfile_ifp_date
+        b
+         | ID
+        div#userProfile_ifp_id
 
-<div id="statusPopUp" style="display: none;" class="popUp">
-    <h2>Ustaw swój własny status!</h2>
-    <br />
-    <input id="statusPopUp_status">
-    <br /><br />
-    <select id="statusPopUp_typ">
-        <option value="a">Dostępny</option>
-        <option value="s">Zaraz wracam</option>
-        <option value="d">Nie przeszkadzać</option>
-        <option value="i">Niewidoczny</option>
-    </select>
-    <br /><br />
-    <button onclick="setStatus()">ok</button>
-</div>
+div#statusPopUp.popUp style="display: none;"
+    h2 Ustaw swój własny status!
+    br
+    input#statusPopUp_status
+    br
+    br
+    select#statusPopUp_typ
+        option value="a" Dostępny
+        option value="s" Zaraz wracam
+        option value="d" Nie przeszkadzać
+        option value="i" Niewidoczny
+    br
+    br
+    button onclick="setStatus()"
+     | ok
 
-<div id="snakesPopUp" style="display: none;" class="popUp s_11 m_8 l_5 u_4">
-    <div style="position: relative; height: 0px; width: 0px;">
-        <button id="snakesPopUpX">X</button>
-    </div>
-    <canvas></canvas>
-    <mob>
-        <button onclick="mobileSnakeBtn('ArrowUp')" class="snakeMobileBtn">&utri;</button>
-        <br />
-        <button onclick="mobileSnakeBtn('ArrowLeft')" class="snakeMobileBtn">&lt;</button>
-        <button onclick="mobileSnakeBtn('ArrowDown')" class="snakeMobileBtn">&dtri;</button>
-        <button onclick="mobileSnakeBtn('ArrowRight')" class="snakeMobileBtn">&gt;</button>
-    </mob>
-</div>
+div#snakesPopUp.popUp.s_11.m_8.l_5.u_4 style="display: none;"
+    div style="position: relative; height: 0px; width: 0px;"
+        button#snakesPopUpX
+         | X
+    canvas
+    mob
+        button onclick="mobileSnakeBtn('ArrowUp')" class="snakeMobileBtn"
+         | &utri;
+        br
+        button onclick="mobileSnakeBtn('ArrowLeft')" class="snakeMobileBtn"
+         | &lt;
+        button onclick="mobileSnakeBtn('ArrowDown')" class="snakeMobileBtn"
+         | &dtri;
+        button onclick="mobileSnakeBtn('ArrowRight')" class="snakeMobileBtn"
+         | &gt;
 
-<div id="casesPopUp" style="display: none;" class="popUp s_11 m_8 l_8">
-    <canvas class="s"></canvas>
-</div>
+div#casesPopUp.popUp.s_11.m_8.l_8 style="display: none;"
+    canvas.s
 
-<div id="itemsPopUp" style="display: none;" class="popUp"></div>
+div#itemsPopUp.popUp style="display: none;"
 
-<div id="casesHubPopUp" style="display: none;" class="popUp">
-    <div id="casesHubPopUpGold"></div>
-    <div class="spaceDiv" id="casesHubPopUpDaily">
-        <span onclick="socket.emit('box_get_drop', 'daily')">Dzienna Skrzynka</span>
-        <button id="casesHubDaily">Open</button>
-    </div>
-    <div id="casesHubPopUpCases"></div>
-</div>
+div#casesHubPopUp.popUp style="display: none;"
+    div#casesHubPopUpGold
+    div.spaceDiv#casesHubPopUpDaily
+        span onclick="socket.emit('box_get_drop', 'daily')"
+         | Dzienna Skrzynka
+        button#casesHubDaily Open
+    div#casesHubPopUpCases
 
-<canvas id="particles"></canvas>
+canvas#particles

@@ -1,52 +1,50 @@
-<div id="messMenu" class="contexMenu" w_id="" style="display: none;">
-    <button onclick="readText({id: true})">
-        <img src="../img/menu/speak.png" />
-        <span>Odtwórz Wiadomość</span>
-    </button>
-    <button onclick="copyMess()">
-        <img src="../img/menu/copy.png" />
-        <span>Kopiuj Wiadomość</span>
-    </button>
-    <button onclick="responeMsgE()">
-        <img src="../img/menu/respone.png" />
-        <span>Odpowiedz na Wiadomość</span>
-    </button>
-    <button class="messMenuA" onclick="editMess()">
-        <img src="../img/menu/pen.png" />
-        <span>Edytuj Wiadomość</span>
-    </button>
-    <button class="messMenuA" onclick="delMess()">
-        <img src="../img/menu/kosz.png" />
-        <span style="color: red;">Usuń Wiadomość</span>
-    </button>
-</div>
+div#messMenu.contexMenu style="display: none;" w_id=""
+    button onclick="readText({id: true})"
+        img src="../img/menu/speak.png"
+        span
+         | Odtwórz Wiadomość
+    button onclick="copyMess()"
+        img src="../img/menu/copy.png"
+        span
+         | Kopiuj Wiadomość
+    button onclick="responeMsgE()"
+        img src="../img/menu/respone.png"
+        span
+         | Odpowiedz na Wiadomość
+    button.messMenuA onclick="editMess()"
+        img src="../img/menu/pen.png"
+        span
+         | Edytuj Wiadomość
+    button.messMenuA onclick="delMess()"
+        img src="../img/menu/kosz.png"
+        span style="color: red;"
+         | Usuń Wiadomość
 
-<div id="serverMenu" class="contexMenu" w_id="" style="display: none;">
-    <button onclick="copyInvite()">
-        <img src="../img/menu/copy.png" />
-        <span>Kopiuj Link z Zaproszeniem</span>
-    </button>
-    <button onclick="copyIdServer()">
-        <img src="../img/menu/copy.png" />
-        <span>Kopiuj Id Serwera</span>
-    </button>
-    <button onclick="exitChat()">
-        <img src="../img/menu/kosz.png" />
-        <span style="color: red;">Wyjdź z Konwersacji</span>
-    </button>
-</div>
+div#serverMenu.contexMenu style="display: none;" w_id=""
+    button onclick="copyInvite()"
+        img src="../img/menu/copy.png"
+        span
+         | Kopiuj Link z Zaproszeniem
+    button onclick="copyIdServer()"
+        img src="../img/menu/copy.png"
+        span
+         | Kopiuj Id Serwera
+    button onclick="exitChat()"
+        img src="../img/menu/kosz.png"
+        span style="color: red;"
+         | Wyjdź z Konwersacji
 
-<div id="friendMenu" class="contexMenu" w_id="" style="display: none;">
-    <button onclick="userProfile()">
-        <img src="../img/menu/copy.png" />
-        <span>Profil</span>
-    </button>
-    <button onclick="deleteFriends()">
-        <img src="../img/menu/kosz.png" />
-        <span>Usuń znajomego</span>
-    </button>
-</div>
+div#friendMenu.contexMenu style="display: none;" w_id=""
+    button onclick="userProfile()"
+        img src="../img/menu/copy.png"
+        span
+         | Profil
+    button onclick="deleteFriends()"
+        img src="../img/menu/kosz.png"
+        span
+         | Usuń znajomego
 
-<div id="emocjiMenu" class="contexMenu" w_id="" style="display: none;"></div>
+div#emocjiMenu.contexMenu style="display: none;" w_id=""
 
-<div id="responeMsgCloseMenu" style="display: none;" class="contexMenu">X - odpowiedz na wiadomość</div>
+div#responeMsgCloseMenu.contexMenu style="display: none;"
+ | X - odpowiedz na wiadomość

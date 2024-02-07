@@ -1,16 +1,13 @@
-<div class="left" id="messagess">
-    <div id="msg"></div>
-    <div id="send" style="display: none;">
-        <span id="pisze"></span>
-        <br />
-        <div id="send-menu" class="mar">
-            <textarea type="text" id="inpSend"></textarea>
-            
-            <div id="send-menu-data">
-                <span style="cursor: pointer;" onclick="emocjiMenu()" id="emocjiMenuM">🦆</span>
-                <div style="cursor: pointer; color: green; font-size: 2.7rem; margin-top: -7px;" onclick="sendFile()">+</div>
-            </div>
-            <button onclick="sendMess()" disabled loadUrl="/img/send.svg"></button>
-        </div>
-    </div>
-</div>
+div.left#messagess
+    div#msg
+    div#send style="display: none;"
+        span#pisze
+        br
+        div#send-menu.mar
+            textarea#inpSend type="text"
+            div#send-menu-data
+                span#emocjiMenuM onclick="emocjiMenu()" style="cursor: pointer;"
+                 | 🦆
+                div onclick="sendFile()" style="cursor: pointer; color: green; font-size: 2.7rem; margin-top: -7px;"
+                 | +
+            button onclick="sendMess()" disabled loadUrl="/img/send.svg"

@@ -2,7 +2,7 @@
     const htmlParser = new DOMParser();
 
     function loadComponent(path, parentEle){
-        const text = cw.get(path);
+        const text = HtmlCraft(cw.get(path));
         const html = htmlParser.parseFromString(text, "text/html");
         const elements = Array.from(html.body.children);
         for(let e of elements){

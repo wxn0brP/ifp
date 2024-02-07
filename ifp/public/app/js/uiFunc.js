@@ -171,6 +171,7 @@ function setUpServer(categories){
             if(type == "text"){
                 msgDiv.html("");
                 toChatChannel = id;
+                actMess = 0;
                 getMessages();
             }else if(type == "voice"){
                 serverCall(id);

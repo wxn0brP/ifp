@@ -6,7 +6,7 @@ const Examples = [
      | Klasyczny tytuł
     p
      | Prosty paragraf z tekstem.
-    img(src='/favicon.ico' alt='Przykładowy obraz' style="width: 100px;")`,
+    img src='/favicon.ico' alt='Przykładowy obraz' style="width: 100px;"`,
 `ul.lista.ar
     li#pierwszy
         | Pierwszy element {{a.a}}
@@ -17,12 +17,12 @@ const Examples = [
              | Zagnieżdżony element 1
             li
              | Zagnieżdżony element 2`,
-`div.ar.kontener(aria-label="test")
+`div.ar.kontener aria-label="test"
     section.sekcja
         h1
          | Nagłówek sekcji
         p
-         | Opis w sekcji... ok (atrub="ok")
+         | Opis w sekcji... ok
     footer.stopka
      | Strona przygotowana przez XYZ`
 ];
@@ -37,11 +37,14 @@ Examples.forEach(Example => {
 
 const pugString = `
 div.container.ar
-  h1 {{pageTitle}}
-  p {{pageContent}}
+  h1
+   | {{pageTitle}}
+  p
+   | {{pageContent}}
   div {{a}}
   ul
-    li {{b[0]}}
+    li
+     | {{b[0]}}
     li
      | {{b[1]}}
 `;

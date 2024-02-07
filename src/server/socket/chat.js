@@ -149,7 +149,7 @@ io.of("/").on("connection", (socket) => {
 
     socket.on("getMessage", async (to, chnl, start, finish, opt) => {
         try{
-            lo(to, chnl, start, finish, opt)
+            // BUG reverse ma jakieś problemy egzystencjalnie i nie zawsze działą
             if(!socket.user) return socket.emit("error", "not auth");
             if(!socket.isUser) return socket.emit("error", "bot");
 

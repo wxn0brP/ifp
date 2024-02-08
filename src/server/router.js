@@ -11,7 +11,6 @@ const resetA = require("./router/reset");
 const resetKodA = require("./router/reset-kod");
 const inviteChatA = require("./router/inviteChat");
 const inviteChatGetA = require("./router/inviteChatGet");
-const feedA = require("./router/feed");
 const genIdA = require("./router/genId");
 const notifRegA = require("./router/notif-reg");
 
@@ -32,7 +31,6 @@ module.exports = (app) => {
         app.post("/reset-kod", resetKodA);
         app.post("/ic", inviteChatA);
         app.get("/ic/get", inviteChatGetA);
-        app.post("/feed", feedA);
         app.get("/genId", genIdA);
         app.post("/notif-reg", notifRegA);
     }

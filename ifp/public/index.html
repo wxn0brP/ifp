@@ -125,16 +125,6 @@
                 border-top: 1px solid #ddd;
             }
 
-            @media screen and (max-width: 800px){
-                .section{
-                    padding-inline: 1rem;
-                    padding-bottom: 100px;
-                }
-                #navs.responsive{
-                    background-color: #222;
-                }
-            }
-
             .ann{
                 scale: 1;
                 margin: 0;
@@ -214,85 +204,162 @@
                     transform: rotateX(0deg);
                 }
             }
+
+            #langsel{
+                position: absolute;
+                top: 5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                padding-inline: 2rem;
+                padding-block: 1rem;
+                border-radius: 1rem;
+                background-color: #000;
+                z-index: 21;
+            }
+
+            #langselS, #langsel button{
+                background-color: #444;
+                color: var(--txt);
+                border: none;
+                padding: 5px;
+                border-radius: 5px;
+                margin: 4px;
+            }
+
+            #navs{
+                z-index: 20;
+            }
+
+            @media screen and (max-width: 800px){
+                .section{
+                    padding-inline: 1rem;
+                    padding-bottom: 100px;
+                }
+                #navs.responsive{
+                    background-color: #222;
+                }
+                #langselS, #langsel button{
+                    padding: 1rem;
+                }
+            }
         </style>
     </head>
     <body>
         <script src="/core.js"></script>
         <div id="assets"></div>
         <script src="js/generateResCss.js"></script>
+        <noscript>This site requires JavaScript to function properly</noscript>
         <div id="HtmlCraft">
-noscript
- | Ta strona wymaga js (javascript) do poprawnego działania
 div#navs
-div.section.fc
+div.section.fc 
     div.flip-up
-        h1.fontNorse Infinite Fusion Project
+        h1.fontNorse
+         | Infinite Fusion Project
 
 div.section.fc
     div.zoom-in
-        h2.fontNorse O Projekcie
-        p.section-description IFP to nowoczesna aplikacja czatowa, stworzona z pasji do łączenia ludzi w cyfrowym świecie. Naszym celem jest dostarczenie intuicyjnej, szybkiej i bezpiecznej platformy komunikacyjnej, która umożliwia użytkownikom łatwe i efektywne dzielenie się myślami, pomysłami oraz plikami.
+        h2.fontNorse
+         | {{t.aboutTitle}}
+        p.section-description
+         | {{t.aboutDescription}}
 
 div.section
     div.fade-left
-        h2.fontNorse Dlaczego IFP?
+        h2.fontNorse 
+         | {{t.whyIFPTitle}}
         div.features-grid
             div.feature-item
-                h4.feature-title Prostota i Intuicyjność
-                p IFP jets zaprojektowane z myślą o łatwości użytkowania.
+                h4.feature-title 
+                 | {{t.simplicityAndIntuitivenessTitle}}
+                p 
+                 | {{t.simplicityAndIntuitivenessDescription}}
             div.feature-item
-                h4.feature-title Wszechstronność
-                p IFP to uniwersalna aplikacja czatowa, doskonała zarówno do pracy zespołowej, jak i rozmów z przyjaciółmi.
+                h4.feature-title 
+                 | {{t.versatilityTitle}}
+                p 
+                 | {{t.versatilityDescription}}
             div.feature-item
-                h4.feature-title Elastyczność i Dostosowanie
-                p IFP umożliwia personalizację ustawień dla maksymalnej efektywności i komfortu użytkowania.
+                h4.feature-title 
+                 | {{t.flexibilityAndCustomizationTitle}}
+                p 
+                 | {{t.flexibilityAndCustomizationDescription}}
             div.feature-item
-                h4.feature-title Otwarte Źródło
-                p IFP jest dostępne na GitHub pod najpopularniejszą licencją MIT.
+                h4.feature-title 
+                 | {{t.openSourceTitle}}
+                p 
+                 | {{t.openSourceDescription}}
 
 div.section
     div.flip-left
-        h2.fontNorse Najczęściej Zadawane Pytania
+        h2.fontNorse 
+         | {{t.faqsTitle}}
         div.faq-container
             details.faq-item
-                summary Jakie są główne funkcje IFP?
-                p IFP oferuje szybką i efektywną komunikację w czasie rzeczywistym, wymianę plików, personalizację ustawień i zaawansowane opcje zarządzania rozmowami.
+                summary 
+                 | {{t.faq1Question}}
+                p 
+                 | {{t.faq1Answer}}
             details.faq-item
-                summary Czy IFP jest dostępny na różne platformy?
-                p Tak, IFP jest dostępny na różne platformy. Moża pobrać wersje aplikacji dla systemów mobilnych, desktopowych oraz wersję CLI na naszej stronie pod adresem get.
+                summary 
+                 | {{t.faq2Question}}
+                p 
+                 | {{t.faq2Answer}}
             details.faq-item
-                summary Czy IFP jest darmowy?
-                p Tak, IFP jest darmowy. Planujemy wprowadzić dodatkowe funkcje premium w przyszłości, ale podstawowa wersja pozostanie bezpłatna.
+                summary 
+                 | {{t.faq3Question}}
+                p 
+                 | {{t.faq3Answer}}
             details.faq-item
-                summary Jak mogę zgłosić błąd lub przesłać sugestię?
-                p Błędy i sugestie można zgłaszać poprzez nasze repozytorium GitHub lub za pomocą formularza kontaktowego na naszej stronie.
+                summary 
+                 | {{t.faq4Question}}
+                p 
+                 | {{t.faq4Answer}}
             details.faq-item
-                summary Czy mogę dostosować interfejs użytkownika IFP?
-                p Tak, IFP oferuje różne opcje personalizacji, aby można było dostosować interfejs do swoich preferencji.
+                summary 
+                 | {{t.faq5Question}}
+                p 
+                 | {{t.faq5Answer}}
             details.faq-item
-                summary Czy IFP wspiera pracę zespołową?
-                p Oczywiście. IFP posiada funkcje umożliwiające efektywną współpracę zespołową, takie jak grupowe czaty, udostępnianie plików i współdzielenie ekranu.
+                summary 
+                 | {{t.faq6Question}}
+                p 
+                 | {{t.faq6Answer}}
 
 div.section.fc
     div.zoom-in
-        h2.fontNorse Dołącz do nas!
-        p Od sprawdzenia repozytorium na GitHub po współtworzenie aplikacji - zapraszamy do współpracy w rozwoju IFP. Twoje opinie i sugestie są dla nas bardzo ważne. Pomagają nam ulepszać IFP i dostosowywać go do potrzeb użytkowników.
+        h2.fontNorse 
+         | {{t.joinUsTitle}}
+        p 
+         | {{t.joinUsDescription}}
 
 div.section.fc
     div.flip-up
-        h2.fontNorse O Nas
+        h2.fontNorse 
+         | {{t.aboutUsTitle}}
         div.about-me-content
-        p Jako twórcy IFP, naszym celem jest stworzenie intuicyjnej i efektywnej platformy komunikacyjnej, która wspiera zarówno pracę zespołową, jak i osobistą wymianę myśli i pomysłów. Nasze zainteresowanie programowaniem i technologiami cyfrowymi prowadzi nas do ciągłego doskonalenia i rozwijania IFP, aby spełniało ono oczekiwania współczesnych użytkowników.
+        p 
+         | {{t.aboutUsDescription}}
 
 span#confetti
+div#langsel style="display: none;"
+    select#langselS onchange="changeLang(this.value)"
+        option value="en"
+         | EN
+        option value="pl"
+         | PL
+    br
+    button onclick="document.querySelector('#langsel').fadeOut();"
+     | Cancel
         </div>
         <script src="/js/aos.js"></script>
         <script src="/js/confetti.min.js"></script>
         <script src="/js/menuBuilder.js"></script>
         <script src="/HtmlCraft/HtmlCraft.js"></script>
         <script>
+            const lang = getLang();
+            const transate = getTranslate(lang);
             const page = document.querySelector("#HtmlCraft");
-            const pageCont = HtmlCraft(page.innerHTML);
+            const pageCont = HtmlCraft(page.innerHTML, { t: transate });
             page.remove();
             const app = document.createElement("div");
             app.id = "app";
@@ -388,6 +455,43 @@ span#confetti
                 });
             });
 
+            document.querySelector("#langselS").value = lang;
+
+            function getLang(){
+                let lang = localStorage.getItem("lang");
+                if(!lang){
+                    lang = (navigator.language || navigator.userLanguage).substring(0, 2);
+                }
+                if(![ "pl","en", ].includes(lang)){
+                    lang = "en";
+                }
+                return lang;
+            }
+
+            function getTranslate(lang){
+                return JSON.parse(cw.get("/translate/index.html/"+lang+".json"));
+            }
+
+            function changeLang(lang){
+                localStorage.setItem("lang", lang);
+                location.reload();
+            }
+
+            function langSel(){
+                document.querySelector("#langsel").fadeIn();
+            }
+
+            function menuTranslate(lang){
+                let transateM = JSON.parse(cw.get("/translate/menu/"+lang+".json"));
+                document.querySelectorAll("#navs a").forEach(ele => {
+                    let txt = ele.textContent;
+                    if(!txt) return;
+                    try{
+                        ele.textContent = transateM[txt] || txt;
+                    }catch{}
+                })
+            }
+            menuTranslate(lang);
         </script>
     </body>
 </html>

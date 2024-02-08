@@ -25,6 +25,37 @@
             .download-button:hover{
                 color: var(--txt);
             }
+
+            #langsel{
+                position: absolute;
+                top: 5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                padding-inline: 2rem;
+                padding-block: 1rem;
+                border-radius: 1rem;
+                background-color: #000;
+                z-index: 21;
+            }
+
+            #langselS, #langsel button{
+                background-color: #444;
+                color: var(--txt);
+                border: none;
+                padding: 5px;
+                border-radius: 5px;
+                margin: 4px;
+            }
+
+            #navs{
+                z-index: 20;
+            }
+
+            @media screen and (max-width: 800px){
+                #langselS, #langsel button{
+                    padding: 1rem;
+                }
+            }
         </style>
     </head>
     <body>
@@ -35,17 +66,61 @@
         <div id="app">
             <noscript>Ta strona wymaga js (javascript) do poprawnego działania</noscript>
             <div id="navs"></div>
-            <script>menuBuilder.menuBuildUrl();</script>
-            <h1>Pobierz Aplikację</h1>
+            <br />
+            <button class="download-button" onclick="downloadApp('ifp-electron', 'windows')" style="--c: #0046e8;">Windows</button>
+            <button class="download-button" onclick="downloadApp('ifp-electron', 'linux')" style="--c: #e95420;">Linux</button>
+            <button class="download-button" onclick="downloadApp('ifp-mobile', 'android')" style="--c: #11c511;">Android</button>
             <br /><br />
-            <button class="download-button" onclick="downloadApp('ifp-electron', 'windows')" style="--c: #0046e8;">Pobierz dla Windows</button>
-            <button class="download-button" onclick="downloadApp('ifp-electron', 'linux')" style="--c: #e95420;">Pobierz dla Linux</button>
-            <button class="download-button" onclick="downloadApp('ifp-mobile', 'android')" style="--c: #11c511;">Pobierz APK dla Androida</button>
-            <br /><br />
-            <button class="download-button" onclick="downloadApp('ifp-console', 'windows')"  style="--c: #1e5ef3;">Pobierz Console dla Windows</button>
-            <button class="download-button" onclick="downloadApp('ifp-console', 'linux')" style="--c: #ff5214;">Pobierz Console dla Linux</button>
+            <button class="download-button" onclick="downloadApp('ifp-console', 'windows')"  style="--c: #1e5ef3;">Console Windows</button>
+            <button class="download-button" onclick="downloadApp('ifp-console', 'linux')" style="--c: #ff5214;">Console Linux</button>
+
+            <div id="langsel" style="display: none;">
+                <select onchange="changeLang(this.value)" id="langselS">
+                    <option value="en">EN</option>
+                    <option value="pl">PL</option>
+                </select>
+                <br />
+                <button onclick="document.querySelector('#langsel').fadeOut();">Cancel</button>
+            </div>
         </div>
         <script>
+            menuBuilder.menuBuildUrl();
+            const lang = getLang();
+            menuTranslate(lang);
+
+            function changeLang(lang){
+                localStorage.setItem("lang", lang);
+                location.reload();
+            }
+
+            function langSel(){
+                document.querySelector("#langsel").fadeIn();
+            }
+
+            function menuTranslate(lang){
+                let transateM = JSON.parse(cw.get("/translate/menu/"+lang+".json"));
+                document.querySelectorAll("#navs a").forEach(ele => {
+                    let txt = ele.textContent;
+                    if(!txt) return;
+                    try{
+                        ele.textContent = transateM[txt] || txt;
+                    }catch{}
+                })
+            }
+
+            document.querySelector("#langselS").value = lang;
+
+            function getLang(){
+                let lang = localStorage.getItem("lang");
+                if(!lang){
+                    lang = (navigator.language || navigator.userLanguage).substring(0, 2);
+                }
+                if(![ "pl","en", ].includes(lang)){
+                    lang = "en";
+                }
+                return lang;
+            }
+
             async function downloadApp(repo, platform){
                 try{
                     let data = await getInfo(repo);

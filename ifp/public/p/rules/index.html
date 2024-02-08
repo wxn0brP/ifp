@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title id="title">IFP - Rules</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="IFP - Infinite Fusion Project">
+		<meta name="keywords" content="ifp, IFP, Infinite Fusion Project">
+        <link href="/favicon.ico" rel="shortcut icon">
+        <link href="/style.css" rel="stylesheet">
+        <style>
+            .app{
+                text-align: left;
+            }
+            h1, h2{
+                color: var(--txt);
+            }
+
+            p, li{
+                line-height: 1.6;
+                color: #ccc;
+            }
+
+            ul{
+                list-style-type: none;
+                margin-left: 0;
+                padding-left: 1em;
+                text-indent: -1em;
+            }
+
+            ul li:before{
+                content: "•";
+                padding-right: 10px;
+                padding-left: 2px;
+                color: var(--txt)
+            }
+
+            a{
+                color: #1e90ff;
+                text-decoration: none;
+            }
+
+            a:hover{
+                text-decoration: underline;
+            }
+
+            section{
+                margin-block: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="assets"></div>
+        <script src="/js/generateResCss.js"></script>
+        <br />
+        <br />
+        <div class="app s m_8 l_7 u_7 mar">
+            <h1>Terms of Service for Infinite Fusion Project (IFP)</h1>
+            
+            <section>
+                <h2>Introduction</h2>
+                <p>Welcome to Infinite Fusion Project (IFP)! We are creating a space where everyone can communicate, share, and collaborate in an environment of mutual respect and openness, inspired by the open-source software community ethos.</p>
+                <p>By using IFP, you agree to abide by these Terms of Service ("Terms"), which are designed to ensure a healthy and safe environment for all users.</p>
+            </section>
+            
+            <section>
+                <h2>Using the Application</h2>
+                <p>IFP allows you to exchange messages, create discussion groups, share files, and more, subject to the following rules:</p>
+                <ul>
+                    <li><strong>Respect and Openness</strong>: Approach every discussion with openness and respect for others' opinions. Remember, there's a person behind every screen.</li>
+                    <li><strong>Collaboration</strong>: We encourage collaboration and helping other users. Solving problems together and sharing knowledge are the foundations of our community.</li>
+                    <li><strong>Safety</strong>: We do not tolerate behaviors that could threaten the safety or privacy of users. This includes cyberbullying, sharing unauthorized content, and using the application for illegal purposes.</li>
+                    <li><strong>Intellectual Property</strong>: Respect copyright and intellectual property rights of others. Share only content that you have the rights to or that is licensed for sharing.</li>
+                    <li><strong>Rights and Responsibilities</strong>: As a user, you have the right to use the application as intended but also the responsibility to follow these terms and applicable laws.</li>
+                </ul>
+            </section>
+            
+            <section>
+                <h2>Changes to the Terms</h2>
+                <p>IFP reserves the right to update and change the Terms at any time. We will inform you of any changes in advance.</p>
+            </section>
+            
+            <section>
+                <h2>Dispute Resolution</h2>
+                <p>In case of any disputes arising from the use of IFP, we encourage amicable resolution through dialogue and mediation.</p>
+            </section>
+            
+            <section>
+                <h2>Contact</h2>
+                <p>If you have any questions or concerns about the Terms of Service, please contact us through <a href="https://github.com/wxn0brP/ifp/issues">GitHub issues</a>.</p>
+            </section>
+            
+        </div>
+        <br />
+        <br />
+        <div class="s m_6 l_6 u_6 mar" style="margin-bottom: 2rem;">
+            <a href="/" id="prev">BACK</a>
+        </div>
+        <script>
+            var urlParam = new URLSearchParams(location.search);
+            urlParam = urlParam.get("next");
+            if(urlParam){
+                var next = window.location.protocol + "//" + window.location.host;
+                if(!urlParam.startsWith("/")) urlParam = "/" + urlParam;
+                next += urlParam;
+                document.getElementById("prev").setAttribute("href", next);
+            }
+        </script>
+    </body>
+</html>

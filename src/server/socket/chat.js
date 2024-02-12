@@ -12,7 +12,7 @@ const vInne = [
     require("./chat/vc"),
 ];
 
-io.of("/").use((socket, next) => {
+io.of("/").use(async (socket, next) => {
     function authError(str){
         const authError = new Error(str);
         authError.data = 'AuthenticationError';
@@ -59,11 +59,10 @@ io.of("/").use((socket, next) => {
         socket.user = hashBase.user;
         socket.rToken = rToken;
     }else{
-        let tokenD = botTest.tokenVery(token);
+        let tokenD = await botTest.tokenVery(token);
         if(!tokenD) return authError(`token`);
-        socket.user = tokenD.o;
+        socket.user = tokenD.o.data.user;
     }
-
     next();
 });
 

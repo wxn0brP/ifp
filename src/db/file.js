@@ -237,7 +237,7 @@ module.exports = {
         return await new Promise(async (resolve) => {
             if(!fs.existsSync(file)){
                 await fs.promises.writeFile(file, "");
-                resolve([]);
+                resolve(false);
                 return;
             }
             const rl = createRL(file);
@@ -250,7 +250,7 @@ module.exports = {
                     rl.close();
                 }
             };
-            resolve([]);
+            resolve(false);
         });
     },
 

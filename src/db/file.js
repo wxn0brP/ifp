@@ -191,7 +191,7 @@ async function remove(folder, name, arg, one){
     let files = fs.readdirSync(folder + "/" + name).filter(file => !/\.tmp$/.test(file));
     files.reverse();
     for(const file of files){
-        let removed = await removeWorker(folder + "/" + name + "/" + file, arg, obj, one);
+        let removed = await removeWorker(folder + "/" + name + "/" + file, arg, one);
         if(removed) break;
     }
     return true;

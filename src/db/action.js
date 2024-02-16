@@ -9,7 +9,7 @@ const format = require("./format");
 const fileM = require("./file");
 const CacheManager = require("./cacheManager");
 
-const maxFileSize = 1024//2 * 1024 * 1024; //2 MB
+const maxFileSize = 2 * 1024 * 1024; //2 MB
 
 /**
  * A class representing database actions on files.
